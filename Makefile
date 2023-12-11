@@ -6,7 +6,7 @@
 #    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/11 02:42:41 by kreys            ###   ########.fr        #
+#    Updated: 2023/12/11 14:19:29 by kreys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,13 @@ SRC				= minishell.c \
 				  del_obj.c \
 				  init_obj.c \
 				  string.c \
+				  string2.c \
+				  string3.c \
 				  error_handle.c \
-				  free_module.c
+				  free_module.c \
+				  signals.c \
+				  text_create.c \
+				  make_act.c \
 
 SRCDIR			= ./project/minishell/
 SRCOBJ			= ${addprefix ${SRCDIR}, ${SRC:.c=.o}}
@@ -31,17 +36,17 @@ PRFDIR			= ./project/ft_printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -Wall -Wextra -Werror -gdwarf-4
+FLAGS			= -g -gdwarf-4 -Wall -Wextra -Werror -fsanitize=address
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 
 all:			 create_prj ${NAME} clean
 
 .c.o:
-				${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+				@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:		${ALLOBJ}
-				${CC} ${FLAGS} ${ALLOBJ} -o ${NAME}
+				@${CC} ${FLAGS} ${ALLOBJ} -lreadline -lhistory -o ${NAME} 
 				@echo DONE
 
 create_prj:		

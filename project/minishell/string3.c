@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_obj.c                                         :+:      :+:    :+:   */
+/*   string3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 12:46:32 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
+/*   Updated: 2023/12/11 14:19:20 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void	took_env(t_prj *prj, char **env)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	int	i;
+	unsigned char	*str;
+	int				size;
 
-	i = 0;
-	while (env[i])
+	size = 0;
+	str = (unsigned char *)b;
+	while (len-- > 0)
 	{
-		if (ft_strncmp("PATH", env[i], 4) == 0)
-			break ;
-		i++;
+		str[size++] = c;
 	}
-	prj->paths = ft_split(&env[i][5], ':');
-}
-
-void	init_prj(t_prj *prj, char **env)
-{
-	took_env(prj, env);
-	prj->env = env;
-	prj->exit = 0;
-	prj->pid = 0;
-	prj->our_path = ft_strdup("./", 0);
-	prj->name = ft_strdup(NAME, 0);
-	prj->list_argv = NULL;
+	return (b);
 }
