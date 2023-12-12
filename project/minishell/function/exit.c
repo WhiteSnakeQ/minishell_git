@@ -10,50 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
-void	make_list_env(char **env, t_prj *prj)
+void    exit_m(char **strs, t_prj *prj)
 {
-	int		i;
+    unsigned char   i;
 
-	i = 0;
-	while (env[i])
-		env_add_last(prj, env[i++]);
-}
-
-void	took_env(t_prj *prj, char **env)
-{
-	int		i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp("PATH", env[i], 4) == 0)
-			break ;
-		i++;
-	}
-	prj->paths= ft_split(&env[i][5], ':');
-	make_list_env(env, prj);
-}
-
-static void	null_struct(t_prj *prj)
-{
-	prj->list_argv = NULL;
-	prj->env = NULL;
-	prj->env_str = NULL;
-	prj->paths = NULL;
-	prj->name = NULL;
-	prj->argv = NULL;
-	prj->our_path = NULL;
-}
-
-void	init_prj(t_prj *prj, char **env)
-{
-	null_struct(prj);
-	took_env(prj, env);
-	prj->env_str = make_env_str(prj->env);
-	prj->pid = 0;
-	prj->skip = 0;
-	prj->our_path = getcwd(NULL, 1024);
-	prj->name = ft_strdup(NAME, 0);
+    (void)prj;
+    if (!strs)
+        return ;
+    ft_printf(1, "exit\n");
+    if (strs[1])
+    {
+        if (ft_isdigit(strs[1]) == 1 && !strs[2])
+        {
+            i = (unsigned char)ft_atoi(strs[1]);
+            clean_prj(GET, NULL);
+            exit(i);
+        }
+        else if (ft_isdigit(strs[1]) == 1 && strs[2])
+        {
+            ft_printf(2, INVEXIT);
+            return ;
+        }
+        else
+        {
+            ft_printf(2, "minishell: ");
+            ft_printf(2, "%s: ", strs[1]);
+            ft_printf(2, "%s\n", NUMREC);
+        }
+    }
+    clean_prj(GET, NULL);
+    exit(0);
 }

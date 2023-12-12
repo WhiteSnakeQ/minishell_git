@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include <signal.h>
 
 int	check_pid(int mod, t_prj **prj)
 {
@@ -45,14 +46,35 @@ void	signal_exit(int syg)
 {
 	(void)syg;
 	clean_prj(GET, NULL);
+	exit(0);
 }
 
-void	set_signals(void)
+void	signal_quit(int syg)
+{
+	(void)syg;
+	if (check_pid(GET, NULL) == 0)
+		return ;
+	ft_printf(2, CORE_D);
+	return ;
+}
+
+void	set_signals(t_prj *prj)
 {
 	struct sigaction	act;
 
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = NULL;
-	signal(SIGINT, signal_sig);
-	signal(SIGQUIT, signal_exit);
+	check_pid(SET, &prj);
+	act.sa_handler = signal_sig;
+	if (sigaction(SIGINT, &act, NULL) == -1)
+	{
+		perror("minishell: signal operations");
+		clean_prj(GET, NULL);
+		exit(0);
+	}	
+	act.sa_handler = signal_quit;
+	if (sigaction(SIGQUIT, &act, NULL) == -1)
+	{
+		perror("minishell: signal operations");
+		clean_prj(GET, NULL);
+		exit(0);
+	}
 }

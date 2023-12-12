@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -32,6 +33,11 @@
 # define MALCERR "minishell: Malloc fail to create object\n"
 # define ERRARG "minishell: Invalid number of arguments\n"
 # define FILNF "minishell: command not found: "
+# define INVEXIT "minishell: exit: too many arguments "
+# define INVNARG "minishell: cd: too many arguments"
+# define NOFILEORDIR "No such file or directory"
+# define CORE_D "Quit (core dumped)\n"
+# define NUMREC "numeric argument required"
 
 # define SIGINT 2
 # define SIGQUIT 3
@@ -69,7 +75,6 @@ typedef struct s_prj
 	char			*argv;
 	char			**paths;
 	char			**env_str;
-	int				exit;
 	int				skip;
 	pid_t			pid;
 	struct s_argv	*list_argv;
@@ -81,7 +86,7 @@ int			ft_printf(int descript, const char *str, ...);
 int			print_error(char *message);
 int			check_error(t_prj *prj);
 char		*get_next_line(int fd);
-void		set_signals(void);
+void		set_signals(t_prj *prj);
 void		parse_argv(t_prj *prj);
 void		make_action(t_prj *prj);
 
@@ -104,6 +109,15 @@ void		free_strings(char **strs);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
 int			ft_strlen(const char *str);
+int			calc_size_strs(char **strs);
+int			ft_isdigit(char *str);
+int			ft_atoi(const char *str);
+
+//					Function
+void    	pwd(char **strs, t_prj *prj);
+void    	cd(char **strs, t_prj *prj);
+void    	echo(char **strs, t_prj *prj);
+void   		exit_m(char **strs, t_prj *prj);
 
 //					Work_with_env
 char		**make_env_str(t_env *env);

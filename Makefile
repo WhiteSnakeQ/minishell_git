@@ -26,6 +26,10 @@ SRC				= minishell.c \
 				  text_create.c \
 				  make_act.c \
 				  ./env_work/env.c \
+				  ./function/pwd.c \
+				  ./function/cd.c \
+				  ./function/echo.c \
+				  ./function/exit.c \
 
 SRCDIR			= ./project/minishell/
 SRCOBJ			= ${addprefix ${SRCDIR}, ${SRC:.c=.o}}
