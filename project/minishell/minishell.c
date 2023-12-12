@@ -15,24 +15,33 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_prj	*prj;
-	char	*exit_l[4];
+	char	*strs[3];
+	char	*exportt[3];
+	char	*exp[3];
 
-	exit_l[1] = "56";
-	exit_l[2] = "lol";
-	exit_l[3] = NULL;
+	exp[1] = NULL;
+	strs[1] = "z";
+	exportt[1] = "z";
+	strs[2] = NULL;
+	exportt[2] = NULL;
 	if (argc != 1 || argv[1])
 		return (print_error(ERRARG));
 	prj = malloc(sizeof(t_prj));
 	if (!prj)
 		return (print_error(MALCERR));
-	set_signals(prj);
+	set_signals(prj, SET);
 	clean_prj(SET, &prj);
 	init_prj(prj, env);
 	while (42)
 	{
+		set_signals(prj, GET);
 		prj->argv = readline(NAME);
 		if (!prj->argv)
 			exit(print_error("exit\n"));
+		export(exportt, prj);
+		unset(strs, prj);
+		export(exp, prj);
+		set_signals(prj, GET);
 		clean_dirty(prj);
 	}
 	return (0);

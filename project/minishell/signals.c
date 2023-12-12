@@ -13,7 +13,7 @@
 #include "../headers/minishell.h"
 #include <signal.h>
 
-int	check_pid(int mod, t_prj **prj)
+static int	check_pid(int mod, t_prj **prj)
 {
 	static t_prj	*clean = NULL;
 
@@ -31,7 +31,7 @@ int	check_pid(int mod, t_prj **prj)
 	return (1);
 }
 
-void	signal_sig(int syg)
+static void	signal_sig(int syg)
 {
 	(void)syg;
 	if (check_pid(GET, NULL) == 1)
@@ -42,14 +42,7 @@ void	signal_sig(int syg)
 	rl_redisplay();
 }
 
-void	signal_exit(int syg)
-{
-	(void)syg;
-	clean_prj(GET, NULL);
-	exit(0);
-}
-
-void	signal_quit(int syg)
+static void	signal_quit(int syg)
 {
 	(void)syg;
 	if (check_pid(GET, NULL) == 0)
@@ -58,10 +51,32 @@ void	signal_quit(int syg)
 	return ;
 }
 
-void	set_signals(t_prj *prj)
+static void	set_signals_action(void)
+{
+	struct sigaction	act;
+	static int			i = 0;
+
+	if (i++ % 2 == 0)
+		act.sa_handler = SIG_IGN;
+	else
+		act.sa_handler = signal_quit;
+	if (sigaction(SIGQUIT, &act, NULL) == -1)
+	{
+		perror("minishell: signal operations");
+		clean_prj(GET, NULL);
+		exit(0);
+	}
+}
+
+void	set_signals(t_prj *prj, int mod)
 {
 	struct sigaction	act;
 
+	if (mod == GET)
+	{
+		set_signals_action();
+		return ;
+	}
 	check_pid(SET, &prj);
 	act.sa_handler = signal_sig;
 	if (sigaction(SIGINT, &act, NULL) == -1)
@@ -70,11 +85,4 @@ void	set_signals(t_prj *prj)
 		clean_prj(GET, NULL);
 		exit(0);
 	}	
-	act.sa_handler = signal_quit;
-	if (sigaction(SIGQUIT, &act, NULL) == -1)
-	{
-		perror("minishell: signal operations");
-		clean_prj(GET, NULL);
-		exit(0);
-	}
 }

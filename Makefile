@@ -20,6 +20,7 @@ SRC				= minishell.c \
 				  ./string_opr/string3.c \
 				  ./string_opr/string4.c \
 				  ./string_opr/string5.c \
+				  ./string_opr/string6.c \
 				  error_handle.c \
 				  free_module.c \
 				  signals.c \
@@ -30,6 +31,8 @@ SRC				= minishell.c \
 				  ./function/cd.c \
 				  ./function/echo.c \
 				  ./function/exit.c \
+				  ./function/export.c \
+				  ./function/unset.c \
 
 SRCDIR			= ./project/minishell/
 SRCOBJ			= ${addprefix ${SRCDIR}, ${SRC:.c=.o}}

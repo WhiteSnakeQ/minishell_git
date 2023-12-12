@@ -12,34 +12,27 @@
 
 #include "../../headers/minishell.h"
 
-void    exit_m(char **strs, t_prj *prj)
+static void    del_one(char *str, t_prj *prj)
 {
-    unsigned char   i;
-
-    (void)prj;
-    if (!strs)
+    if ((str[0] >= '0' && str[0] <= '9') || symbl_in_str(str, '=') == 1)
+    {
+        ft_printf(2, "minishell: export: `%s':%s\n", str, NVID);
         return ;
-    ft_printf(1, "exit\n");
+    }
+    env_remove_key(prj, str);
+}
+
+void    unset(char **strs, t_prj *prj)
+{
+    int i;
+
+    i = 1;
+    while (strs[i])
+        del_one(strs[i++], prj);
     if (strs[1])
     {
-        if (ft_isdigit(strs[1]) == 1 && !strs[2])
-        {
-            i = (unsigned char)ft_atoi(strs[1]);
-            clean_prj(GET, NULL);
-            exit(i);
-        }
-        else if (ft_isdigit(strs[1]) == 1 && strs[2])
-        {
-            ft_printf(2, INVEXIT);
-            return ;
-        }
-        else
-        {
-            ft_printf(2, "minishell: exit:");
-            ft_printf(2, "%s: ", strs[1]);
-            ft_printf(2, "%s\n", NUMREC);
-        }
+        free_strings(prj->env_str);
+        prj->env_str = make_env_str(prj->env);
     }
-    clean_prj(GET, NULL);
-    exit(0);
+    // exit(0);
 }

@@ -38,6 +38,7 @@
 # define NOFILEORDIR "No such file or directory"
 # define CORE_D "Quit (core dumped)\n"
 # define NUMREC "numeric argument required"
+# define NVID " not a valid identifier"
 
 # define SIGINT 2
 # define SIGQUIT 3
@@ -86,7 +87,7 @@ int			ft_printf(int descript, const char *str, ...);
 int			print_error(char *message);
 int			check_error(t_prj *prj);
 char		*get_next_line(int fd);
-void		set_signals(t_prj *prj);
+void		set_signals(t_prj *prj, int mod);
 void		parse_argv(t_prj *prj);
 void		make_action(t_prj *prj);
 
@@ -106,6 +107,7 @@ void		*ft_memset(void *b, int c, size_t len);
 void		print_strings(char **strs, int modprnt, int mod);
 void		free_string(char *str);
 void		free_strings(char **strs);
+int 		symbl_in_str(char *str, char symb);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
 int			ft_strlen(const char *str);
@@ -118,6 +120,9 @@ void    	pwd(char **strs, t_prj *prj);
 void    	cd(char **strs, t_prj *prj);
 void    	echo(char **strs, t_prj *prj);
 void   		exit_m(char **strs, t_prj *prj);
+void    	export(char **strs, t_prj *prj);
+void    	env(char **strs, t_prj *prj);
+void		unset(char **strs, t_prj *prj);
 
 //					Work_with_env
 char		**make_env_str(t_env *env);

@@ -19,7 +19,6 @@ void	clean_dirty(t_prj *prj)
 	prj->list_argv = NULL;
 	free_string(prj->argv);
 	prj->argv = NULL;
-	ft_printf(1, "\n");
 }
 
 void	clean_prj(int mod, t_prj **prj)

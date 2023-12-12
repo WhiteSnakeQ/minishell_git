@@ -12,34 +12,16 @@
 
 #include "../../headers/minishell.h"
 
-void    exit_m(char **strs, t_prj *prj)
+int symbl_in_str(char *str, char symb)
 {
-    unsigned char   i;
+    int i;
 
-    (void)prj;
-    if (!strs)
-        return ;
-    ft_printf(1, "exit\n");
-    if (strs[1])
+    i = 0;
+    while (str[i])
     {
-        if (ft_isdigit(strs[1]) == 1 && !strs[2])
-        {
-            i = (unsigned char)ft_atoi(strs[1]);
-            clean_prj(GET, NULL);
-            exit(i);
-        }
-        else if (ft_isdigit(strs[1]) == 1 && strs[2])
-        {
-            ft_printf(2, INVEXIT);
-            return ;
-        }
-        else
-        {
-            ft_printf(2, "minishell: exit:");
-            ft_printf(2, "%s: ", strs[1]);
-            ft_printf(2, "%s\n", NUMREC);
-        }
+        if (str[i] == symb)
+            return (1);
+        i++;
     }
-    clean_prj(GET, NULL);
-    exit(0);
+    return (0);    
 }

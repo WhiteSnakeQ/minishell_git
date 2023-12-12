@@ -102,10 +102,7 @@ void	env_remove_key(t_prj *prj, char *key)
 	env = remove_env(prj->env, key);
 	if (env == NULL)
 		return ;
-	ft_printf(2, "\n\n%s\n\n", key);
 	prj->env = env;
-	free_strings(prj->env_str);
-	prj->env_str = make_env_str(prj->env);
 }
 
 void	env_change_key(t_prj *prj, char *key, char *new_val)

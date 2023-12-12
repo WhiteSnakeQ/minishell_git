@@ -12,34 +12,52 @@
 
 #include "../../headers/minishell.h"
 
-void    exit_m(char **strs, t_prj *prj)
+static void    add_some_th(char *strs, t_prj *prj)
 {
-    unsigned char   i;
+    char    *key;
 
-    (void)prj;
-    if (!strs)
-        return ;
-    ft_printf(1, "exit\n");
-    if (strs[1])
+    if ((strs[0] >= '0' && strs[0] <= '9'))
     {
-        if (ft_isdigit(strs[1]) == 1 && !strs[2])
-        {
-            i = (unsigned char)ft_atoi(strs[1]);
-            clean_prj(GET, NULL);
-            exit(i);
-        }
-        else if (ft_isdigit(strs[1]) == 1 && strs[2])
-        {
-            ft_printf(2, INVEXIT);
-            return ;
-        }
-        else
-        {
-            ft_printf(2, "minishell: exit:");
-            ft_printf(2, "%s: ", strs[1]);
-            ft_printf(2, "%s\n", NUMREC);
-        }
+        ft_printf(2, "minishell: export: `%s':%s\n", strs, NVID);
+        return ;
     }
-    clean_prj(GET, NULL);
-    exit(0);
+    else
+    {
+        key = new_str_till(strs, '=');
+        env_remove_key(prj, key);
+        free_string(key);
+        env_add_last(prj, strs);
+    }
+}
+
+static void    print_exp(t_env *env)
+{
+    t_env   *curr;
+
+    curr = env;
+    while (curr)
+    {
+        ft_printf(1, curr->key);
+        if (curr->value)
+            ft_printf(1, "=\"%s\"", curr->value);
+        curr = curr->next;
+        ft_printf(1, "\n");
+    }
+}
+
+void    export(char **strs, t_prj *prj)
+{
+    int i;
+
+    i = 1;
+    while (strs[i])
+        add_some_th(strs[i++], prj);
+    if (!strs[1])
+        print_exp(prj->env);
+    else
+    {
+        free_strings(prj->env_str);
+        prj->env_str = make_env_str(prj->env);
+    }
+    // exit(0);
 }
