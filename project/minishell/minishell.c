@@ -41,9 +41,12 @@ int	main(int argc, char **argv, char **env)
 	while (prj->exit != 1)
 	{
 		prj->argv = readline(NAME);
-		parse_argv(prj);
-		make_action(prj);
-		clean_dirty(prj);
+		// parse_argv(prj);
+		// if (check_error(prj) == 0)
+		// 	make_action(prj);
+		// clean_dirty(prj);
+		ft_printf(2, "%s\n", getcwd(str, 10));
+		prj->exit = 1;
 	}
 	clean_prj(GET, NULL);
 	return (0);

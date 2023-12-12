@@ -12,6 +12,12 @@
 
 #include "../headers/minishell.h"
 
+int	check_error(t_prj *prj)
+{
+	prj->pid = 0;
+	return (0);
+}
+
 int	print_error(char *message)
 {
 	printf("%s", message);

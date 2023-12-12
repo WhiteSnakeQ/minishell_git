@@ -55,5 +55,4 @@ void	set_signals(void)
 	act.sa_handler = NULL;
 	signal(SIGINT, signal_sig);
 	signal(SIGQUIT, signal_exit);
-	sigaction()
 }

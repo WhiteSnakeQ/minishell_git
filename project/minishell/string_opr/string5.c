@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string3.c                                          :+:      :+:    :+:   */
+/*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:19:20 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
+/*   Updated: 2023/12/11 12:46:32 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+int ft_strcmp(const char *s1, const char *s2)
 {
-	unsigned char	*str;
-	int				size;
+	int		i;
 
-	size = 0;
-	str = (unsigned char *)b;
-	while (len-- > 0)
-	{
-		str[size++] = c;
-	}
-	return (b);
+	i = 0;
+	while (*(s1 + i) && *(s1 + i) == *(s2 + i))
+		i++;
+	return (*((unsigned char *)s1 + i) - *((unsigned char *)s2 + i));
 }

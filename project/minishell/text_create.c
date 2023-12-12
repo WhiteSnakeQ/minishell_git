@@ -19,8 +19,6 @@ static char	*get_path(char *str, char **paths)
 	char	*midl;
 
 	i = 0;
-	if (access(str, X_OK) == 0)
-		return (ft_strdup(str, -1));
 	while (paths[i])
 	{
 		cheack = ft_strjoin(paths[i], "/");

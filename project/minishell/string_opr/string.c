@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 static size_t	counter(char const *s, char c)
 {
@@ -39,7 +39,7 @@ char	**ft_split(char const *s, char c)
 
 	str = (char **)malloc((counter(s, c) + 1) * sizeof(char *));
 	if (!s || !str)
-		return (0);
+		exit(print_error(MALCERR));
 	i = 0;
 	while (*s)
 	{
@@ -75,7 +75,7 @@ char	*ft_strdup(char *src, int size)
 		size = i;
 	s = malloc((sizeof(char) * i) + 1);
 	if (s == NULL)
-		return (NULL);
+		exit(print_error(MALCERR));
 	i = 0;
 	while (i < size)
 	{
@@ -107,4 +107,15 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 		str2++;
 	}
 	return (0);
+}
+
+char	*create_str(int size)
+{
+	char *str;
+
+	str = malloc(sizeof(char) * (size + 1));
+	if (!str)
+		exit(print_error(MALCERR));
+	str[size] = '\0';
+	return (str);
 }

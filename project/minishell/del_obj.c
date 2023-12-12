@@ -34,6 +34,8 @@ void	clean_prj(int mod, t_prj **prj)
 	free_string(to_clean->name);
 	free_string(to_clean->argv);
 	free_strings(to_clean->paths);
+	free_strings(to_clean->env_str);
 	free_argv(to_clean->list_argv);
+	free_env(to_clean->env);
 	free(to_clean);
 }

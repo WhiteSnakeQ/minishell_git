@@ -39,6 +39,8 @@ char	**make_exec(t_prj *prj)
 	}
 	argv = prj->list_argv;
 	ex = malloc(sizeof(char *) * (size + 1));
+	if (!ex)
+		exit(print_error(MALCERR));
 	ex[size] = NULL;
 	while (i < size)
 	{
@@ -57,7 +59,7 @@ void	execute(t_prj *prj, char **ex, char *name)
 	prj->pid = fork();
 	if (prj->pid == 0)
 	{
-		execve(name, ex, prj->env);
+		execve(name, ex, prj->env_str);
 		exit(1);
 	}
 	else

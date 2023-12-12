@@ -15,14 +15,17 @@ NAME			= minishell
 SRC				= minishell.c \
 				  del_obj.c \
 				  init_obj.c \
-				  string.c \
-				  string2.c \
-				  string3.c \
+				  ./string_opr/string.c \
+				  ./string_opr/string2.c \
+				  ./string_opr/string3.c \
+				  ./string_opr/string4.c \
+				  ./string_opr/string5.c \
 				  error_handle.c \
 				  free_module.c \
 				  signals.c \
 				  text_create.c \
 				  make_act.c \
+				  ./env_work/env.c \
 
 SRCDIR			= ./project/minishell/
 SRCOBJ			= ${addprefix ${SRCDIR}, ${SRC:.c=.o}}
@@ -32,7 +35,7 @@ GNLSIR			= ./project/get_next_line/
 GNLOBJ			= ${addprefix ${GNLSIR}, ${GNLSRC:.c=.o}}
 
 PRFSRC			= libftprintf.a
-PRFDIR			= ./project/ft_printf/
+PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc

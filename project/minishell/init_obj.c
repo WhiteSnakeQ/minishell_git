@@ -12,9 +12,18 @@
 
 #include "../headers/minishell.h"
 
+void	make_list_env(char **env, t_prj *prj)
+{
+	int		i;
+
+	i = 0;
+	while (env[i])
+		env_add_last(prj, env[i++]);
+}
+
 void	took_env(t_prj *prj, char **env)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (env[i])
@@ -23,16 +32,28 @@ void	took_env(t_prj *prj, char **env)
 			break ;
 		i++;
 	}
-	prj->paths = ft_split(&env[i][5], ':');
+	prj->paths= ft_split(&env[i][5], ':');
+	make_list_env(env, prj);
+}
+
+static void	null_struct(t_prj *prj)
+{
+	prj->list_argv = NULL;
+	prj->env = NULL;
+	prj->env_str = NULL;
+	prj->paths = NULL;
+	prj->name = NULL;
+	prj->argv = NULL;
+	prj->our_path = NULL;
 }
 
 void	init_prj(t_prj *prj, char **env)
 {
+	null_struct(prj);
 	took_env(prj, env);
-	prj->env = env;
+	prj->env_str = make_env_str(prj->env);
 	prj->exit = 0;
 	prj->pid = 0;
 	prj->our_path = ft_strdup("./", 0);
 	prj->name = ft_strdup(NAME, 0);
-	prj->list_argv = NULL;
 }

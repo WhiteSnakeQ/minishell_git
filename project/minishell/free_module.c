@@ -12,6 +12,21 @@
 
 #include "../headers/minishell.h"
 
+void	free_env(t_env *env)
+{
+	t_env	*next;
+
+	while (env)
+	{
+		free_string(env->key);
+		free_string(env->value);
+		next = env->next;
+		free(env);
+		env = next;
+	}
+	env = NULL;
+}
+
 void	free_argv(t_argv *text)
 {
 	t_argv	*next;
@@ -27,10 +42,3 @@ void	free_argv(t_argv *text)
 	text = NULL;
 }
 
-void	free_string(char *str)
-{
-	if (!str)
-		return ;
-	free(str);
-	str = NULL;
-}

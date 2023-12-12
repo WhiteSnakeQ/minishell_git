@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
@@ -24,7 +24,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		return (NULL);
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (str == NULL)
-		return (NULL);
+		exit(print_error(MALCERR));
 	while (s1[i] != '\0')
 	{
 		str[i] = s1[i];
@@ -44,7 +44,7 @@ void	free_strings(char **strs)
 	int	i;
 
 	i = 0;
-	if (!strs || !*strs)
+	if (!strs)
 		return ;
 	while (strs[i])
 		free(strs[i++]);
@@ -70,6 +70,8 @@ int	ft_strlen(const char *str)
 	int		size;
 
 	size = 0;
+	if (!str)
+		return (0);
 	while (str[size])
 		size++;
 	return (size);
@@ -87,7 +89,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	src = malloc(sizeof(*s) * (len + 1));
 	if (src == NULL)
-		return (NULL);
+		exit(print_error(MALCERR));
 	while (len > size && s[i])
 	{
 		if (i >= start)
