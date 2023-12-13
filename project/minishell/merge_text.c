@@ -27,8 +27,8 @@ static int calc_g_env(char *str, t_prj *prj, int *start, char *ret)
     }
     if (str[i] == '?')
     {
-        i = ft_strlcpy(&ret[*start], prj->last_cmd, ft_strlen(prj->last_cmd));
-        *start += i;
+        i = ft_strlcpy(&ret[*start], prj->last_cmd, ft_strlen(prj->last_cmd) + 1);
+        *start += 1;
         return (i);
     }
     while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\'' && str[i] != '\"'))

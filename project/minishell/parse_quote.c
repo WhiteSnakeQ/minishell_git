@@ -21,11 +21,14 @@ static int calc_g_env(char *str, t_prj *prj, int *stop, int q)
     j = -1;
     if (str[i] == '$')
     {
-        ft_strlen(prj->last_cmd);
+        stop += 1;
         return (1);
     }
     if (str[i] == '?')
+    {
+        *stop += 1;
         return (ft_strlen(prj->last_cmd));
+    }
     while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\'' && str[i] != '\"'))
     {
         if ((str[i] >= '0' && str[i] <= '9') && i == 0)
@@ -58,7 +61,7 @@ static int calc_d_q(char *str, t_prj *prj, int *stop)
     while (str[i] != '\"')
     {
         if (str[i] == '$' && i++ > -1)
-            size = calc_g_env(&str[i], prj, &i, 1);
+            size += calc_g_env(&str[i], prj, &i, 1);
         else
         {
             i++;

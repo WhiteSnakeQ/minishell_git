@@ -53,6 +53,7 @@ void	init_prj(t_prj *prj, char **env)
 	null_struct(prj);
 	took_env(prj, env);
 	prj->env_str = make_env_str(prj->env);
+	prj->last_cmd = ft_strdup("0", 0);
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->our_path = getcwd(NULL, 1024);

@@ -19,10 +19,7 @@ int    get_value_env_int(char *key, t_env *env)
     while (curr)
     {
         if (ft_strcmp(key, curr->key) == 0)
-        {
-            ft_printf(2, "%s\n", curr->value);
             return (ft_strlen(curr->value));
-        }
         curr = curr->next;
     }
     return (0);

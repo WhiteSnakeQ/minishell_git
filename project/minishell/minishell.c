@@ -12,15 +12,14 @@
 
 #include "../headers/minishell.h"
 
-void	print_all(t_prj *prj)
+void	go_work(t_prj	*prj)
 {
 	t_argv	*argv;
 
 	argv = prj->list_argv;
 	while (argv)
 	{
-		ft_printf(1, argv->text);
-		ft_printf(1, "\n");
+		ft_printf(1, "%s\n", argv->text);
 		argv = argv->next;
 	}
 }
@@ -46,7 +45,7 @@ int	main(int argc, char **argv, char **envs)
 			exit(print_error("exit\n"));
 		parse_argv(prj);
 		parse_quotet(prj);
-		print_all(prj);
+		go_work(prj);
 		set_signals(prj, GET);
 		clean_dirty(prj);
 	}
