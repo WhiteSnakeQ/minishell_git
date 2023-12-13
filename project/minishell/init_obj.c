@@ -39,6 +39,7 @@ void	took_env(t_prj *prj, char **env)
 static void	null_struct(t_prj *prj)
 {
 	prj->list_argv = NULL;
+	prj->pipe = NULL;
 	prj->last_cmd = NULL;
 	prj->env = NULL;
 	prj->env_str = NULL;
@@ -46,6 +47,8 @@ static void	null_struct(t_prj *prj)
 	prj->name = NULL;
 	prj->argv = NULL;
 	prj->our_path = NULL;
+	prj->redirect_inp = 0;
+	prj->redirect_out = 0;
 }
 
 void	init_prj(t_prj *prj, char **env)
@@ -54,6 +57,9 @@ void	init_prj(t_prj *prj, char **env)
 	took_env(prj, env);
 	prj->env_str = make_env_str(prj->env);
 	prj->last_cmd = ft_strdup("0", 0);
+	prj->pipe = malloc(sizeof(int) * 2);
+	if (!prj->pipe);
+		exit(print_error(MALCERR));
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->our_path = getcwd(NULL, 1024);

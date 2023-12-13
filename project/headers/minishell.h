@@ -54,6 +54,9 @@
 # define NCLEAN 0
 # define CLEAN 1
 
+# define SINGLE 0
+# define DOUBLE 1
+
 typedef struct s_env
 {
 	char			*key;
@@ -68,6 +71,18 @@ typedef struct s_argv
 	struct s_argv	*next;
 }					t_argv;
 
+typedef struct	s_cmd
+{
+	char			*cmd_name;
+	char			**argv;
+	int				valid;
+	int				file_inp;
+	int				redirect_inp;
+	int				file_fd_out;
+	int				redirect_out;
+	struct s_cmd	*next;
+}					t_cmd;
+
 typedef struct s_prj
 {
 	char			*our_path;
@@ -75,6 +90,7 @@ typedef struct s_prj
 	char			*argv;
 	char			**paths;
 	char			**env_str;
+	int				*pipe;
 	int				skip;
 	int				parsing;
 	char			*last_cmd;
@@ -82,6 +98,7 @@ typedef struct s_prj
 	pid_t			pid;
 	struct s_argv	*list_argv;
 	struct s_env	*env;
+	struct s_cmd	*cmd;
 }					t_prj;
 
 //					Modules
