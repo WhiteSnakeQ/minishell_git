@@ -12,18 +12,23 @@
 
 #include "../headers/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	print_all(t_prj *prj)
+{
+	t_argv	*argv;
+
+	argv = prj->list_argv;
+	while (argv)
+	{
+		ft_printf(1, argv->text);
+		ft_printf(1, "\n");
+		argv = argv->next;
+	}
+}
+
+int	main(int argc, char **argv, char **envs)
 {
 	t_prj	*prj;
-	char	*strs[3];
-	char	*exportt[3];
-	char	*exp[3];
 
-	exp[1] = NULL;
-	strs[1] = "z";
-	exportt[1] = "z";
-	strs[2] = NULL;
-	exportt[2] = NULL;
 	if (argc != 1 || argv[1])
 		return (print_error(ERRARG));
 	prj = malloc(sizeof(t_prj));
@@ -31,16 +36,17 @@ int	main(int argc, char **argv, char **env)
 		return (print_error(MALCERR));
 	set_signals(prj, SET);
 	clean_prj(SET, &prj);
-	init_prj(prj, env);
+	init_prj(prj, envs);
 	while (42)
 	{
 		set_signals(prj, GET);
 		prj->argv = readline(NAME);
+		add_history(prj->argv);
 		if (!prj->argv)
 			exit(print_error("exit\n"));
-		export(exportt, prj);
-		unset(strs, prj);
-		export(exp, prj);
+		parse_argv(prj);
+		parse_quotet(prj);
+		print_all(prj);
 		set_signals(prj, GET);
 		clean_dirty(prj);
 	}

@@ -34,7 +34,6 @@ void	free_argv(t_argv *text)
 	while (text)
 	{
 		free_string(text->text);
-		free_string(text->name);
 		next = text->next;
 		free(text);
 		text = next;

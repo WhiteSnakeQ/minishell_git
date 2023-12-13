@@ -30,13 +30,18 @@ char	**make_env_str(t_env *env)
 	envs = malloc(sizeof(char *) * (size + 1));
 	if (!envs)
 		exit(print_error(MALCERR));
-	envs[size] = NULL;
 	help = env;
 	while (size > i)
 	{
 		envs[i++] = create_one_env(help);
+		if (!envs[i - 1])
+		{
+			i--;
+			size--;
+		}
 		help = help->next;
 	}
+	envs[i] = NULL;
 	return (envs);
 }
 

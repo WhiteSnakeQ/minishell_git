@@ -16,7 +16,7 @@ static void    del_one(char *str, t_prj *prj)
 {
     if ((str[0] >= '0' && str[0] <= '9') || symbl_in_str(str, '=') == 1)
     {
-        ft_printf(2, "minishell: export: `%s':%s\n", str, NVID);
+        ft_printf(2, "minishell: unset: `%s':%s\n", str, NVID);
         return ;
     }
     env_remove_key(prj, str);

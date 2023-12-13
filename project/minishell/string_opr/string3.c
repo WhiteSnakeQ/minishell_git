@@ -90,7 +90,10 @@ char    *create_one_env(t_env *env)
 	while (env->key[j])
 		str[i++] = env->key[j++];
 	if (!env->value)
-		return (str);
+	{
+		free(str);
+		return (NULL);
+	}
 	str[i++] = '=';
 	j = 0;
 	while (env->value && env->value[j])

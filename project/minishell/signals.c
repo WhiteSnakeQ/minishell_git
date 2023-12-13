@@ -66,18 +66,10 @@ static void	set_signals_action(void)
 		clean_prj(GET, NULL);
 		exit(0);
 	}
-}
-
-void	set_signals(t_prj *prj, int mod)
-{
-	struct sigaction	act;
-
-	if (mod == GET)
-	{
-		set_signals_action();
-		return ;
-	}
-	check_pid(SET, &prj);
+	if (i - 1 % 2 == 0)
+		act.sa_handler = SIG_IGN;
+	else
+		act.sa_handler = signal_quit;
 	act.sa_handler = signal_sig;
 	if (sigaction(SIGINT, &act, NULL) == -1)
 	{
@@ -85,4 +77,14 @@ void	set_signals(t_prj *prj, int mod)
 		clean_prj(GET, NULL);
 		exit(0);
 	}	
+}
+
+void	set_signals(t_prj *prj, int mod)
+{
+	if (mod == GET)
+	{
+		set_signals_action();
+		return ;
+	}
+	check_pid(SET, &prj);
 }

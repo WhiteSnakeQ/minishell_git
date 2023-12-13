@@ -61,11 +61,10 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-
 typedef struct s_argv
 {
 	char			*text;
-	char			*name;
+	int				ex;
 	struct s_argv	*next;
 }					t_argv;
 
@@ -77,6 +76,9 @@ typedef struct s_prj
 	char			**paths;
 	char			**env_str;
 	int				skip;
+	int				parsing;
+	char			*last_cmd;
+	pid_t			curr;
 	pid_t			pid;
 	struct s_argv	*list_argv;
 	struct s_env	*env;
@@ -86,10 +88,11 @@ typedef struct s_prj
 int			ft_printf(int descript, const char *str, ...);
 int			print_error(char *message);
 int			check_error(t_prj *prj);
+char   	 	*make_full(char *str, t_prj *prj, int m_size);
 char		*get_next_line(int fd);
 void		set_signals(t_prj *prj, int mod);
 void		parse_argv(t_prj *prj);
-void		make_action(t_prj *prj);
+void   		parse_quotet(t_prj *prj);
 
 //					String_work
 char		**ft_split(char const *s, char c);
@@ -104,9 +107,11 @@ char		*del_symbl(char *str, char *symbl);
 char		*create_str(int size);
 char		*cover_char(char *str, char symb);
 void		*ft_memset(void *b, int c, size_t len);
+char    	*add_to_end(char *str, char symb);
 void		print_strings(char **strs, int modprnt, int mod);
 void		free_string(char *str);
 void		free_strings(char **strs);
+int			ft_strlcpy(char *dest, const char *src, size_t size);
 int 		symbl_in_str(char *str, char symb);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
@@ -126,8 +131,10 @@ void		unset(char **strs, t_prj *prj);
 
 //					Work_with_env
 char		**make_env_str(t_env *env);
+char   	 	*get_value_env_str(char *key, t_env *env);
 void		env_add_last(t_prj *prj, char *str);
 void		env_remove_key(t_prj *prj, char *key);
+int   		get_value_env_int(char *key, t_env *env);
 
 //					Init_del_obj
 t_argv		*init_argv(char *str);

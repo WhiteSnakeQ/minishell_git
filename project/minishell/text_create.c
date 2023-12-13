@@ -12,87 +12,91 @@
 
 #include "../headers/minishell.h"
 
-static char	*get_path(char *str, char **paths)
+// static char	*get_path(char *str, char **paths)
+// {
+// 	int		i;
+// 	char	*cheack;
+// 	char	*midl;
+
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		cheack = ft_strjoin(paths[i], "/");
+// 		midl = ft_strjoin(cheack, str);
+// 		free(cheack);
+// 		cheack = midl;
+// 		if (access(cheack, X_OK) == 0)
+// 			return (cheack);
+// 		free(cheack);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
+
+static char	*create_one_arg(char *str, int *skip)
 {
 	int		i;
-	char	*cheack;
-	char	*midl;
+	char	finish;
+	char	*ret;
 
 	i = 0;
-	while (paths[i])
+	finish = '\0';
+	while (str[i])
 	{
-		cheack = ft_strjoin(paths[i], "/");
-		midl = ft_strjoin(cheack, str);
-		free(cheack);
-		cheack = midl;
-		if (access(cheack, X_OK) == 0)
-			return (cheack);
-		free(cheack);
-		i++;
+		if (finish == str[i] && i++ > -1)
+			finish = '\0';
+		if (finish == '\0' && str[i] == '\'')
+			finish = '\'';
+		if (finish == '\0' && str[i] == '\"')
+			finish = '\"';
+		if (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && finish == '\0')
+			break ;
+		if (str[i])
+			i++;
 	}
-	return (NULL);
+	ret = ft_strdup(str, i);
+	if (finish != '\0')
+		ret = add_to_end(ret, finish);
+	*skip += i;
+	return (ret);
 }
 
-static t_argv	*init_text(char *text, int *i)
+static void	add_back_argv(t_prj *prj, char *text)
 {
-	t_argv	*cmd;
-	int		size;
+	t_argv	*argv;
+	t_argv	*curr;
 
-	size = 0;
-	if (!text || !text[0])
+	argv = malloc(sizeof(t_argv));
+	if (!argv)
+		exit(print_error(MALCERR));
+	argv->next = NULL;
+	argv->text = text;
+	if (!prj->list_argv)
+		prj->list_argv = argv;
+	else
 	{
-		*i += 1;
-		return (NULL);
+		curr = prj->list_argv;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = argv;
 	}
-	while (text[size] && ((text[size] < 9 || text[size] > 13) \
-		&& text[size] != 32))
-		size++;
-	if (size == 0)
-		return (NULL);
-	cmd = malloc(sizeof(t_argv));
-	if (!cmd)
-		return (NULL);
-	cmd->next = NULL;
-	cmd->name = NULL;
-	cmd->text = ft_strdup(&text[0], size);
-	*i += size;
-	return (cmd);
-}
-
-static t_argv	*lstlast(t_argv *lst)
-{
-	t_argv		*my_list;
-
-	my_list = lst;
-	if (my_list == (void *)0)
-		return (0);
-	while (my_list->next)
-		my_list = my_list->next;
-	return (my_list);
 }
 
 void	parse_argv(t_prj *prj)
 {
-	t_argv	*cmd;
 	int		i;
+	char	*str;
 
 	i = 0;
 	if (!prj->argv)
 		return ;
-	while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == 32)
+	while ((prj->argv[i] >= 9 &&prj->argv[i] <= 13) || prj->argv[i] == ' ')
 		i++;
-	prj->list_argv = init_text(&prj->argv[i], &i);
-	if (!prj->list_argv)
-		return ;
-	prj->list_argv->name = get_path(prj->list_argv->text, prj->paths);
 	while (prj->argv[i])
 	{
-		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == 32)
+		str = create_one_arg(&prj->argv[i], &i);
+		add_back_argv(prj, str);
+		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 			i++;
-		cmd = init_text(&prj->argv[i], &i);
-		if (!cmd)
-			continue ;
-		cmd->name = get_path(cmd->text, prj->paths);
-		lstlast(prj->list_argv)->next = cmd;
 	}
 }

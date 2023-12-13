@@ -39,6 +39,7 @@ void	took_env(t_prj *prj, char **env)
 static void	null_struct(t_prj *prj)
 {
 	prj->list_argv = NULL;
+	prj->last_cmd = NULL;
 	prj->env = NULL;
 	prj->env_str = NULL;
 	prj->paths = NULL;
