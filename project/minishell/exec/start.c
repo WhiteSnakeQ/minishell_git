@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:10:12 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/14 22:09:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-// static void	write_in_fd(t_cmd *cmd, t_cmd *cmd2)
-// {
-//     close(cmd->pipe[1]);
-//     // if (!cmd2)
-//     // {
-//     //     close(cmd->pipe[1]);
-//     //     return ;
-//     // }
-//     // cmd2->pipe[1] = cmd->pipe[0];
-// }
-
-void    write_terminal(t_prj *prj)
+static void	write_in_fd(t_cmd *cmd, t_cmd *cmd2)
 {
-    char *fr_term;
-
-    ft_printf(2, "lol");
-    // close(prj->pipeold[1]);
-    fr_term = get_next_line(prj->pipeold[0]);
-    while (fr_term)
-    {
-        ft_printf(1, fr_term);
-        free_string(fr_term);
-        fr_term = get_next_line(prj->pipeold[0]);
-    }
-    close(prj->pipeold[1]);
+    if (!cmd2)
+        return ;
+    close(cmd->pipe[1]);
+    close(cmd2->pipe[1]);
+    cmd2->redirect_inp = 1;
+    cmd2->file_inp = cmd->pipe[0];
 }
 
 static void	worket(t_prj *prj, t_cmd *cmd)
@@ -48,8 +31,10 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 		    exit(print_error(PEDERR));
 	    if (cmd->pid == 0)
 	    {
+            if (!cmd->next)
+                close(cmd->pipe[1]);
             dup2(cmd->pipe[1], STDOUT_FILENO);
-		    if (cmd->redirect_inp == 1)
+		    if (cmd->redirect_inp == 1 || cmd->redirect_inp == 2)
 			    dup2(cmd->file_inp, STDIN_FILENO);
 		    close(cmd->pipe[0]);
 		    execve(cmd->cmd_name, cmd->argv, prj->env_str);
@@ -58,8 +43,6 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 	    }
     }
     prj->pid = cmd->pid;
-    close(cmd->pipe[1]);
-	dup2(cmd->pipe[0], STDIN_FILENO);
 }
 
 void    execute_cmd(t_prj *prj)
@@ -87,14 +70,13 @@ void    execute_cmd(t_prj *prj)
         if (ft_strcmp(cmd->argv[0], "exit") == 0)
             exit_m(cmd->argv, prj);
         worket(prj, cmd);
-        // write_in_fd(cmd, cmd->next);
-        prj->pipeold = cmd->pipe;
+        write_in_fd(cmd, cmd->next);
         if (first == 0)
             first = cmd->pid;
         i = cmd->pid;
         cmd = cmd->next;
     }
+    waitpid(first, &prj->exit, 0);
     waitpid(i, &prj->exit, 0);
-    write_terminal(prj);
     prj->last_cmd = ft_itoa(prj->exit % 255, prj->last_cmd);
 }

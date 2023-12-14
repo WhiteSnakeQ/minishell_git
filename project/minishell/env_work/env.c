@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_obj.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 12:46:32 by kreys            ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   env.c											  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: kreys <kirrill20030@gmail.com>			 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2023/12/11 00:14:32 by kreys			 #+#	#+#			 */
+/*   Updated: 2023/12/14 07:50:08 by kreys			###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
@@ -69,20 +69,20 @@ void	env_add_last(t_prj *prj, char *str)
 
 static t_env	*remove_env(t_env *env, char *key)
 {
-    t_env	*prev;
-    t_env	*next;
-    t_env	*first;
+	t_env	*prev;
+	t_env	*next;
+	t_env	*first;
 
 	first = env;
 	prev = NULL;
 	while (env)
 	{
 		next = env->next;
-        if (ft_strcmp(env->key, key) == 0)
-        {
-            free_string(env->key);
-            free_string(env->value);
-            free(env);
+		if (ft_strcmp(env->key, key) == 0)
+		{
+			free_string(env->key);
+			free_string(env->value);
+			free(env);
 			env = NULL;
 			if (first)
 			{
@@ -91,10 +91,10 @@ static t_env	*remove_env(t_env *env, char *key)
 			}
 			else
 				return (next);
-        }
+		}
 		prev = env;
 		env = env->next;
-    }
+	}
 	return (NULL);
 }
 
@@ -121,14 +121,14 @@ void	env_change_key(t_prj *prj, char *key, char *new_val)
 	finish = 0;
 	while (env)
 	{
-        if (ft_strcmp(env->key, key) == 0)
-        {
+		if (ft_strcmp(env->key, key) == 0)
+		{
 			free_string(env->value);
 			env->value = ft_strdup(new_val, 0);
 			finish++;
-        }
+		}
 		env = env->next;
-    }
+	}
 	if (finish == 1)
 	{
 		free_strings(prj->env_str);
