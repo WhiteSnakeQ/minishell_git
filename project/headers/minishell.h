@@ -92,7 +92,7 @@ typedef struct	s_cmd
 	int				redirect_inp;
 	int				file_fd_out;
 	int				redirect_out;
-	int				pipe[2];
+	int				*pipe;
 	struct s_cmd	*next;
 }					t_cmd;
 

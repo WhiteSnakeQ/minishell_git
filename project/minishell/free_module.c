@@ -20,6 +20,9 @@ void	free_cmd(t_cmd *cmd)
 	{
 		free_string(cmd->cmd_name);
 		free_strings(cmd->argv);
+		close(cmd->pipe[1]);
+		close(cmd->pipe[0]);
+		free(cmd->pipe);
 		next = cmd->next;
 		free(cmd);
 		cmd = next;

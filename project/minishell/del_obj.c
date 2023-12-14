@@ -43,9 +43,5 @@ void	clean_prj(int mod, t_prj **prj)
 	free_cmd(to_clean->cmd);
 	free_argv(to_clean->list_argv);
 	free_env(to_clean->env);
-	close(to_clean->pipeold[0]);
-    close(to_clean->pipeold[1]);
-	if (to_clean->pipeold)
-   		free(to_clean->pipeold);
 	free(to_clean);
 }

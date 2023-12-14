@@ -56,10 +56,6 @@ void	init_prj(t_prj *prj, char **env)
 	took_env(prj, env);
 	prj->env_str = make_env_str(prj->env);
 	prj->last_cmd = ft_strdup("0", 0);
-	prj->pipeold = malloc(sizeof(int) * 2);
-	if (!prj->pipeold)
-		exit(print_error(MALCERR));
-    pipe(prj->pipeold);
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->exit = 0;
@@ -74,6 +70,7 @@ t_cmd	*init_cmd()
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		exit(print_error(MALCERR));
+	cmd->pipe = malloc(sizeof(int) * 2);
 	if (pipe(cmd->pipe) == -1)
 		exit(print_error(PIPERR));
 	cmd->valid = 1;
