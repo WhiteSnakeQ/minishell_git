@@ -60,7 +60,7 @@ static void    print_exp(t_env *env, int fd)
     }
 }
 
-void    export(char **strs, t_prj *prj)
+void    export(char **strs, t_prj *prj, int fd)
 {
     int i;
 
@@ -68,7 +68,7 @@ void    export(char **strs, t_prj *prj)
     while (strs[i])
         add_some_th(strs[i++], prj);
     if (!strs[1])
-        print_exp(prj->env, prj->pipe[1]);
+        print_exp(prj->env, fd);
     else
     {
         free_strings(prj->env_str);

@@ -46,8 +46,6 @@ void	clean_prj(int mod, t_prj **prj)
 	close(to_clean->pipeold[0]);
     close(to_clean->pipeold[1]);
 	if (to_clean->pipeold)
-    	free(to_clean->pipeold);
-	if (to_clean->pipe)
-		free(to_clean->pipe);
+   		free(to_clean->pipeold);
 	free(to_clean);
 }

@@ -12,11 +12,11 @@
 
 #include "../../headers/minishell.h"
 
-void    pwd(char **strs, t_prj *prj)
+void    pwd(char **strs, t_prj *prj, int fd)
 {
     if (!strs)
         return ;
-    ft_printf(prj->pipe[1], "%s\n", prj->our_path);
+    ft_printf(fd, "%s\n", prj->our_path);
     prj->exit = 0;
     return ;
 }

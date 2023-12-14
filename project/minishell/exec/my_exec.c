@@ -43,17 +43,17 @@ char    *took_puth(t_prj *prj, t_cmd *cmd)
 int    my_execve(t_prj *prj, t_cmd *cmd)
 {
     if (ft_strcmp(cmd->argv[0], "echo") == 0)
-        echo(cmd->argv, prj);
+        echo(cmd->argv, prj, cmd->pipe[1]);
     else if (ft_strcmp(cmd->argv[0], "cd") == 0)
         cd(cmd->argv, prj);
     else if (ft_strcmp(cmd->argv[0], "pwd") == 0)
-        pwd(cmd->argv, prj);
+        pwd(cmd->argv, prj, cmd->pipe[1]);
     else if (ft_strcmp(cmd->argv[0], "exit") == 0)
         exit_m(cmd->argv, prj);
     else if (ft_strcmp(cmd->argv[0], "export") == 0)
-        export(cmd->argv, prj);
+        export(cmd->argv, prj, cmd->pipe[1]);
     else if (ft_strcmp(cmd->argv[0], "env") == 0)
-        env(cmd->argv, prj);
+        env(cmd->argv, prj, cmd->pipe[1]);
     else if (ft_strcmp(cmd->argv[0], "unset") == 0)
         unset(cmd->argv, prj);
     else

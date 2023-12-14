@@ -39,7 +39,6 @@ void	took_env(t_prj *prj, char **env)
 static void	null_struct(t_prj *prj)
 {
 	prj->list_argv = NULL;
-	prj->pipe = NULL;
 	prj->last_cmd = NULL;
 	prj->env = NULL;
 	prj->env_str = NULL;
@@ -57,10 +56,9 @@ void	init_prj(t_prj *prj, char **env)
 	took_env(prj, env);
 	prj->env_str = make_env_str(prj->env);
 	prj->last_cmd = ft_strdup("0", 0);
-	prj->pipe = malloc(sizeof(int) * 2);
-	if (!prj->pipe)
-	exit(print_error(MALCERR));
-		prj->pipeold = malloc(sizeof(int) * 2);
+	prj->pipeold = malloc(sizeof(int) * 2);
+	if (!prj->pipeold)
+		exit(print_error(MALCERR));
     pipe(prj->pipeold);
 	prj->pid = 0;
 	prj->skip = 0;
@@ -76,6 +74,8 @@ t_cmd	*init_cmd()
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		exit(print_error(MALCERR));
+	if (pipe(cmd->pipe) == -1)
+		exit(print_error(PIPERR));
 	cmd->valid = 1;
 	cmd->redirect_inp = 0;
 	cmd->file_fd_out = 1;

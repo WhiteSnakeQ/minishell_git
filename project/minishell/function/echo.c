@@ -12,7 +12,7 @@
 
 #include "../../headers/minishell.h"
 
-void    echo(char **strs, t_prj *prj)
+void    echo(char **strs, t_prj *prj, int fd)
 {
     int nl;
     int i;
@@ -27,12 +27,12 @@ void    echo(char **strs, t_prj *prj)
     }
     while (strs[i])
     {
-        ft_printf(prj->pipe[1], "%s", strs[i++]);
+        ft_printf(fd, "%s", strs[i++]);
         if (strs[i])
-            ft_printf(prj->pipe[1], " ");
+            ft_printf(fd, " ");
     }
     if (nl == 1)
-        ft_printf(prj->pipe[1], "\n");
+        ft_printf(fd, "\n");
     prj->exit = 0;
     return ;
 }

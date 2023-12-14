@@ -54,7 +54,31 @@ void    change_fd_write(t_cmd *cmd, int mod, char *str)
     }
 }
 
-void    change_fd_read(t_cmd *cmd, int mod, char *str)
+static void    read_term(t_prj *prj, t_cmd *cmd, char *stop)
+{
+    char *fr_term;
+
+    (void)prj;
+    pipe(cmd->pipe);
+    fr_term = get_next_line(0);
+    while (fr_term && ft_strncmp(stop, fr_term, ft_strlen(fr_term) - 1) != 0)
+    {
+        ft_printf(cmd->pipe[1], fr_term);
+        free_string(fr_term);
+        fr_term = get_next_line(0);
+    }
+    close(cmd->pipe[1]);
+    free_string(fr_term);
+    if (!cmd->next)
+        return ;
+    if (cmd->next->redirect_inp != 1 && cmd->next->valid == 1)
+    {
+        cmd->next->redirect_inp = 1;
+        cmd->next->file_inp = cmd->pipe[0];
+    }
+}
+
+void    change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj)
 {
     close_if_op(cmd, 0);
     if (cmd->valid == 0)
@@ -72,14 +96,5 @@ void    change_fd_read(t_cmd *cmd, int mod, char *str)
         }
     }
     else
-    {
-        cmd->file_inp = open(str, O_RDONLY);
-        if (cmd->file_inp < 0)
-        {
-            ft_printf(2, "minishell: ");
-            perror(str);
-            cmd->valid = 0;
-            return ;
-        }
-    }
+        read_term(prj, cmd, str);
 }

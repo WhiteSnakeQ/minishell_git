@@ -12,19 +12,21 @@
 
 #include "../../headers/minishell.h"
 
-static t_argv	*check_sp_smb(t_argv *argv, t_cmd *cmd)
+static t_argv	*check_sp_smb(t_argv *argv, t_cmd *cmd, t_prj *prj)
 {
+	if (!argv)
+		return (argv);
 	if (ft_strcmp(argv->text, ">") == 0)
 		change_fd_write(cmd, SINGLE, argv->next->text);
 	else if (ft_strcmp(argv->text, ">>") == 0)
 		change_fd_write(cmd, DOUBLE, argv->next->text);
 	else if (ft_strcmp(argv->text, "<") == 0)
-		change_fd_read(cmd, SINGLE, argv->next->text);
+		change_fd_read(cmd, SINGLE, argv->next->text, prj);
 	else if (ft_strcmp(argv->text, "<<") == 0)
-		change_fd_read(cmd, DOUBLE, argv->next->text);
+		change_fd_read(cmd, DOUBLE, argv->next->text, prj);
 	else
 		return (argv);
-	return (argv->next->next);
+	return (check_sp_smb(argv->next->next, cmd, prj));
 }
 
 static void	add_text(t_text **text, t_argv *argv)
@@ -83,7 +85,7 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 	text = NULL;
 	while (argv)
 	{
-		argv = check_sp_smb(argv, cmd);
+		argv = check_sp_smb(argv, cmd, prj);
 		if (!argv)
 			break ;
 		if (ft_strcmp(argv->text, "||") == 0 && argv->ex == 1)

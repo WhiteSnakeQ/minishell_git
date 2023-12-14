@@ -127,7 +127,7 @@ void		set_signals(t_prj *prj, int mod);
 void		parse_argv(t_prj *prj);
 void   		parse_quotet(t_prj *prj);
 void  	  	change_fd_write(t_cmd *cmd, int mod, char *str);
-void   		change_fd_read(t_cmd *cmd, int mod, char *str);
+void   		change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
 void    	add_last_cmd(t_cmd **cmd, t_cmd *new);
 void    	close_if_op(t_cmd *cmd, int mod);
 void  	  	execute_cmd(t_prj *prj);
@@ -160,12 +160,12 @@ int			ft_isdigit(char *str);
 int			ft_atoi(const char *str);
 
 //					Function
-void    	pwd(char **strs, t_prj *prj);
+void    	pwd(char **strs, t_prj *prj, int fd);
 void    	cd(char **strs, t_prj *prj);
-void    	echo(char **strs, t_prj *prj);
+void    	echo(char **strs, t_prj *prj, int fd);
 void   		exit_m(char **strs, t_prj *prj);
-void    	export(char **strs, t_prj *prj);
-void    	env(char **strs, t_prj *prj);
+void    	export(char **strs, t_prj *prj, int fd);
+void    	env(char **strs, t_prj *prj, int fd);
 void		unset(char **strs, t_prj *prj);
 int   	 	my_execve(t_prj *prj, t_cmd *cmd);
 
