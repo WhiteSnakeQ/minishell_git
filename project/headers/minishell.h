@@ -32,9 +32,14 @@
 
 # define MALCERR "minishell: Malloc fail to create object\n"
 # define ERRARG "minishell: Invalid number of arguments\n"
+# define PIPERR "minishell: Pipe failed\n"
+# define PEDERR "minishell: Fork failed\n"
 # define FILNF "minishell: command not found: "
+# define UNEXPTOKS "minishell: syntax error near unexpected token "
+# define UNEXPTOKN "minishell: syntax error near unexpected token `newline'\n"
+# define UNEXPTOK "minishell: syntax error near unexpected token `|'\n"
 # define INVEXIT "minishell: exit: too many arguments "
-# define INVNARG "minishell: cd: too many arguments"
+# define INVNARG "minishell: cd: too many arguments\n"
 # define NOFILEORDIR "No such file or directory"
 # define CORE_D "Quit (core dumped)\n"
 # define NUMREC "numeric argument required"
@@ -64,6 +69,12 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_text
+{
+	char			*text;
+	struct s_text	*next;
+}					t_text;
+
 typedef struct s_argv
 {
 	char			*text;
@@ -75,11 +86,13 @@ typedef struct	s_cmd
 {
 	char			*cmd_name;
 	char			**argv;
+	pid_t			pid;
 	int				valid;
 	int				file_inp;
 	int				redirect_inp;
 	int				file_fd_out;
 	int				redirect_out;
+	int				pipe[2];
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -90,9 +103,10 @@ typedef struct s_prj
 	char			*argv;
 	char			**paths;
 	char			**env_str;
-	int				*pipe;
+	int				*pipeold;
 	int				skip;
 	int				parsing;
+	int				exit;
 	char			*last_cmd;
 	pid_t			curr;
 	pid_t			pid;
@@ -105,11 +119,18 @@ typedef struct s_prj
 int			ft_printf(int descript, const char *str, ...);
 int			print_error(char *message);
 int			check_error(t_prj *prj);
+int    		check_sp_smb_arv(t_argv *argv);
 char   	 	*make_full(char *str, t_prj *prj, int m_size);
 char		*get_next_line(int fd);
+void		make_cmd(t_prj	*prj);
 void		set_signals(t_prj *prj, int mod);
 void		parse_argv(t_prj *prj);
 void   		parse_quotet(t_prj *prj);
+void  	  	change_fd_write(t_cmd *cmd, int mod, char *str);
+void   		change_fd_read(t_cmd *cmd, int mod, char *str);
+void    	add_last_cmd(t_cmd **cmd, t_cmd *new);
+void    	close_if_op(t_cmd *cmd, int mod);
+void  	  	execute_cmd(t_prj *prj);
 
 //					String_work
 char		**ft_split(char const *s, char c);
@@ -123,8 +144,9 @@ char    	*create_one_env(t_env *env);
 char		*del_symbl(char *str, char *symbl);
 char		*create_str(int size);
 char		*cover_char(char *str, char symb);
-void		*ft_memset(void *b, int c, size_t len);
+char		*ft_itoa(int n, char *clean);
 char    	*add_to_end(char *str, char symb);
+void		*ft_memset(void *b, int c, size_t len);
 void		print_strings(char **strs, int modprnt, int mod);
 void		free_string(char *str);
 void		free_strings(char **strs);
@@ -145,6 +167,7 @@ void   		exit_m(char **strs, t_prj *prj);
 void    	export(char **strs, t_prj *prj);
 void    	env(char **strs, t_prj *prj);
 void		unset(char **strs, t_prj *prj);
+int   	 	my_execve(t_prj *prj, t_cmd *cmd);
 
 //					Work_with_env
 char		**make_env_str(t_env *env);
@@ -155,10 +178,13 @@ int   		get_value_env_int(char *key, t_env *env);
 
 //					Init_del_obj
 t_argv		*init_argv(char *str);
+t_cmd		*init_cmd();
 void		clean_dirty(t_prj *prj);
 void		init_prj(t_prj *prj, char **env);
 void		clean_prj(int mod, t_prj **prj);
+void		free_text(t_text *text);
 void		free_argv(t_argv *text);
 void		free_env(t_env *env);
+void		free_cmd(t_cmd *cmd);
 
 #endif

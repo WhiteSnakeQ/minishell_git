@@ -12,6 +12,35 @@
 
 #include "../headers/minishell.h"
 
+void	free_cmd(t_cmd *cmd)
+{
+	t_cmd	*next;
+
+	while (cmd)
+	{
+		free_string(cmd->cmd_name);
+		free_strings(cmd->argv);
+		next = cmd->next;
+		free(cmd);
+		cmd = next;
+	}
+	cmd = NULL;
+}
+
+void	free_text(t_text *text)
+{
+	t_text	*next;
+
+	while (text)
+	{
+		free_string(text->text);
+		next = text->next;
+		free(text);
+		text = next;
+	}
+	text = NULL;
+}
+
 void	free_env(t_env *env)
 {
 	t_env	*next;

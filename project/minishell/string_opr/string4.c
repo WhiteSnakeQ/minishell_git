@@ -12,7 +12,7 @@
 
 #include "../../headers/minishell.h"
 
-void    print_strings(char **strs, int modprnt, int mod)
+void    print_strings(char **strs, int modprnt, int term)
 {
     int		i;
 
@@ -20,12 +20,10 @@ void    print_strings(char **strs, int modprnt, int mod)
 	while (strs[i])
 	{
 		if (modprnt == NL)
-			ft_printf(1, "%s\n", strs[i++]);
+			ft_printf(term, "%s\n", strs[i++]);
 		else
-			ft_printf(1, strs[i++]);
+			ft_printf(term, strs[i++]);
 	}
-    if (mod == CLEAN)
-		free_strings(strs);
 }
 
 static int	cmp_one(char *str, char symb)

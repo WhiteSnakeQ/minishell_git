@@ -12,26 +12,24 @@
 
 #include "../headers/minishell.h"
 
-// static char	*get_path(char *str, char **paths)
-// {
-// 	int		i;
-// 	char	*cheack;
-// 	char	*midl;
-
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		cheack = ft_strjoin(paths[i], "/");
-// 		midl = ft_strjoin(cheack, str);
-// 		free(cheack);
-// 		cheack = midl;
-// 		if (access(cheack, X_OK) == 0)
-// 			return (cheack);
-// 		free(cheack);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+static int check_sp(char *str)
+{
+	if (str[0] == '|' && str[1] && str[0] == str[1])
+		return (2);
+	else if (str[0] == '|')
+		return (1);
+	else if (str[0] == '<' && str[1] && str[0] == str[1])
+		return (2);
+	else if (str[0] == '>' && str[1] && str[0] == str[1])
+		return (2);
+	else if (str[0] == '>')
+		return (1);
+	else if (str[0] == '<')
+		return (1);
+	else if (str[0] == '&' && str[1] && str[0] == str[1])
+		return (2);
+	return (0);
+}
 
 static char	*create_one_arg(char *str, int *skip)
 {
@@ -43,6 +41,11 @@ static char	*create_one_arg(char *str, int *skip)
 	finish = '\0';
 	while (str[i])
 	{
+		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&' && str[i + 1] == '&')) && i == 0)
+		{
+			i += check_sp(str);
+			break ;
+		}
 		if (finish == str[i] && i++ > -1)
 			finish = '\0';
 		if (finish == '\0' && str[i] == '\'')
@@ -50,6 +53,8 @@ static char	*create_one_arg(char *str, int *skip)
 		if (finish == '\0' && str[i] == '\"')
 			finish = '\"';
 		if (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && finish == '\0')
+			break ;
+		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&' && str[i + 1] == '&')) && finish == '\0')
 			break ;
 		if (str[i])
 			i++;

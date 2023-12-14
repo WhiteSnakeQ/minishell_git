@@ -26,8 +26,13 @@ void    echo(char **strs, t_prj *prj)
         i++;
     }
     while (strs[i])
-        ft_printf(1, strs[i++]);
+    {
+        ft_printf(prj->pipe[1], "%s", strs[i++]);
+        if (strs[i])
+            ft_printf(prj->pipe[1], " ");
+    }
     if (nl == 1)
-        ft_printf(1, "\n");
-    // exit(0); later
+        ft_printf(prj->pipe[1], "\n");
+    prj->exit = 0;
+    return ;
 }

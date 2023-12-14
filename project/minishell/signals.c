@@ -35,7 +35,10 @@ static void	signal_sig(int syg)
 {
 	(void)syg;
 	if (check_pid(GET, NULL) == 1)
+	{
+		ft_printf(1, "\n");
 		return ;
+	}
 	ft_printf(1, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -66,10 +69,6 @@ static void	set_signals_action(void)
 		clean_prj(GET, NULL);
 		exit(0);
 	}
-	if (i - 1 % 2 == 0)
-		act.sa_handler = SIG_IGN;
-	else
-		act.sa_handler = signal_quit;
 	act.sa_handler = signal_sig;
 	if (sigaction(SIGINT, &act, NULL) == -1)
 	{

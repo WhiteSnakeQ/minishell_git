@@ -34,6 +34,12 @@ SRC				= minishell.c \
 				  ./function/export.c \
 				  ./function/unset.c \
 				  ./function/env.c \
+				  ./parse_cmd/redirect.c \
+				  ./parse_cmd/create_cmd.c \
+				  ./parse_cmd/additional.c \
+				  ./exec/start.c \
+				  ./exec/check.c \
+				  ./exec/my_exec.c \
 				  parse_quote.c \
 				  merge_text.c \
 

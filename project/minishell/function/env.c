@@ -15,6 +15,8 @@
 void    env(char **strs, t_prj *prj)
 {
     if (!strs)
-        return ;
-    print_strings(prj->env_str, NL, NCLEAN);
+        exit(0);
+    print_strings(prj->env_str, NL, prj->pipe[1]);
+    prj->exit = 0;
+    return ;
 }

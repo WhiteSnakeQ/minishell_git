@@ -19,6 +19,7 @@ void    cd(char **strs, t_prj *prj)
     if (strs[2])
     {
         ft_printf(2, INVNARG);
+        prj->exit = 1;
         return ;
     }
     dir = opendir(strs[1]);
@@ -26,6 +27,8 @@ void    cd(char **strs, t_prj *prj)
     {
         ft_printf(2, "minishell: %s: ", strs[1]);
         perror(NULL);
+        prj->exit = 1;
+        return ;
     }
     else
     {
@@ -34,5 +37,6 @@ void    cd(char **strs, t_prj *prj)
         chdir(strs[1]);
         prj->our_path = getcwd(NULL, 1024);
     }
-    // exit(0); later
+    prj->exit = 0;
+    return ;
 }

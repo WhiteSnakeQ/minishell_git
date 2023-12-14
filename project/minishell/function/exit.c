@@ -31,6 +31,7 @@ void    exit_m(char **strs, t_prj *prj)
         else if (ft_isdigit(strs[1]) == 1 && strs[2])
         {
             ft_printf(2, INVEXIT);
+            prj->exit = 1;
             return ;
         }
         else
@@ -38,6 +39,8 @@ void    exit_m(char **strs, t_prj *prj)
             ft_printf(2, "minishell: exit:");
             ft_printf(2, "%s: ", strs[1]);
             ft_printf(2, "%s\n", NUMREC);
+            clean_prj(GET, NULL);
+            exit(2);
         }
     }
     clean_prj(GET, NULL);

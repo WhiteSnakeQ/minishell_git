@@ -12,6 +12,20 @@
 
 #include "../../headers/minishell.h"
 
+static void    add_puth(t_prj *prj)
+{
+    int		i;
+
+	i = 0;
+	while (prj->env_str[i])
+	{
+		if (ft_strncmp("PATH", prj->env_str[i], 4) == 0)
+			break ;
+		i++;
+	}
+	prj->paths = ft_split(&prj->env_str[i][5], ':');
+}
+
 static void    add_some_th(char *strs, t_prj *prj)
 {
     char    *key;
@@ -30,18 +44,19 @@ static void    add_some_th(char *strs, t_prj *prj)
     }
 }
 
-static void    print_exp(t_env *env)
+static void    print_exp(t_env *env, int fd)
 {
     t_env   *curr;
 
     curr = env;
     while (curr)
     {
-        ft_printf(1, curr->key);
+        ft_printf(fd, "declare -x ");
+        ft_printf(fd, curr->key);
         if (curr->value)
-            ft_printf(1, "=\"%s\"", curr->value);
+            ft_printf(fd, "=\"%s\"", curr->value);
         curr = curr->next;
-        ft_printf(1, "\n");
+        ft_printf(fd, "\n");
     }
 }
 
@@ -53,11 +68,14 @@ void    export(char **strs, t_prj *prj)
     while (strs[i])
         add_some_th(strs[i++], prj);
     if (!strs[1])
-        print_exp(prj->env);
+        print_exp(prj->env, prj->pipe[1]);
     else
     {
         free_strings(prj->env_str);
         prj->env_str = make_env_str(prj->env);
+        free_strings(prj->paths);
+        add_puth(prj);
     }
-    // exit(0);
+    prj->exit = 0;
+    return ;
 }

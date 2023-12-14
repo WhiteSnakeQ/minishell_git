@@ -19,6 +19,8 @@ void	clean_dirty(t_prj *prj)
 	prj->list_argv = NULL;
 	free_string(prj->argv);
 	prj->argv = NULL;
+	free_cmd(prj->cmd);
+	prj->cmd = NULL;
 }
 
 void	clean_prj(int mod, t_prj **prj)
@@ -38,7 +40,14 @@ void	clean_prj(int mod, t_prj **prj)
 	free_string(to_clean->last_cmd);
 	free_strings(to_clean->paths);
 	free_strings(to_clean->env_str);
+	free_cmd(to_clean->cmd);
 	free_argv(to_clean->list_argv);
 	free_env(to_clean->env);
+	close(to_clean->pipeold[0]);
+    close(to_clean->pipeold[1]);
+	if (to_clean->pipeold)
+    	free(to_clean->pipeold);
+	if (to_clean->pipe)
+		free(to_clean->pipe);
 	free(to_clean);
 }

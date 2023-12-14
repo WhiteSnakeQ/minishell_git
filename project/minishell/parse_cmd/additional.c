@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_obj.c                                         :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 12:46:32 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
+/*   Updated: 2023/12/11 14:21:37 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void    pwd(char **strs, t_prj *prj)
+void    add_last_cmd(t_cmd **cmd, t_cmd *new)
 {
-    if (!strs)
+    t_cmd   *curr;
+
+    curr = *cmd;
+    if (!*cmd)
+    {
+        *cmd = new;
         return ;
-    ft_printf(prj->pipe[1], "%s\n", prj->our_path);
-    prj->exit = 0;
-    return ;
+    }
+    while (curr->next)
+        curr = curr->next;
+    curr->next = new;
 }
