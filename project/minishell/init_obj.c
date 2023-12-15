@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 01:12:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 08:44:27 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	took_env(t_prj *prj, char **env)
 static void	null_struct(t_prj *prj)
 {
 	prj->list_argv = NULL;
-	prj->last_cmd = NULL;
+	prj->l_cmd = NULL;
 	prj->env = NULL;
 	prj->env_str = NULL;
 	prj->paths = NULL;
@@ -54,7 +54,7 @@ void	init_prj(t_prj *prj, char **env)
 	null_struct(prj);
 	took_env(prj, env);
 	prj->env_str = make_env_str(prj->env);
-	prj->last_cmd = ft_strdup("0", 0);
+	prj->l_cmd = ft_strdup("0", 0);
 	prj->pipeold = malloc(sizeof(int) * 2);
 	if (!prj->pipeold)
 		exit(print_error(MALCERR));

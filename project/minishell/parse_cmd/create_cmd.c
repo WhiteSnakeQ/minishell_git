@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 01:43:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 08:51:13 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,8 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 	return (argv);
 }
 
-void	make_cmd(t_prj *prj, int mod)
+void	make_cmd(t_prj *prj, t_argv *argv, int mod)
 {
-	t_argv	*argv;
-
-	argv = prj->list_argv;
 	if (!argv)
 		return ;
 	if (check_sp_smb_arv(argv) == -1)
@@ -131,4 +128,5 @@ void	make_cmd(t_prj *prj, int mod)
 			argv = argv->next;
 		}
 	}
+	check_for_ex(prj);
 }

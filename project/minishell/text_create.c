@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:12:43 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 08:09:53 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,41 +31,39 @@ static int	check_sp(char *str)
 	return (0);
 }
 
-static char	*create_one_arg(char *str, int *skip)
+static void	helper_crt(char *str, char *finish, int i)
 {
-	int		i;
-	char	finish;
-	char	*ret;
+	if (*finish == str[i] && i++ > -1)
+		*finish = '\0';
+	if (*finish == '\0' && str[i] == '\'')
+		*finish = '\'';
+	if (*finish == '\0' && str[i] == '\"')
+		*finish = '\"';
+}
 
-	i = 0;
-	finish = '\0';
-	while (str[i])
+static char	*create_one_arg(char *s, int *skip, t_helper h)
+{
+	h.i = -1;
+	h.ch = '\0';
+	while (++h.i > -2 && s[h.i])
 	{
-		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&'
-					&& str[i + 1] == '&')) && i == 0)
+		if ((s[h.i] == '<' || s[h.i] == '>' || s[h.i] == '|' || \
+			(s[h.i] == '&' && s[h.i + 1] == '&')) && h.i == 0)
 		{
-			i += check_sp(str);
+			h.i += check_sp(s);
 			break ;
 		}
-		if (finish == str[i] && i++ > -1)
-			finish = '\0';
-		if (finish == '\0' && str[i] == '\'')
-			finish = '\'';
-		if (finish == '\0' && str[i] == '\"')
-			finish = '\"';
-		if (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && finish == '\0')
+		helper_crt(s, &h.ch, h.i);
+		if (((s[h.i] == '<' || s[h.i] == '>' || s[h.i] == '|' || (s[h.i] == '&' \
+				&& s[h.i + 1] == '&')) && h.ch == '\0') || (((s[h.i] >= 9 && \
+					s[h.i] <= 13) || s[h.i] == 32) && h.ch == '\0'))
 			break ;
-		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&'
-					&& str[i + 1] == '&')) && finish == '\0')
-			break ;
-		if (str[i])
-			i++;
 	}
-	ret = ft_strdup(str, i);
-	if (finish != '\0')
-		ret = add_to_end(ret, finish);
-	*skip += i;
-	return (ret);
+	h.str = ft_strdup(s, h.i);
+	if (h.ch != '\0')
+		h.str = add_to_end(h.str, h.ch);
+	*skip += h.i;
+	return (h.str);
 }
 
 static void	add_back_argv(t_prj *prj, char *text)
@@ -91,8 +89,9 @@ static void	add_back_argv(t_prj *prj, char *text)
 
 void	parse_argv(t_prj *prj)
 {
-	int		i;
-	char	*str;
+	int			i;
+	char		*str;
+	t_helper	h;
 
 	i = 0;
 	if (!prj->argv)
@@ -101,7 +100,7 @@ void	parse_argv(t_prj *prj)
 		i++;
 	while (prj->argv[i])
 	{
-		str = create_one_arg(&prj->argv[i], &i);
+		str = create_one_arg(&prj->argv[i], &i, h);
 		add_back_argv(prj, str);
 		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 			i++;

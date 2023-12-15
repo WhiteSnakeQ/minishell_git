@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 01:53:24 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 08:51:50 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_helper
 	int				i;
 	int				j;
 	int				c;
+	char			ch;
 	char			*str;
 }					t_helper;
 
@@ -122,7 +123,7 @@ typedef struct s_prj
 	int				skip;
 	int				parsing;
 	int				exit;
-	char			*last_cmd;
+	char			*l_cmd;
 	pid_t			curr;
 	pid_t			pid;
 	struct s_argv	*list_argv;
@@ -138,7 +139,7 @@ int					check_cmd(t_argv **argv);
 int					check_sp_smb_arv(t_argv *argv);
 char				*make_full(char *str, t_prj *prj, int m_size, int i);
 char				*get_next_line(int fd);
-void				make_cmd(t_prj *prj, int mod);
+void				make_cmd(t_prj *prj, t_argv *argv, int mod);
 void				set_signals(t_prj *prj, int mod);
 void				parse_argv(t_prj *prj);
 void				parse_quotet(t_prj *prj);
@@ -146,6 +147,7 @@ void				change_fd_write(t_cmd *cmd, int mod, char *str);
 void				change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
 void				add_last_cmd(t_cmd **cmd, t_cmd *new);
 void				close_if_op(t_cmd *cmd, int mod);
+void				check_for_ex(t_prj *prj);
 void				execute_cmd(t_prj *prj, t_cmd *cmd);
 
 //					String_work

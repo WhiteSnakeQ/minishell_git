@@ -67,7 +67,7 @@ static void	end_ex(t_prj *prj, int j, int i)
 {
 	waitpid(j, &prj->exit, 0);
 	waitpid(i, &prj->exit, 0);
-	prj->last_cmd = ft_itoa(prj->exit % 255, prj->last_cmd);
+	prj->l_cmd = ft_itoa(prj->exit % 255, prj->l_cmd);
 }
 
 void	execute_cmd(t_prj *prj, t_cmd *cmd)

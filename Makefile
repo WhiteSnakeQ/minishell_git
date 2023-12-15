@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/15 02:39:10 by codespace        ###   ########.fr        #
+#    Updated: 2023/12/15 07:39:52 by kreys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC				= minishell.c \
 				  text_create.c \
 				  parse_quote.c \
 				  merge_text.c \
+				  chech_cmd.c \
 				  ./env_work/env.c \
 				  ./env_work/env_additional.c \
 				  ./function/pwd.c \
@@ -57,7 +58,7 @@ PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -g
+FLAGS			= -Wall -Wextra -Werror
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 

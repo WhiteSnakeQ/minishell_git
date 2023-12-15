@@ -3,55 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   merge_text.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:28:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/14 22:41:34 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 10:23:05 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-static int	calc_g_env(char *str, t_prj *prj, int *start, char *ret)
+static int	calc_g_env(char *str, t_prj *prj, int *srt, char *ret)
 {
-	int		i;
-	int		j;
-	char	*key;
+	t_helper	p;
 
-	i = 0;
-	j = -1;
-	if (str[i] == '$')
+	p.i = 0;
+	p.j = 0;
+	*srt += 1;
+	if (str[p.i] == '$')
+		return (ret[*srt] = str[p.i], *srt += 1, 1);
+	if (str[p.i] == '?')
+		return (p.i = ft_strlcpy(&ret[*srt], prj->l_cmd, \
+			ft_strlen(prj->l_cmd)), *srt += 1, p.i);
+	*srt -= 1;
+	while (str[p.i] && (str[p.i] != ' ' && str[p.i] != '$' && str[p.i] != '\''
+			&& str[p.i] != '\"'))
 	{
-		ret[*start] = str[i];
-		*start += 1;
-		return (1);
-	}
-	if (str[i] == '?')
-	{
-		i = ft_strlcpy(&ret[*start], prj->last_cmd, ft_strlen(prj->last_cmd)
-				+ 1);
-		*start += 1;
-		return (i);
-	}
-	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\''
-			&& str[i] != '\"'))
-	{
-		if ((str[i] >= '0' && str[i] <= '9') && i == 0)
+		if ((str[p.i] >= '0' && str[p.i] <= '9') && p.i == 0)
 			return (1);
-		i++;
+		p.i++;
 	}
-	if (i == 0 && prj->parsing == 0)
-		return (i);
-	else if (i == 0 && prj->parsing == 1)
-		return (i);
-	key = create_str(i);
-	while (++j < i)
-		key[j] = str[j];
-	j = ft_strlcpy(&ret[*start], get_value_env_str(key, prj->env),
-			ft_strlen(get_value_env_str(key, prj->env)) + 1);
-	*start += j;
-	free_string(key);
-	return (i);
+	if (p.i == 0 && prj->parsing == 0)
+		return (p.i);
+	p.str = ft_strdup(&str[p.j], p.i - (p.j));
+	ft_printf(2, "%s\n", p.str);
+	p.j = ft_strlcpy(&ret[*srt], get_value_env_str(p.str, prj->env), \
+		ft_strlen(get_value_env_str(p.str, prj->env)) + 1);
+	return (*srt += p.j, free_string(p.str), p.i);
 }
 
 static int	calc_d_q(char *str, t_prj *prj, int *start, char *ret)
@@ -91,15 +78,17 @@ static void	helper_q(int *i, char *str, t_prj *prj, t_helper *help)
 {
 	if (str[*i] == '\"')
 	{
+		*i += 1;
 		*i += calc_d_q(&str[*i], prj, &help->j, help->str);
 		if (str[*i])
 			*i += 1;
 	}
 	else if (str[*i] == '\'')
 	{
-		i += calc_s_q(&str[*i], &help->j, help->str);
+		*i += 1;
+		*i += calc_s_q(&str[*i], &help->j, help->str);
 		if (str[*i])
-			i++;
+			*i += 1;
 	}
 }
 
@@ -112,7 +101,7 @@ char	*make_full(char *str, t_prj *prj, int m_size, int i)
 	help.c = ft_strlen(str);
 	while (i < help.c)
 	{
-		if ((str[i] == '\"' || str[i] == '\'') && i++ > -1)
+		if ((str[i] == '\"' || str[i] == '\''))
 			helper_q(&i, str, prj, &help);
 		else if (str[i] == '$' && i++ > -1)
 		{

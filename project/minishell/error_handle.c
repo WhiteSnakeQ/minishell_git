@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 01:07:51 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 12:15:02 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 08:41:09 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int	print_error(char *message)
 {
 	printf("%s", message);
 	clean_prj(GET, NULL);
-	return (0);
+	return (1);
 }

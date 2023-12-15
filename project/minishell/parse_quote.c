@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/14 22:41:45 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 10:13:39 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,13 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 	if (str[i] == '$')
 		return (1);
 	if (str[i] == '?')
-		return (ft_strlen(prj->last_cmd));
+		return (ft_strlen(prj->l_cmd));
 	*stop -= 1;
 	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\''
 			&& str[i] != '\"'))
 	{
 		if ((str[i] >= '0' && str[i] <= '9') && i == 0)
-		{
-			*stop += 1;
-			return (0);
-		}
+			return (*stop += 1, 0);
 		i++;
 	}
 	if (i == 0)
@@ -41,8 +38,7 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 		key[j] = str[j];
 	*stop += i;
 	i = get_value_env_int(key, prj->env);
-	free_string(key);
-	return (i);
+	return (free_string(key), i);
 }
 
 static int	calc_d_q(char *str, t_prj *prj, int *stop)
@@ -62,8 +58,7 @@ static int	calc_d_q(char *str, t_prj *prj, int *stop)
 			size++;
 		}
 	}
-	*stop += i;
-	return (size);
+	return (*stop += i, size);
 }
 
 static int	calc_s_q(char *str, int *stop)
@@ -73,8 +68,7 @@ static int	calc_s_q(char *str, int *stop)
 	i = 0;
 	while (str[i] != '\'')
 		i++;
-	*stop += i;
-	return (i);
+	return (*stop += i, i);
 }
 
 static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)

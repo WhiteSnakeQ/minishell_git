@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 01:47:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 07:29:05 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exit_nr(char **strs)
 {
-	ft_printf(2, "minishell: exit:");
+	ft_printf(2, "minishell: exit: ");
 	ft_printf(2, "%s: ", strs[1]);
 	ft_printf(2, "%s\n", NUMREC);
 	clean_prj(GET, NULL);
