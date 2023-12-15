@@ -6,24 +6,39 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 08:34:20 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 14:27:05 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+static int	skip_n(char **strs, int *nl)
+{
+	int	i;
+
+	i = 1;
+	if (!strs[i])
+		return (1);
+	while (strs[i] && ft_strcmp(strs[i], "-n") == 0)
+	{
+		i++;
+		*nl = 0;
+	}
+	return (i);
+}
 
 void	echo(char **strs, t_prj *prj, int fd)
 {
 	int	nl;
 	int	i;
 
-	(void)prj;
 	nl = 1;
-	i = 1;
-	if (strs[1] && ft_strcmp(strs[1], "-n") == 0)
+	i = 0;
+	i = skip_n(strs, &nl);
+	if (!strs)
 	{
-		nl = 0;
-		i++;
+		prj->exit = 0;
+		return ;
 	}
 	while (strs[i])
 	{

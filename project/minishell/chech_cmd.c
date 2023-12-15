@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 07:39:09 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 07:39:20 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 14:01:12 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,22 @@ static int	check_all(char *str)
 void	check_for_ex(t_prj *prj)
 {
 	t_cmd	*cmd;
-	int		i;
+	void	*dir;
 
-	i = 0;
 	cmd = prj->cmd;
 	while (cmd)
 	{
 		if (check_all(cmd->cmd_name) == 1)
-			i++;
+			prj->exit = prj->exit;
 		else
 		{
 			cmd->cmd_name = took_puth(prj, cmd);
-			if (access(cmd->cmd_name, X_OK) != 0)
+			dir = opendir(cmd->cmd_name);
+			if (access(cmd->cmd_name, X_OK) != 0 || dir)
 			{
+				if (dir)
+					closedir(dir);
+				prj->exit = 127;
 				cmd->valid = -1;
 				ft_printf(2, "minishell: %s: command not found\n", \
 					cmd->argv[0]);

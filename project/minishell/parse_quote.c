@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/15 10:13:39 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 13:48:02 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,29 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 	int		j;
 	char	*key;
 
-	j = -1;
-	*stop += 1;
-	if (str[i] == '$')
-		return (1);
-	if (str[i] == '?')
-		return (ft_strlen(prj->l_cmd));
-	*stop -= 1;
-	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\''
+	j = check_dollr(str, i, prj);
+	if (j != 0)
+	{
+		if (str[1] == '?')
+			(*stop)++;
+		return ((*stop)++, j);
+	}
+	i++;
+	j = 0;
+	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\'' \
 			&& str[i] != '\"'))
 	{
 		if ((str[i] >= '0' && str[i] <= '9') && i == 0)
 			return (*stop += 1, 0);
 		i++;
 	}
-	if (i == 0)
+	if (i == 1)
 		return (0);
-	key = create_str(i);
+	key = create_str(i - 1);
 	while (++j < i)
-		key[j] = str[j];
-	*stop += i;
-	i = get_value_env_int(key, prj->env);
-	return (free_string(key), i);
+		key[j - 1] = str[j];
+	return (*stop += i, i = get_value_env_int(key, prj->env), \
+		free_string(key), i);
 }
 
 static int	calc_d_q(char *str, t_prj *prj, int *stop)
@@ -48,9 +49,9 @@ static int	calc_d_q(char *str, t_prj *prj, int *stop)
 
 	i = 0;
 	size = 0;
-	while (str[i] != '\"')
+	while (str[i] && str[i] != '\"')
 	{
-		if (str[i] == '$' && i++ > -1)
+		if (str[i] == '$')
 			size += calc_g_env(&str[i], prj, &i, 0);
 		else
 		{
@@ -92,7 +93,7 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 				i++;
 			argv->ex = 0;
 		}
-		else if (str[i] == '$' && i++ > -1)
+		else if (str[i] == '$')
 			size += calc_g_env(&str[i], prj, &i, 0);
 		else if (i++ > -1)
 			size++;

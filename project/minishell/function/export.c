@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 07:29:05 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 11:48:53 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,34 @@ static void	add_some_th(char *strs, t_prj *prj)
 	}
 }
 
+static int	size_env(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
 static void	print_exp(t_env *env, int fd)
 {
 	t_env	*curr;
+	char	**strs;
+	int		i;
+	int		size;
 
+	i = 0;
 	curr = env;
-	while (curr)
-	{
-		ft_printf(fd, "declare -x ");
-		ft_printf(fd, curr->key);
-		if (curr->value)
-			ft_printf(fd, "=\"%s\"", curr->value);
-		curr = curr->next;
-		ft_printf(fd, "\n");
-	}
+	size = size_env(env);
+	strs = export_all(curr, size);
+	ft_sort_params(strs, size);
+	while (strs[i])
+		ft_printf(fd, "declare -x %s\n", strs[i++]);
+	free_strings(strs);
 }
 
 void	export(char **strs, t_prj *prj, int fd)

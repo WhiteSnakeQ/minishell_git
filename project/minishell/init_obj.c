@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 08:44:27 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 14:12:40 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	make_list_env(char **env, t_prj *prj)
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 		env_add_last(prj, env[i++]);
 }
 
@@ -26,13 +26,14 @@ void	took_env(t_prj *prj, char **env)
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp("PATH", env[i], 4) == 0)
 			break ;
 		i++;
 	}
-	prj->paths = ft_split(&env[i][5], ':');
+	if (env[i])
+		prj->paths = ft_split(&env[i][5], ':');
 	make_list_env(env, prj);
 }
 
@@ -59,6 +60,10 @@ void	init_prj(t_prj *prj, char **env)
 	if (!prj->pipeold)
 		exit(print_error(MALCERR));
 	pipe(prj->pipeold);
+	if (get_value_env_str("SHLVL", prj->env))
+		env_change_key(prj, "SHLVL", \
+			ft_itoa(ft_atoi(get_value_env_str("SHLVL", \
+				prj->env)) + 1, NULL));
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->exit = 0;

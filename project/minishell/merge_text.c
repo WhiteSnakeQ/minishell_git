@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:28:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/15 10:23:05 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 14:05:52 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ static int	calc_g_env(char *str, t_prj *prj, int *srt, char *ret)
 	t_helper	p;
 
 	p.i = 0;
-	p.j = 0;
-	*srt += 1;
-	if (str[p.i] == '$')
-		return (ret[*srt] = str[p.i], *srt += 1, 1);
-	if (str[p.i] == '?')
-		return (p.i = ft_strlcpy(&ret[*srt], prj->l_cmd, \
-			ft_strlen(prj->l_cmd)), *srt += 1, p.i);
-	*srt -= 1;
+	p.str = str;
+	p.j = copy_to(&p, prj, srt, ret);
+	if (p.j != 0)
+		return (p.j);
+	p.j = 1;
+	p.i++;
 	while (str[p.i] && (str[p.i] != ' ' && str[p.i] != '$' && str[p.i] != '\''
 			&& str[p.i] != '\"'))
 	{
@@ -32,10 +30,9 @@ static int	calc_g_env(char *str, t_prj *prj, int *srt, char *ret)
 			return (1);
 		p.i++;
 	}
-	if (p.i == 0 && prj->parsing == 0)
+	if (p.i == 1 && prj->parsing == 0)
 		return (p.i);
 	p.str = ft_strdup(&str[p.j], p.i - (p.j));
-	ft_printf(2, "%s\n", p.str);
 	p.j = ft_strlcpy(&ret[*srt], get_value_env_str(p.str, prj->env), \
 		ft_strlen(get_value_env_str(p.str, prj->env)) + 1);
 	return (*srt += p.j, free_string(p.str), p.i);
@@ -50,7 +47,7 @@ static int	calc_d_q(char *str, t_prj *prj, int *start, char *ret)
 	size = 0;
 	while (str[i] != '\"')
 	{
-		if (str[i] == '$' && i++ > -1)
+		if (str[i] == '$')
 		{
 			prj->parsing = 1;
 			i += calc_g_env(&str[i], prj, start, &ret[size]);
@@ -80,7 +77,7 @@ static void	helper_q(int *i, char *str, t_prj *prj, t_helper *help)
 	{
 		*i += 1;
 		*i += calc_d_q(&str[*i], prj, &help->j, help->str);
-		if (str[*i])
+		if (str[*i] == '\"')
 			*i += 1;
 	}
 	else if (str[*i] == '\'')
@@ -103,7 +100,7 @@ char	*make_full(char *str, t_prj *prj, int m_size, int i)
 	{
 		if ((str[i] == '\"' || str[i] == '\''))
 			helper_q(&i, str, prj, &help);
-		else if (str[i] == '$' && i++ > -1)
+		else if (str[i] == '$')
 		{
 			help.str[help.j] = '\0';
 			prj->parsing = 0;

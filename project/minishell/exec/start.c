@@ -65,8 +65,8 @@ static void	helper_exv(t_cmd **cmd)
 
 static void	end_ex(t_prj *prj, int j, int i)
 {
-	waitpid(j, &prj->exit, 0);
 	waitpid(i, &prj->exit, 0);
+	waitpid(j, &prj->exit, 0);
 	prj->l_cmd = ft_itoa(prj->exit % 255, prj->l_cmd);
 }
 

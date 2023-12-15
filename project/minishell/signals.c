@@ -6,12 +6,11 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:23:29 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 13:11:27 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-#include <signal.h>
 
 static int	check_pid(int mod, t_prj **prj)
 {

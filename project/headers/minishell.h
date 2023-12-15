@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 08:51:50 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 13:33:48 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define MALCERR "minishell: Malloc fail to create object\n"
 # define CDOLD "minishell: cd: OLDPWD not set\n"
+# define CDHOME "minishell: cd: HOME not set\n"
 # define ERRARG "minishell: Invalid number of arguments\n"
 # define PIPERR "minishell: Pipe failed\n"
 # define PEDERR "minishell: Fork failed\n"
@@ -169,6 +170,9 @@ void				*ft_memset(void *b, int c, size_t len);
 void				print_strings(char **strs, int modprnt, int mod);
 void				free_string(char *str);
 void				free_strings(char **strs);
+void				ft_sort_params(char **tab, int size);
+int					copy_to(t_helper *p, t_prj *prj, int *srt, char *ret);
+int					check_dollr(char *str, int i, t_prj *prj);
 int					ft_strlcpy(char *dest, const char *src, size_t size);
 int					symbl_in_str(char *str, char symb);
 int					ft_strcmp(const char *s1, const char *s2);
@@ -190,6 +194,7 @@ int					my_execve(t_prj *prj, t_cmd *cmd);
 
 //					Work_with_env
 char				**make_env_str(t_env *env);
+char				**export_all(t_env *env, int size);
 char				*get_value_env_str(char *key, t_env *env);
 void				env_add_last(t_prj *prj, char *str);
 void				env_remove_key(t_prj *prj, char *key);

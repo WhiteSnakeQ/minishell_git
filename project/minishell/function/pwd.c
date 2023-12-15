@@ -14,9 +14,19 @@
 
 void	pwd(char **strs, t_prj *prj, int fd)
 {
+	char	*path;
+
 	if (!strs)
 		return ;
-	ft_printf(fd, "%s\n", get_value_env_str("PWD", prj->env));
+	path = getcwd(NULL, 1024);
+	if (!path)
+	{
+		perror("minishell: pwd:");
+		prj->exit = 1;
+		return ;
+	}
+	ft_printf(fd, "%s\n", path);
+	free_string(path);
 	prj->exit = 0;
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 07:49:37 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/14 07:49:59 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 11:52:12 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,60 @@ char	*get_value_env_str(char *key, t_env *env)
 		curr = curr->next;
 	}
 	return (NULL);
+}
+
+char	**export_all(t_env *env, int size)
+{
+	char	**strs;
+	char	*clean;
+	int		i;
+
+	i = 0;
+	strs = malloc(sizeof(char *) * (size + 1));
+	strs[size] = NULL;
+	while (env)
+	{
+		strs[i] = ft_strdup(env->key, 0);
+		clean = strs[i];
+		if (env->value)
+		{
+			strs[i] = ft_strjoin(strs[i], "=\"");
+			free_string(clean);
+			clean = ft_strjoin(strs[i], env->value);
+			free_string(strs[i]);
+			strs[i] = ft_strjoin(clean, "\"");
+			free_string(clean);
+		}
+		i++;
+		env = env->next;
+	}
+	return (strs);
+}
+
+static void	swap(char **digit_one, char **digit_two)
+{
+	char	*intermidiate;
+
+	intermidiate = *digit_one;
+	*digit_one = *digit_two;
+	*digit_two = intermidiate;
+}
+
+void	ft_sort_params(char **tab, int size)
+{
+	int		i_o_a;
+	int		main_iteration;
+
+	main_iteration = size - 1;
+	while (main_iteration >= 1)
+	{
+		i_o_a = main_iteration - 1;
+		while (i_o_a > 0)
+		{
+			if (ft_strcmp(*(tab + main_iteration), *(tab + i_o_a)) < 0)
+				swap((tab + main_iteration), (tab + i_o_a));
+			i_o_a--;
+		}
+		main_iteration--;
+	}
 }
