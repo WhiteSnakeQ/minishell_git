@@ -14,23 +14,23 @@
 
 # define GET_NEXT_LINE_H
 
+# include <fcntl.h>
 # include <stdint.h>
 # include <stdio.h>
-# include <unistd.h>
-# include <string.h>
 # include <stdlib.h>
-# include <fcntl.h>
+# include <string.h>
+# include <unistd.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
 
-char		*strjoins(char *s1, char *s2, int size1, int size2);
-char		*clean_str(char *str, int i);
-char		*read_file(char *full_str, int file);
-char		*read_str(char	*str);
+char	*strjoins(char *s1, char *s2, int size1, int size2);
+char	*clean_str(char *str, int i);
+char	*read_file(char *full_str, int file);
+char	*read_str(char *str);
 
-int			strlens(char *str);
-int			check_new_line(char *str);
+int		strlens(char *str);
+int		check_new_line(char *str);
 
 #endif

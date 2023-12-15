@@ -19,10 +19,8 @@ static int	check_token(char *str)
 	i = 0;
 	if (ft_strcmp(str, "|") == 0)
 		i = 1;
-	if (ft_strcmp(str, ">>") == 0 \
-				|| ft_strcmp(str, "<<") == 0 \
-				|| ft_strcmp(str, "<") == 0 \
-				|| ft_strcmp(str, ">") == 0)
+	if (ft_strcmp(str, ">>") == 0 || ft_strcmp(str, "<<") == 0 || ft_strcmp(str,
+			"<") == 0 || ft_strcmp(str, ">") == 0)
 	{
 		if (i == 0)
 		{
@@ -62,9 +60,8 @@ int	check_sp_smb_arv(t_argv *argv)
 	{
 		if (argv->next)
 		{
-			if (ft_strcmp(argv->text, ">>") == 0 \
-				|| ft_strcmp(argv->text, "<<") == 0 \
-				|| ft_strcmp(argv->text, "<") == 0 \
+			if (ft_strcmp(argv->text, ">>") == 0 || ft_strcmp(argv->text,
+					"<<") == 0 || ft_strcmp(argv->text, "<") == 0
 				|| ft_strcmp(argv->text, ">") == 0)
 			{
 				if (check_token(argv->next->text) == -1)
@@ -78,7 +75,8 @@ int	check_sp_smb_arv(t_argv *argv)
 					return (-1);
 				}
 			}
-			else if (ft_strcmp(argv->text, "&&") == 0 || ft_strcmp(argv->text, "||") == 0)
+			else if (ft_strcmp(argv->text, "&&") == 0 || ft_strcmp(argv->text,
+					"||") == 0)
 			{
 				if (check_token2(argv->next->text) == -1)
 				{
@@ -89,9 +87,8 @@ int	check_sp_smb_arv(t_argv *argv)
 		}
 		if (!argv->next)
 		{
-			if (ft_strcmp(argv->text, ">>") == 0 \
-				|| ft_strcmp(argv->text, "<<") == 0 \
-				|| ft_strcmp(argv->text, "<") == 0 \
+			if (ft_strcmp(argv->text, ">>") == 0 || ft_strcmp(argv->text,
+					"<<") == 0 || ft_strcmp(argv->text, "<") == 0
 				|| ft_strcmp(argv->text, ">") == 0)
 			{
 				ft_printf(2, UNEXPTOKN);
@@ -102,7 +99,8 @@ int	check_sp_smb_arv(t_argv *argv)
 				ft_printf(2, UNEXPTOK);
 				return (-1);
 			}
-			else if (ft_strcmp(argv->text, "&&") == 0 || ft_strcmp(argv->text, "||") == 0)
+			else if (ft_strcmp(argv->text, "&&") == 0 || ft_strcmp(argv->text,
+					"||") == 0)
 			{
 				ft_printf(2, "%s`%s'\n", UNEXPTOKS, argv->text);
 				return (-1);

@@ -12,7 +12,7 @@
 
 #include "../headers/minishell.h"
 
-static int check_sp(char *str)
+static int	check_sp(char *str)
 {
 	if (str[0] == '|' && str[1] && str[0] == str[1])
 		return (2);
@@ -41,7 +41,8 @@ static char	*create_one_arg(char *str, int *skip)
 	finish = '\0';
 	while (str[i])
 	{
-		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&' && str[i + 1] == '&')) && i == 0)
+		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&'
+					&& str[i + 1] == '&')) && i == 0)
 		{
 			i += check_sp(str);
 			break ;
@@ -54,7 +55,8 @@ static char	*create_one_arg(char *str, int *skip)
 			finish = '\"';
 		if (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && finish == '\0')
 			break ;
-		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&' && str[i + 1] == '&')) && finish == '\0')
+		if ((str[i] == '<' || str[i] == '>' || str[i] == '|' || (str[i] == '&'
+					&& str[i + 1] == '&')) && finish == '\0')
 			break ;
 		if (str[i])
 			i++;
@@ -95,7 +97,7 @@ void	parse_argv(t_prj *prj)
 	i = 0;
 	if (!prj->argv)
 		return ;
-	while ((prj->argv[i] >= 9 &&prj->argv[i] <= 13) || prj->argv[i] == ' ')
+	while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 		i++;
 	while (prj->argv[i])
 	{

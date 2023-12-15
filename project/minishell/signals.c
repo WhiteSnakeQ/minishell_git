@@ -75,7 +75,7 @@ static void	set_signals_action(void)
 		perror("minishell: signal operations");
 		clean_prj(GET, NULL);
 		exit(0);
-	}	
+	}
 }
 
 void	set_signals(t_prj *prj, int mod)

@@ -12,9 +12,9 @@
 
 #include "../../headers/minishell.h"
 
-void    print_strings(char **strs, int modprnt, int term)
+void	print_strings(char **strs, int modprnt, int term)
 {
-    int		i;
+	int	i;
 
 	i = 0;
 	while (strs[i])
@@ -34,7 +34,7 @@ static int	cmp_one(char *str, char symb)
 	while (str[size_s])
 	{
 		if (str[size_s] == symb)
-			return (-1) ;
+			return (-1);
 		size_s++;
 	}
 	return (1);
@@ -61,7 +61,7 @@ char	*del_symbl(char *str, char *symbl)
 {
 	int		size;
 	int		i;
-	char*	new_str;
+	char	*new_str;
 
 	if (!str)
 		return (NULL);
@@ -80,9 +80,9 @@ char	*del_symbl(char *str, char *symbl)
 
 char	*cover_char(char *str, char symb)
 {
-	char	*new_str;
-	int		i;
-	int		size;
+	char *new_str;
+	int i;
+	int size;
 
 	i = 0;
 	size = ft_strlen(str);

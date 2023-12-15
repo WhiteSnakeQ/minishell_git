@@ -33,12 +33,13 @@ static void	add_text(t_text **text, t_argv *argv)
 {
 	t_text	*new;
 	t_text	*curr;
+
 	new = malloc(sizeof(t_text));
 	if (!new)
 		exit(print_error(MALCERR));
 	new->text = ft_strdup(argv->text, 0);
 	new->next = NULL;
-	if(!*text)
+	if (!*text)
 		*text = new;
 	else
 	{
@@ -49,30 +50,30 @@ static void	add_text(t_text **text, t_argv *argv)
 	}
 }
 
-static char **merge_text(t_text *text)
+static char	**merge_text(t_text *text)
 {
-    char    **strs;
-    t_text  *curr;
-    int     i;
+	char	**strs;
+	t_text	*curr;
+	int		i;
 
-    curr = text;
-    i = 0;
-    while (curr)
-    {
-        i++;
-        curr = curr->next;
-    }
-    strs = malloc(sizeof(char *) * (i + 1));
-    if (!strs)
-        exit(print_error(MALCERR));
-    i = 0;
-    while (text)
-    {
-        strs[i++] = ft_strdup(text->text, 0);
-        text = text->next;
-    }
-    strs[i] = NULL;
-    return (strs);
+	curr = text;
+	i = 0;
+	while (curr)
+	{
+		i++;
+		curr = curr->next;
+	}
+	strs = malloc(sizeof(char *) * (i + 1));
+	if (!strs)
+		exit(print_error(MALCERR));
+	i = 0;
+	while (text)
+	{
+		strs[i++] = ft_strdup(text->text, 0);
+		text = text->next;
+	}
+	strs[i] = NULL;
+	return (strs);
 }
 
 static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
@@ -89,14 +90,14 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 		if (!argv)
 			break ;
 		if (ft_strcmp(argv->text, "||") == 0 && argv->ex == 1)
-            break ;
+			break ;
 		if (ft_strcmp(argv->text, "&&") == 0 && argv->ex == 1)
-            break ;
+			break ;
 		if (ft_strcmp(argv->text, "|") == 0 && argv->ex == 1)
 		{
-            argv = argv->next;
-            break ;
-        }
+			argv = argv->next;
+			break ;
+		}
 		add_text(&text, argv);
 		argv = argv->next;
 	}
@@ -112,10 +113,10 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 	return (argv);
 }
 
-void	make_cmd(t_prj	*prj)
+void	make_cmd(t_prj *prj)
 {
-	t_argv	*argv;
-	int		mod;
+	t_argv *argv;
+	int mod;
 
 	mod = 1;
 	argv = prj->list_argv;
@@ -136,7 +137,7 @@ void	make_cmd(t_prj	*prj)
 		if (!argv)
 			break ;
 		if (ft_strcmp(argv->text, "&&") == 0 && argv->ex == 1)
-        {
+		{
 			mod = 2;
 			argv = argv->next;
 		}

@@ -1,0 +1,12 @@
+Makefile
+l
+lol
+loll
+minishell
+project
+Makefile
+l
+lol
+loll
+minishell
+project

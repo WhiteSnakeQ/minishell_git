@@ -67,7 +67,7 @@ char	*ft_strchr(const char *src, int symbol)
 
 int	ft_strlen(const char *str)
 {
-	int		size;
+	int	size;
 
 	size = 0;
 	if (!str)
@@ -79,9 +79,9 @@ int	ft_strlen(const char *str)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*src;
-	size_t			size;
-	size_t			i;
+	char	*src;
+	size_t	size;
+	size_t	i;
 
 	i = 0;
 	size = 0;

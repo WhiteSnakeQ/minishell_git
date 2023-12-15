@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:21:37 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 00:29:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 # define MINISHELL_H
 
-# include <stdarg.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <limits.h>
-# include <fcntl.h>
-# include <dirent.h>
-# include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "project_f.h"
 # include "get_next_line.h"
+# include "project_f.h"
+# include <dirent.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 # define MALCERR "minishell: Malloc fail to create object\n"
 # define ERRARG "minishell: Invalid number of arguments\n"
@@ -62,6 +60,15 @@
 # define SINGLE 0
 # define DOUBLE 1
 
+typedef struct s_helper
+{
+	int		i;
+	int		j;
+	int		c;
+	char	*str;
+}				t_helper;
+
+
 typedef struct s_env
 {
 	char			*key;
@@ -82,7 +89,7 @@ typedef struct s_argv
 	struct s_argv	*next;
 }					t_argv;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char			*cmd_name;
 	char			**argv;
@@ -116,75 +123,76 @@ typedef struct s_prj
 }					t_prj;
 
 //					Modules
-int			ft_printf(int descript, const char *str, ...);
-int			print_error(char *message);
-int			check_error(t_prj *prj);
-int    		check_sp_smb_arv(t_argv *argv);
-char   	 	*make_full(char *str, t_prj *prj, int m_size);
-char		*get_next_line(int fd);
-void		make_cmd(t_prj	*prj);
-void		set_signals(t_prj *prj, int mod);
-void		parse_argv(t_prj *prj);
-void   		parse_quotet(t_prj *prj);
-void  	  	change_fd_write(t_cmd *cmd, int mod, char *str);
-void   		change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
-void    	add_last_cmd(t_cmd **cmd, t_cmd *new);
-void    	close_if_op(t_cmd *cmd, int mod);
-void  	  	execute_cmd(t_prj *prj);
+int					ft_printf(int descript, const char *str, ...);
+int					print_error(char *message);
+int					check_error(t_prj *prj);
+int					check_sp_smb_arv(t_argv *argv);
+char				*make_full(char *str, t_prj *prj, int m_size, int i);
+char				*get_next_line(int fd);
+void				make_cmd(t_prj *prj);
+void				set_signals(t_prj *prj, int mod);
+void				parse_argv(t_prj *prj);
+void				parse_quotet(t_prj *prj);
+void				change_fd_write(t_cmd *cmd, int mod, char *str);
+void				change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
+void				add_last_cmd(t_cmd **cmd, t_cmd *new);
+void				close_if_op(t_cmd *cmd, int mod);
+void				execute_cmd(t_prj *prj, t_cmd *cmd);
 
 //					String_work
-char		**ft_split(char const *s, char c);
-char		*ft_strjoin(const char *s1, const char *s2);
-char		*ft_strdup(char *src, int size);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strchr(const char *src, int symbol);
-char		*new_str_after(char *env, char symbl);
-char		*new_str_till(char *env, char symbl);
-char    	*create_one_env(t_env *env);
-char		*del_symbl(char *str, char *symbl);
-char		*create_str(int size);
-char		*cover_char(char *str, char symb);
-char		*ft_itoa(int n, char *clean);
-char    	*add_to_end(char *str, char symb);
-void		*ft_memset(void *b, int c, size_t len);
-void		print_strings(char **strs, int modprnt, int mod);
-void		free_string(char *str);
-void		free_strings(char **strs);
-int			ft_strlcpy(char *dest, const char *src, size_t size);
-int 		symbl_in_str(char *str, char symb);
-int			ft_strcmp(const char *s1, const char *s2);
-int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
-int			ft_strlen(const char *str);
-int			calc_size_strs(char **strs);
-int			ft_isdigit(char *str);
-int			ft_atoi(const char *str);
+char				**ft_split(char const *s, char c);
+char				*ft_strjoin(const char *s1, const char *s2);
+char				*ft_strdup(char *src, int size);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_strchr(const char *src, int symbol);
+char				*new_str_after(char *env, char symbl);
+char				*new_str_till(char *env, char symbl);
+char				*create_one_env(t_env *env);
+char				*del_symbl(char *str, char *symbl);
+char				*create_str(int size);
+char				*cover_char(char *str, char symb);
+char				*ft_itoa(int n, char *clean);
+char				*add_to_end(char *str, char symb);
+void				*ft_memset(void *b, int c, size_t len);
+void				print_strings(char **strs, int modprnt, int mod);
+void				free_string(char *str);
+void				free_strings(char **strs);
+int					ft_strlcpy(char *dest, const char *src, size_t size);
+int					symbl_in_str(char *str, char symb);
+int					ft_strcmp(const char *s1, const char *s2);
+int					ft_strncmp(const char *s1, const char *s2, unsigned int n);
+int					ft_strlen(const char *str);
+int					calc_size_strs(char **strs);
+int					ft_isdigit(char *str);
+int					ft_atoi(const char *str);
 
 //					Function
-void    	pwd(char **strs, t_prj *prj, int fd);
-void    	cd(char **strs, t_prj *prj);
-void    	echo(char **strs, t_prj *prj, int fd);
-void   		exit_m(char **strs, t_prj *prj);
-void    	export(char **strs, t_prj *prj, int fd);
-void    	env(char **strs, t_prj *prj, int fd);
-void		unset(char **strs, t_prj *prj);
-int   	 	my_execve(t_prj *prj, t_cmd *cmd);
+void				pwd(char **strs, t_prj *prj, int fd);
+void				cd(char **strs, t_prj *prj, int fd);
+void				echo(char **strs, t_prj *prj, int fd);
+void				exit_m(char **strs, t_prj *prj);
+void				export(char **strs, t_prj *prj, int fd);
+void				env(char **strs, t_prj *prj, int fd);
+void				unset(char **strs, t_prj *prj);
+int					my_execve(t_prj *prj, t_cmd *cmd);
 
 //					Work_with_env
-char		**make_env_str(t_env *env);
-char   	 	*get_value_env_str(char *key, t_env *env);
-void		env_add_last(t_prj *prj, char *str);
-void		env_remove_key(t_prj *prj, char *key);
-int   		get_value_env_int(char *key, t_env *env);
+char				**make_env_str(t_env *env);
+char				*get_value_env_str(char *key, t_env *env);
+void				env_add_last(t_prj *prj, char *str);
+void				env_remove_key(t_prj *prj, char *key);
+void				env_change_key(t_prj *prj, char *key, char *new_val);
+int					get_value_env_int(char *key, t_env *env);
 
 //					Init_del_obj
-t_argv		*init_argv(char *str);
-t_cmd		*init_cmd();
-void		clean_dirty(t_prj *prj);
-void		init_prj(t_prj *prj, char **env);
-void		clean_prj(int mod, t_prj **prj);
-void		free_text(t_text *text);
-void		free_argv(t_argv *text);
-void		free_env(t_env *env);
-void		free_cmd(t_cmd *cmd);
+t_argv				*init_argv(char *str);
+t_cmd				*init_cmd(void);
+void				clean_dirty(t_prj *prj);
+void				init_prj(t_prj *prj, char **env);
+void				clean_prj(int mod, t_prj **prj);
+void				free_text(t_text *text);
+void				free_argv(t_argv *text);
+void				free_env(t_env *env);
+void				free_cmd(t_cmd *cmd);
 
 #endif

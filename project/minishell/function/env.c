@@ -12,11 +12,11 @@
 
 #include "../../headers/minishell.h"
 
-void    env(char **strs, t_prj *prj, int fd)
+void	env(char **strs, t_prj *prj, int fd)
 {
-    if (!strs)
-        exit(0);
-    print_strings(prj->env_str, NL, fd);
-    prj->exit = 0;
-    return ;
+	if (!strs)
+		exit(0);
+	print_strings(prj->env_str, NL, fd);
+	prj->exit = 0;
+	return ;
 }

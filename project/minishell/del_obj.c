@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 12:46:56 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/14 22:50:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void	clean_prj(int mod, t_prj **prj)
 	free_cmd(to_clean->cmd);
 	free_argv(to_clean->list_argv);
 	free_env(to_clean->env);
+	if (to_clean->pipeold)
+		free(to_clean->pipeold);
 	free(to_clean);
 }

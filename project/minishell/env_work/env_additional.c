@@ -28,7 +28,7 @@ int	get_value_env_int(char *key, t_env *env)
 
 char	*get_value_env_str(char *key, t_env *env)
 {
-	t_env   *curr;
+	t_env	*curr;
 
 	curr = env;
 	while (curr)

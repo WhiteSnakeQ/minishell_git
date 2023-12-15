@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_module.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 12:46:24 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 00:05:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_cmd(t_cmd *cmd)
 		free_strings(cmd->argv);
 		close(cmd->pipe[1]);
 		close(cmd->pipe[0]);
+		if (cmd->file_fd_out != 0 && cmd->file_fd_out != 1)
+			close(cmd->file_fd_out);
 		free(cmd->pipe);
 		next = cmd->next;
 		free(cmd);
@@ -72,4 +74,3 @@ void	free_argv(t_argv *text)
 	}
 	text = NULL;
 }
-

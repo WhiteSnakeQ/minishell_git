@@ -12,17 +12,17 @@
 
 #include "../../headers/minishell.h"
 
-void    add_last_cmd(t_cmd **cmd, t_cmd *new)
+void	add_last_cmd(t_cmd **cmd, t_cmd *new)
 {
-    t_cmd   *curr;
+	t_cmd	*curr;
 
-    curr = *cmd;
-    if (!*cmd)
-    {
-        *cmd = new;
-        return ;
-    }
-    while (curr->next)
-        curr = curr->next;
-    curr->next = new;
+	curr = *cmd;
+	if (!*cmd)
+	{
+		*cmd = new;
+		return ;
+	}
+	while (curr->next)
+		curr = curr->next;
+	curr->next = new;
 }

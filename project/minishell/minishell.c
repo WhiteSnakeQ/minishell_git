@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:10:12 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/14 23:26:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envs)
 		parse_quotet(prj);
 		make_cmd(prj);
 		set_signals(prj, GET);
-		execute_cmd(prj);
+		execute_cmd(prj, prj->cmd);
 		clean_dirty(prj);
 	}
 	return (0);

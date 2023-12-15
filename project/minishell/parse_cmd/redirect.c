@@ -5,13 +5,13 @@ void	close_if_op(t_cmd *cmd, int mod)
 {
 	if (mod == 0)
 	{
-		if (cmd->file_inp != 0)
-		close (cmd->file_inp);
+		if (cmd->file_inp != 0 && cmd->file_inp != 1)
+			close(cmd->file_inp);
 	}
 	else
 	{
-		if (cmd->file_fd_out != 1)
-		close (cmd->file_fd_out);
+		if (cmd->file_fd_out != 1 && cmd->file_fd_out != 0)
+			close(cmd->file_fd_out);
 	}
 }
 
@@ -32,7 +32,8 @@ void	change_fd_write(t_cmd *cmd, int mod, char *str)
 	}
 	else
 	{
-		cmd->file_fd_out = open(str, O_APPEND | O_CREAT, 777);
+		ft_printf(2, "%d\n", cmd->file_fd_out);
+		cmd->file_fd_out = open(str, O_APPEND | O_WRONLY | O_CREAT, 777);
 		if (cmd->file_fd_out < 0)
 		{
 			ft_printf(2, "minishell: ");
@@ -43,24 +44,23 @@ void	change_fd_write(t_cmd *cmd, int mod, char *str)
 	}
 }
 
-static void read_term(t_prj *prj, t_cmd *cmd, char *stop)
+static void	read_term(t_prj *prj, t_cmd *cmd, char *stop)
 {
-	char *fr_term;
+	char	*fr_term;
 
-	(void)prj;
-	close(cmd->pipe[0]);
-	close(cmd->pipe[1]);
-	pipe(cmd->pipe);
+	close(prj->pipeold[0]);
+	close(prj->pipeold[1]);
+	pipe(prj->pipeold);
 	fr_term = get_next_line(0);
 	while (fr_term && ft_strncmp(stop, fr_term, ft_strlen(fr_term) - 1) != 0)
 	{
-		ft_printf(cmd->pipe[1], fr_term);
+		ft_printf(prj->pipeold[1], fr_term);
 		free_string(fr_term);
 		fr_term = get_next_line(0);
 	}
 	free_string(fr_term);
-	close(cmd->pipe[1]);
-	cmd->file_inp = cmd->pipe[0];
+	close(prj->pipeold[1]);
+	cmd->file_inp = prj->pipeold[0];
 	if (cmd->redirect_inp != 1)
 		cmd->redirect_inp = 2;
 }

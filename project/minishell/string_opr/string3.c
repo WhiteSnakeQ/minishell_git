@@ -26,7 +26,7 @@ void	*ft_memset(void *b, int c, size_t len)
 
 char	*new_str_till(char *env, char symbl)
 {
-	int 	i;
+	int		i;
 	int		j;
 	char	*str;
 
@@ -48,7 +48,7 @@ char	*new_str_till(char *env, char symbl)
 
 char	*new_str_after(char *env, char symbl)
 {
-	int 	i;
+	int		i;
 	int		j;
 	int		start;
 	char	*str;
@@ -72,21 +72,21 @@ char	*new_str_after(char *env, char symbl)
 	return (str);
 }
 
-char    *create_one_env(t_env *env)
+char	*create_one_env(t_env *env)
 {
-    char    *str;
-    int     size;
-    int     i;
+	char	*str;
+	int		size;
+	int		i;
 	int		j;
 
-    i = 0;
+	i = 0;
 	j = 0;
 	size = 0;
 	if (env->value)
 		size = 1;
-    size += ft_strlen(env->key);
+	size += ft_strlen(env->key);
 	size += ft_strlen(env->value);
-    str = create_str(size);
+	str = create_str(size);
 	while (env->key[j])
 		str[i++] = env->key[j++];
 	if (!env->value)

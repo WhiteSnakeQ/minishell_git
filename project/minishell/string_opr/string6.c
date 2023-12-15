@@ -12,36 +12,35 @@
 
 #include "../../headers/minishell.h"
 
-int symbl_in_str(char *str, char symb)
+int	symbl_in_str(char *str, char symb)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == symb)
-            return (1);
-        i++;
-    }
-    return (0);    
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == symb)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-char    *add_to_end(char *str, char symb)
+char	*add_to_end(char *str, char symb)
 {
-    int     i;
-    int     j;
-    char    *ret;
+	int		i;
+	int		j;
+	char	*ret;
 
-    j = -1;
-    i = ft_strlen(str);
-    ret = create_str(i + 1);
-    ret[i] = symb;
-    while (str[++j])
-        ret[j] = str[j];
-    free_string(str);
-    return (ret);    
+	j = -1;
+	i = ft_strlen(str);
+	ret = create_str(i + 1);
+	ret[i] = symb;
+	while (str[++j])
+		ret[j] = str[j];
+	free_string(str);
+	return (ret);
 }
-
 
 int	ft_strlcpy(char *dest, const char *src, size_t size)
 {
@@ -83,7 +82,7 @@ char	*ft_itoa(int n, char *clean)
 	int			minus;
 	long int	num;
 
-    free_string(clean);
+	free_string(clean);
 	minus = 0;
 	num = n;
 	if (n < 0 && minus++ == 0)

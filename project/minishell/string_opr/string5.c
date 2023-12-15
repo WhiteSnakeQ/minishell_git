@@ -12,9 +12,9 @@
 
 #include "../../headers/minishell.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (*(s1 + i) && *(s1 + i) == *(s2 + i))
@@ -26,7 +26,7 @@ int	calc_size_strs(char **strs)
 {
 	int	i;
 
-	i= 0;
+	i = 0;
 	while (strs[i])
 		i++;
 	return (0);
@@ -46,7 +46,7 @@ int	ft_isdigit(char *str)
 
 static int	check_string(long *number_print, const char *symbol, int *minus)
 {
-	int		stop_cheking;
+	int	stop_cheking;
 
 	stop_cheking = 0;
 	if ((symbol[0] == '+' || symbol[0] == '-') && *number_print == 0)
@@ -75,8 +75,8 @@ static int	check_string(long *number_print, const char *symbol, int *minus)
 
 int	ft_atoi(const char *str)
 {
-	long		number_to_print;
-	int			minus;
+	long	number_to_print;
+	int		minus;
 
 	minus = 1;
 	number_to_print = 0;

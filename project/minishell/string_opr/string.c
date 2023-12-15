@@ -111,7 +111,7 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 
 char	*create_str(int size)
 {
-	char *str;
+	char	*str;
 
 	str = malloc(sizeof(char) * (size + 1));
 	if (!str)
