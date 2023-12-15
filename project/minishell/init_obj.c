@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 00:36:49 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 01:12:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	null_struct(t_prj *prj)
 	prj->paths = NULL;
 	prj->name = NULL;
 	prj->argv = NULL;
-	prj->our_path = NULL;
 	prj->cmd = NULL;
 	prj->pipeold = NULL;
 }
@@ -63,9 +62,7 @@ void	init_prj(t_prj *prj, char **env)
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->exit = 0;
-	prj->our_path = getcwd(NULL, 1024);
 	prj->name = ft_strdup(NAME, 0);
-	env_change_key(prj, "OLDPWD", "/");
 }
 
 t_cmd	*init_cmd(void)

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/14 22:50:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 01:12:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	clean_prj(int mod, t_prj **prj)
 	}
 	if (!to_clean)
 		return ;
-	free_string(to_clean->our_path);
 	free_string(to_clean->name);
 	free_string(to_clean->argv);
 	free_string(to_clean->last_cmd);

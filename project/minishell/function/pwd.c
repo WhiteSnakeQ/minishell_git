@@ -16,7 +16,7 @@ void	pwd(char **strs, t_prj *prj, int fd)
 {
 	if (!strs)
 		return ;
-	ft_printf(fd, "%s\n", prj->our_path);
+	ft_printf(fd, "%s\n", get_value_env_str("PWD", prj->env));
 	prj->exit = 0;
 	return ;
 }

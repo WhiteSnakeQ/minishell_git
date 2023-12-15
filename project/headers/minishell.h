@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 00:29:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 01:23:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <unistd.h>
 
 # define MALCERR "minishell: Malloc fail to create object\n"
+# define CDOLD "minishell: cd: OLDPWD not set\n"
 # define ERRARG "minishell: Invalid number of arguments\n"
 # define PIPERR "minishell: Pipe failed\n"
 # define PEDERR "minishell: Fork failed\n"
@@ -153,6 +154,7 @@ char				*create_str(int size);
 char				*cover_char(char *str, char symb);
 char				*ft_itoa(int n, char *clean);
 char				*add_to_end(char *str, char symb);
+char				*add_to_start(char *str, char symb);
 void				*ft_memset(void *b, int c, size_t len);
 void				print_strings(char **strs, int modprnt, int mod);
 void				free_string(char *str);
