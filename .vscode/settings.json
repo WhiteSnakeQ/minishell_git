@@ -17,6 +17,8 @@
         "*.tcc": "c",
         "fstream": "c",
         "cstdlib": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "minishell.h": "c",
+        "random": "c"
     }
 }

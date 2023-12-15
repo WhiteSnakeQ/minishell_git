@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 01:07:43 by kreys             #+#    #+#              #
-#    Updated: 2023/12/01 20:12:17 by kreys            ###   ########.fr        #
+#    Updated: 2023/12/15 01:34:52 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ GCC			= cc
 
 CFLAGS		= -Wall -Wextra -Werror
 
-all:		${NAME_F} clean
+all:		${NAME_F}
 
 .c.o:
 			@${GCC} ${CFLAGS} -c $< -o ${<:.c=.o}
