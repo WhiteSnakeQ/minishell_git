@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 01:23:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 01:53:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,20 @@
 # define SINGLE 0
 # define DOUBLE 1
 
+typedef struct s_helper_env
+{
+	struct s_env	*prev;
+	struct s_env	*next;
+	struct s_env	*first;
+}	t_hlp;
+
 typedef struct s_helper
 {
-	int		i;
-	int		j;
-	int		c;
-	char	*str;
-}				t_helper;
-
+	int				i;
+	int				j;
+	int				c;
+	char			*str;
+}					t_helper;
 
 typedef struct s_env
 {
@@ -100,6 +106,7 @@ typedef struct s_cmd
 	int				redirect_inp;
 	int				file_fd_out;
 	int				redirect_out;
+	int				olddesl;
 	int				*pipe;
 	struct s_cmd	*next;
 }					t_cmd;
@@ -127,10 +134,11 @@ typedef struct s_prj
 int					ft_printf(int descript, const char *str, ...);
 int					print_error(char *message);
 int					check_error(t_prj *prj);
+int					check_cmd(t_argv **argv);
 int					check_sp_smb_arv(t_argv *argv);
 char				*make_full(char *str, t_prj *prj, int m_size, int i);
 char				*get_next_line(int fd);
-void				make_cmd(t_prj *prj);
+void				make_cmd(t_prj *prj, int mod);
 void				set_signals(t_prj *prj, int mod);
 void				parse_argv(t_prj *prj);
 void				parse_quotet(t_prj *prj);

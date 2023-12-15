@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   string4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:21:37 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 01:46:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ char	*del_symbl(char *str, char *symbl)
 
 char	*cover_char(char *str, char symb)
 {
-	char *new_str;
-	int i;
-	int size;
+	char	*new_str;
+	int		i;
+	int		size;
 
 	i = 0;
 	size = ft_strlen(str);

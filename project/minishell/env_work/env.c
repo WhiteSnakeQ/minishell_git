@@ -14,34 +14,30 @@
 
 char	**make_env_str(t_env *env)
 {
-	t_env	*help;
-	char	**envs;
-	int		size;
-	int		i;
+	t_env		*help;
+	t_helper	hp;
+	char		**envs;
 
-	i = 0;
-	size = 0;
+	hp.i = 0;
+	hp.j = 0;
 	help = env;
-	while (help)
-	{
+	while (help && hp.j++ > -1)
 		help = help->next;
-		size++;
-	}
-	envs = malloc(sizeof(char *) * (size + 1));
+	envs = malloc(sizeof(char *) * (hp.j + 1));
 	if (!envs)
 		exit(print_error(MALCERR));
 	help = env;
-	while (size > i)
+	while (hp.j > hp.i)
 	{
-		envs[i++] = create_one_env(help);
-		if (!envs[i - 1])
+		envs[hp.i++] = create_one_env(help);
+		if (!envs[hp.i - 1])
 		{
-			i--;
-			size--;
+			hp.i--;
+			hp.j--;
 		}
 		help = help->next;
 	}
-	envs[i] = NULL;
+	envs[hp.i] = NULL;
 	return (envs);
 }
 
@@ -69,30 +65,28 @@ void	env_add_last(t_prj *prj, char *str)
 
 static t_env	*remove_env(t_env *env, char *key)
 {
-	t_env	*prev;
-	t_env	*next;
-	t_env	*first;
+	t_hlp	hlp;
 
-	first = env;
-	prev = NULL;
+	hlp.first = env;
+	hlp.prev = NULL;
 	while (env)
 	{
-		next = env->next;
+		hlp.next = env->next;
 		if (ft_strcmp(env->key, key) == 0)
 		{
 			free_string(env->key);
 			free_string(env->value);
 			free(env);
 			env = NULL;
-			if (first)
+			if (hlp.first)
 			{
-				prev->next = next;
-				return (first);
+				hlp.prev->next = hlp.next;
+				return (hlp.first);
 			}
 			else
-				return (next);
+				return (hlp.next);
 		}
-		prev = env;
+		hlp.prev = env;
 		env = env->next;
 	}
 	return (NULL);

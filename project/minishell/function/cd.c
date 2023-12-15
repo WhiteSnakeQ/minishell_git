@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 01:26:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/15 01:44:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*change_env(char *new_pwd, t_prj *prj, int fd)
 	if (!new_pwd)
 		new_pwd = ft_strdup(get_value_env_str("HOME", prj->env), 0);
 	else
-		new_pwd =  ft_strdup(new_pwd, 0);
+		new_pwd = ft_strdup(new_pwd, 0);
 	if (ft_strcmp(new_pwd, "-") == 0)
 	{
 		if (ft_strcmp(get_value_env_str("PWD", prj->env), "/") != 0)
@@ -45,7 +45,7 @@ static void	re_lock(void *dir, char *path)
 
 static void	set_root(t_prj *prj)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = getcwd(NULL, 1024);
 	env_change_key(prj, "PWD", pwd);

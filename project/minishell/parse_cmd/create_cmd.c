@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:21:37 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/15 01:43:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,8 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 	while (argv)
 	{
 		argv = check_sp_smb(argv, cmd, prj);
-		if (!argv)
+		if (check_cmd(&argv) == -1)
 			break ;
-		if (ft_strcmp(argv->text, "||") == 0 && argv->ex == 1)
-			break ;
-		if (ft_strcmp(argv->text, "&&") == 0 && argv->ex == 1)
-			break ;
-		if (ft_strcmp(argv->text, "|") == 0 && argv->ex == 1)
-		{
-			argv = argv->next;
-			break ;
-		}
 		add_text(&text, argv);
 		argv = argv->next;
 	}
@@ -113,12 +104,10 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 	return (argv);
 }
 
-void	make_cmd(t_prj *prj)
+void	make_cmd(t_prj *prj, int mod)
 {
-	t_argv *argv;
-	int mod;
+	t_argv	*argv;
 
-	mod = 1;
 	argv = prj->list_argv;
 	if (!argv)
 		return ;

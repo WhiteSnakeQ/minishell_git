@@ -14,7 +14,7 @@
 
 static void	write_in_fd(t_cmd *cmd, t_cmd *cmd2)
 {
-	if (!cmd2)
+	if (!cmd2 || cmd2->valid == 2 || cmd2->valid == 3)
 		return ;
 	close(cmd->pipe[1]);
 	cmd2->redirect_inp = 1;
@@ -30,7 +30,9 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 			exit(print_error(PEDERR));
 		if (cmd->pid == 0)
 		{
-			if (cmd->next && cmd->redirect_out == 0)
+			if (cmd->next && cmd->next->valid >= 2)
+				dup2(STDOUT_FILENO, STDOUT_FILENO);
+			else if (cmd->next && cmd->redirect_out == 0)
 				dup2(cmd->pipe[1], STDOUT_FILENO);
 			else if (cmd->redirect_out == 1)
 				dup2(cmd->file_fd_out, STDOUT_FILENO);
@@ -39,7 +41,6 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 			if (cmd->file_inp != 0)
 				close(cmd->file_inp);
 			execve(cmd->cmd_name, cmd->argv, prj->env_str);
-			ft_printf(2, "minishell: %s: command not found\n", cmd->argv[0]);
 			exit(127);
 		}
 	}
@@ -49,9 +50,16 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 
 static void	helper_exv(t_cmd **cmd)
 {
+	int		fd0;
+	int		fd1;
+
+	fd0 = (*cmd)->pipe[0];
+	fd1 = (*cmd)->pipe[1];
 	*cmd = (*cmd)->next;
-	close((*cmd)->pipe[1]);
-	(*cmd)->file_inp = (*cmd)->pipe[0];
+	if (!*cmd || (*cmd)->valid == 2 || (*cmd)->valid == 3)
+		return ;
+	close(fd1);
+	(*cmd)->file_inp = fd0;
 	(*cmd)->redirect_inp = 1;
 }
 

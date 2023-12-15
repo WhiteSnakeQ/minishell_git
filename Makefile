@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/15 00:57:32 by codespace        ###   ########.fr        #
+#    Updated: 2023/12/15 02:39:10 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC				= minishell.c \
 				  ./function/unset.c \
 				  ./function/env.c \
 				  ./parse_cmd/redirect.c \
+				  ./parse_cmd/additional_cmd.c \
 				  ./parse_cmd/create_cmd.c \
 				  ./parse_cmd/additional.c \
 				  ./exec/start.c \
@@ -56,7 +57,7 @@ PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -g -gdwarf-4 -Wall -Wextra -Werror -fsanitize=address
+FLAGS			= -g
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 
