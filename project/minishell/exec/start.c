@@ -12,37 +12,35 @@
 
 #include "../../headers/minishell.h"
 
-static void	write_in_fd(t_cmd *cmd, t_cmd *cmd2)
+static void	exit_special(t_prj *prj, t_cmd *cmd)
 {
-	if (!cmd2 || cmd2->valid == 2 || cmd2->valid == 3)
-		return ;
-	close(cmd->pipe[1]);
-	cmd2->redirect_inp = 1;
-	cmd2->file_inp = cmd->pipe[0];
+	if (ft_strcmp(cmd->argv[0], "exit") == 0)
+	{
+		exit_m(cmd->argv, prj, 0);
+		exit(1);
+	}
 }
 
 static void	worket(t_prj *prj, t_cmd *cmd)
 {
-	if (my_execve(prj, cmd) == 1)
+	cmd->pid = fork();
+	if (cmd->pid == -1)
+		exit(print_error(PEDERR));
+	if (cmd->pid == 0)
 	{
-		cmd->pid = fork();
-		if (cmd->pid == -1)
-			exit(print_error(PEDERR));
-		if (cmd->pid == 0)
-		{
-			if (cmd->next && cmd->next->valid >= 2)
-				dup2(STDOUT_FILENO, STDOUT_FILENO);
-			else if (cmd->next && cmd->redirect_out == 0)
-				dup2(cmd->pipe[1], STDOUT_FILENO);
-			else if (cmd->redirect_out == 1)
-				dup2(cmd->file_fd_out, STDOUT_FILENO);
-			if (cmd->redirect_inp == 1 || cmd->redirect_inp == 2)
-				dup2(cmd->file_inp, STDIN_FILENO);
-			if (cmd->file_inp != 0)
-				close(cmd->file_inp);
-			execve(cmd->cmd_name, cmd->argv, prj->env_str);
-			exit(127);
-		}
+		if (my_execve(prj, cmd) == -1)
+			exit(0);
+		if (cmd->next && cmd->next->valid >= 2)
+			dup2(STDOUT_FILENO, STDOUT_FILENO);
+		else if (cmd->next && cmd->redirect_out == 0)
+			dup2(cmd->pipe[1], STDOUT_FILENO);
+		else if (cmd->redirect_out == 1)
+			dup2(cmd->file_fd_out, STDOUT_FILENO);
+		if (cmd->redirect_inp == 1 || cmd->redirect_inp == 2)
+			dup2(cmd->file_inp, STDIN_FILENO);
+		close_all(prj);
+		execve(cmd->cmd_name, cmd->argv, prj->env_str);
+		exit(127);
 	}
 	prj->pid = cmd->pid;
 	write_in_fd(cmd, cmd->next);
@@ -65,8 +63,10 @@ static void	helper_exv(t_cmd **cmd)
 
 static void	end_ex(t_prj *prj, int j, int i)
 {
-	waitpid(i, &prj->exit, 0);
-	waitpid(j, &prj->exit, 0);
+	if (i != 0)
+		waitpid(j, &prj->exit, 0);
+	if (i != j)
+		waitpid(i, &prj->exit, 0);
 	prj->l_cmd = ft_itoa(prj->exit % 255, prj->l_cmd);
 }
 
@@ -87,9 +87,10 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd)
 		}
 		if (cmd->valid == 3 || cmd->valid == 2)
 			waitpid(help.j, &prj->exit, 0);
-		if (ft_strcmp(cmd->argv[0], "exit") == 0)
-			exit_m(cmd->argv, prj);
-		worket(prj, cmd);
+		if (!prj->cmd->next)
+			help.c = my_execve(prj, cmd);
+		if (help.c == 1)
+			worket(prj, cmd);
 		if (help.j == 0)
 			help.j = cmd->pid;
 		help.i = cmd->pid;

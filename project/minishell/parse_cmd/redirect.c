@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 01:47:14 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/15 14:00:11 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 15:37:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	change_fd_write(t_cmd *cmd, int mod, char *str)
 	cmd->redirect_out = 1;
 	if (mod == SINGLE)
 	{
-		cmd->file_fd_out = open(str, O_WRONLY | O_CREAT | O_TRUNC, 777);
+		cmd->file_fd_out = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (cmd->file_fd_out < 0)
 		{
 			ft_printf(2, "minishell: ");
@@ -43,8 +43,7 @@ void	change_fd_write(t_cmd *cmd, int mod, char *str)
 	}
 	else
 	{
-		ft_printf(2, "%d\n", cmd->file_fd_out);
-		cmd->file_fd_out = open(str, O_APPEND | O_WRONLY | O_CREAT, 777);
+		cmd->file_fd_out = open(str, O_APPEND | O_WRONLY | O_CREAT, 0644);
 		if (cmd->file_fd_out < 0)
 		{
 			ft_printf(2, "minishell: ");
@@ -59,9 +58,10 @@ static void	read_term(t_prj *prj, t_cmd *cmd, char *stop)
 {
 	char	*fr_term;
 
-	close(prj->pipeold[0]);
-	close(prj->pipeold[1]);
-	pipe(prj->pipeold);
+	close_fd(prj->pipeold[0]);
+	close_fd(prj->pipeold[1]);
+	if (pipe(prj->pipeold) == -1)
+		exit (print_error(PIPERR));
 	fr_term = get_next_line(0);
 	while (fr_term && ft_strncmp(stop, fr_term, ft_strlen(fr_term) - 1) != 0)
 	{

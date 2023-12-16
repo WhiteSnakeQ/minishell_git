@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 13:33:48 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 16:48:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int					ft_atoi(const char *str);
 void				pwd(char **strs, t_prj *prj, int fd);
 void				cd(char **strs, t_prj *prj, int fd);
 void				echo(char **strs, t_prj *prj, int fd);
-void				exit_m(char **strs, t_prj *prj);
+void				exit_m(char **strs, t_prj *prj, int fd);
 void				export(char **strs, t_prj *prj, int fd);
 void				env(char **strs, t_prj *prj, int fd);
 void				unset(char **strs, t_prj *prj);
@@ -211,5 +211,10 @@ void				free_text(t_text *text);
 void				free_argv(t_argv *text);
 void				free_env(t_env *env);
 void				free_cmd(t_cmd *cmd);
+void				close_fd(int fd);
+void				write_in_fd(t_cmd *cmd, t_cmd *cmd2);
+void				close_all(t_prj *prj);
+t_argv				*make_more_argv(t_argv *argv, char **env);
+void				free_one_argv(t_argv *argv);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 13:11:27 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 11:49:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,13 @@ static void	signal_quit(int syg)
 
 static void	set_signals_action(void)
 {
-	struct sigaction	act;
 	static int			i = 0;
 
 	if (i++ % 2 == 0)
-		act.sa_handler = SIG_IGN;
+		signal(SIGQUIT, SIG_IGN);
 	else
-		act.sa_handler = signal_quit;
-	if (sigaction(SIGQUIT, &act, NULL) == -1)
-	{
-		perror("minishell: signal operations");
-		clean_prj(GET, NULL);
-		exit(0);
-	}
-	act.sa_handler = signal_sig;
-	if (sigaction(SIGINT, &act, NULL) == -1)
-	{
-		perror("minishell: signal operations");
-		clean_prj(GET, NULL);
-		exit(0);
-	}
+		signal(SIGQUIT, signal_quit);
+	signal(SIGINT, signal_sig);
 }
 
 void	set_signals(t_prj *prj, int mod)

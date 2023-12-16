@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 14:12:40 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 13:43:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	null_struct(t_prj *prj)
 
 void	init_prj(t_prj *prj, char **env)
 {
+	char	*str;
+
 	null_struct(prj);
 	took_env(prj, env);
 	prj->env_str = make_env_str(prj->env);
@@ -59,11 +61,14 @@ void	init_prj(t_prj *prj, char **env)
 	prj->pipeold = malloc(sizeof(int) * 2);
 	if (!prj->pipeold)
 		exit(print_error(MALCERR));
-	pipe(prj->pipeold);
 	if (get_value_env_str("SHLVL", prj->env))
-		env_change_key(prj, "SHLVL", \
-			ft_itoa(ft_atoi(get_value_env_str("SHLVL", \
-				prj->env)) + 1, NULL));
+	{
+		str = ft_itoa(ft_atoi(get_value_env_str("SHLVL", prj->env)) + 1, NULL);
+		env_change_key(prj, "SHLVL", str);
+		free_string(str);
+	}
+	prj->pipeold[0] = 0;
+	prj->pipeold[1] = 0;
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->exit = 0;

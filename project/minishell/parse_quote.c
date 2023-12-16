@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/15 13:48:02 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 17:04:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 	char	*key;
 
 	j = check_dollr(str, i, prj);
-	if (j != 0)
+	if (j != 0 && i++ > -10)
 	{
 		if (str[1] == '?')
 			(*stop)++;
 		return ((*stop)++, j);
 	}
-	i++;
-	j = 0;
 	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\'' \
 			&& str[i] != '\"'))
 	{
@@ -95,7 +93,7 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 		}
 		else if (str[i] == '$')
 			size += calc_g_env(&str[i], prj, &i, 0);
-		else if (i++ > -1)
+		else if (str[i] && i++ > -1)
 			size++;
 	}
 	return (size);
@@ -104,6 +102,8 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 void	parse_quotet(t_prj *prj)
 {
 	t_argv	*argv;
+	t_argv	*new;
+	t_argv	*prev;
 	int		i;
 
 	argv = prj->list_argv;
@@ -112,6 +112,25 @@ void	parse_quotet(t_prj *prj)
 		argv->ex = 1;
 		i = check_doubl_q(argv->text, prj, argv, 0);
 		argv->text = make_full(argv->text, prj, i, 0);
+		argv = argv->next;
+	}
+	argv = prj->list_argv;
+	prev = NULL;
+	while (argv)
+	{
+		if (ft_strcmp(argv->text, "*") == 0 && argv->ex == 1)
+		{
+			new = make_more_argv(argv, prj->env_str);
+			if (prev)
+			{
+				free_one_argv(argv);
+				prev->next = new;
+			}
+			else
+				prj->list_argv = new;
+			argv = new->next;
+		}
+		prev = argv;
 		argv = argv->next;
 	}
 }

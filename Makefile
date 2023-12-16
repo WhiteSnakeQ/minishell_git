@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/15 07:39:52 by kreys            ###   ########.fr        #
+#    Updated: 2023/12/16 17:05:40 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC				= minishell.c \
 				  parse_quote.c \
 				  merge_text.c \
 				  chech_cmd.c \
+				  wildcast.c \
 				  ./env_work/env.c \
 				  ./env_work/env_additional.c \
 				  ./function/pwd.c \
@@ -36,6 +37,7 @@ SRC				= minishell.c \
 				  ./parse_cmd/create_cmd.c \
 				  ./parse_cmd/additional.c \
 				  ./exec/start.c \
+				  ./exec/fd.c \
 				  ./exec/check.c \
 				  ./exec/my_exec.c \
 				  ./string_opr/string.c \
@@ -58,7 +60,7 @@ PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -Wall -Wextra -Werror
+FLAGS			= -g
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 
@@ -81,3 +83,5 @@ fclean:			clean
 				@rm -f ${NAME}
 
 re:				fclean all clean
+
+##valgrind --suppressions=readline.supp --track-origins=yes --track-fds=yes --leak-check=full --show-leak-kinds=all --trace-children=yes --gen-suppressions=no --quiet ./minishell 

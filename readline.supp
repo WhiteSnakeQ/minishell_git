@@ -1,0 +1,18 @@
+{
+	readline
+	Memchech:Leak
+	...
+	fun:readline
+}
+{
+	add_history
+	Memchech:Leak
+	...
+	fun:add_history
+}
+{
+	ignore_external_libs
+	Memchech:Leak
+	...
+	obj:/usr/bin/*
+}

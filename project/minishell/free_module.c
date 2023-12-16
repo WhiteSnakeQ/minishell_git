@@ -6,11 +6,18 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 00:05:45 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 16:48:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+
+void	free_one_argv(t_argv *argv)
+{
+	free_string(argv->text);
+	free(argv);
+}
+
 
 void	free_cmd(t_cmd *cmd)
 {
@@ -20,8 +27,10 @@ void	free_cmd(t_cmd *cmd)
 	{
 		free_string(cmd->cmd_name);
 		free_strings(cmd->argv);
-		close(cmd->pipe[1]);
-		close(cmd->pipe[0]);
+		close_fd(cmd->pipe[1]);
+		close_fd(cmd->pipe[0]);
+		close_fd(cmd->file_inp);
+		close_fd(cmd->file_fd_out);
 		if (cmd->file_fd_out != 0 && cmd->file_fd_out != 1)
 			close(cmd->file_fd_out);
 		free(cmd->pipe);
