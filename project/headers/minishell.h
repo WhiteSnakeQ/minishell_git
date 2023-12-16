@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 17:54:15 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 18:13:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,11 +185,11 @@ void				ft_sort_params(char **tab, int size);
 void				pwd(char **strs, t_prj *prj, int fd);
 void				cd(char **strs, t_prj *prj, int fd);
 void				echo(char **strs, t_prj *prj, int fd);
-void				exit_m(char **strs, t_prj *prj, int fd);
+void				exit_m(char **strs, t_prj *prj);
 void				export(char **strs, t_prj *prj, int fd);
 void				env(char **strs, t_prj *prj, int fd);
 void				unset(char **strs, t_prj *prj);
-int					my_execve(t_prj *prj, t_cmd *cmd);
+int					my_execve(t_prj *prj, t_cmd *cmd, int mod);
 
 //					Work_with_env
 char				**make_env_str(t_env *env);
@@ -205,6 +205,8 @@ void				close_if_op(t_cmd *cmd, int mod);
 void				close_fd(int fd);
 void				write_in_fd(t_cmd *cmd, t_cmd *cmd2);
 void				close_all(t_prj *prj);
+void				change_fd_write(t_cmd *cmd, int mod, char *str);
+void				change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
 
 //					Init_del_obj
 t_argv				*init_argv(char *str);
@@ -217,7 +219,5 @@ void				free_argv(t_argv *text);
 void				free_env(t_env *env);
 void				free_cmd(t_cmd *cmd);
 void				free_one_argv(t_argv *argv);
-void				change_fd_write(t_cmd *cmd, int mod, char *str);
-void				change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
 
 #endif

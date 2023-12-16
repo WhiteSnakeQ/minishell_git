@@ -19,7 +19,7 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 		exit(print_error(PEDERR));
 	if (cmd->pid == 0)
 	{
-		if (my_execve(prj, cmd) == -1)
+		if (my_execve(prj, cmd, 0) == -1)
 			exit(0);
 		if (cmd->next && cmd->next->valid >= 2)
 			dup2(STDOUT_FILENO, STDOUT_FILENO);
@@ -79,7 +79,7 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int mod)
 		if (cmd->valid == 3 || cmd->valid == 2)
 			waitpid(f_ex, &prj->exit, 0);
 		if (!prj->cmd->next)
-			mod = my_execve(prj, cmd);
+			mod = my_execve(prj, cmd, 1);
 		if (mod == 1)
 			worket(prj, cmd);
 		if (f_ex == 0)

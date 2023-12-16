@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 16:05:06 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 18:09:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ static void	exit_nr(char **strs)
 	exit(2);
 }
 
-void	exit_m(char **strs, t_prj *prj, int fd)
+void	exit_m(char **strs, t_prj *prj)
 {
 	unsigned char	i;
 
 	if (!strs)
 		return ;
-	if (fd == 1)
-		ft_printf(fd, "exit\n");
 	if (strs[1])
 	{
 		if (ft_isdigit(strs[1]) == 1 && !strs[2])

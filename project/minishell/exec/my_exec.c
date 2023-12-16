@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 17:08:14 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 18:14:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	my_execve(t_prj *prj, t_cmd *cmd)
+int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
 {
 	int	fd;
 
@@ -26,7 +26,11 @@ int	my_execve(t_prj *prj, t_cmd *cmd)
 	else if (ft_strcmp(cmd->argv[0], "pwd") == 0)
 		pwd(cmd->argv, prj, fd);
 	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
-		exit_m(cmd->argv, prj, fd);
+	{
+		if (mod == 1)
+			ft_printf(1, "exit\n");
+		exit_m(cmd->argv, prj);
+	}
 	else if (ft_strcmp(cmd->argv[0], "export") == 0)
 		export(cmd->argv, prj, fd);
 	else if (ft_strcmp(cmd->argv[0], "env") == 0)
