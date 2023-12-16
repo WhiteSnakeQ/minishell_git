@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 10:09:18 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 17:55:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 int	main(int argc, char **argv, char **envs)
 {
@@ -32,10 +32,8 @@ int	main(int argc, char **argv, char **envs)
 		if (!prj->argv)
 			exit(print_error("exit\n"));
 		parse_argv(prj);
-		parse_quotet(prj);
-		make_cmd(prj, prj->list_argv, 1);
 		set_signals(prj, GET);
-		execute_cmd(prj, prj->cmd);
+		execute_cmd(prj, prj->cmd, 0, 1);
 		clean_dirty(prj);
 	}
 	return (0);

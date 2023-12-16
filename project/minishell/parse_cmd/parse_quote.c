@@ -6,11 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/16 17:04:44 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 17:41:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 {
@@ -102,8 +102,6 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 void	parse_quotet(t_prj *prj)
 {
 	t_argv	*argv;
-	t_argv	*new;
-	t_argv	*prev;
 	int		i;
 
 	argv = prj->list_argv;
@@ -115,22 +113,5 @@ void	parse_quotet(t_prj *prj)
 		argv = argv->next;
 	}
 	argv = prj->list_argv;
-	prev = NULL;
-	while (argv)
-	{
-		if (ft_strcmp(argv->text, "*") == 0 && argv->ex == 1)
-		{
-			new = make_more_argv(argv, prj->env_str);
-			if (prev)
-			{
-				free_one_argv(argv);
-				prev->next = new;
-			}
-			else
-				prj->list_argv = new;
-			argv = new->next;
-		}
-		prev = argv;
-		argv = argv->next;
-	}
+	make_wildcast(prj, argv);
 }

@@ -6,18 +6,17 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 16:48:17 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 17:40:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 void	free_one_argv(t_argv *argv)
 {
 	free_string(argv->text);
 	free(argv);
 }
-
 
 void	free_cmd(t_cmd *cmd)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   merge_text.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:28:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/15 14:05:52 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 17:41:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 static int	calc_g_env(char *str, t_prj *prj, int *srt, char *ret)
 {

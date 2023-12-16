@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 16:48:29 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/16 17:54:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,23 +135,32 @@ typedef struct s_prj
 //					Modules
 int					ft_printf(int descript, const char *str, ...);
 int					print_error(char *message);
-int					check_error(t_prj *prj);
+char				*get_next_line(int fd);
+void				set_signals(t_prj *prj, int mod);
+void				execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int mod);
+void				make_wildcast(t_prj *prj, t_argv *argv);
+
+//					Parse_param
 int					check_cmd(t_argv **argv);
 int					check_sp_smb_arv(t_argv *argv);
 char				*make_full(char *str, t_prj *prj, int m_size, int i);
-char				*get_next_line(int fd);
-void				make_cmd(t_prj *prj, t_argv *argv, int mod);
-void				set_signals(t_prj *prj, int mod);
+void				check_for_ex(t_prj *prj);
+void				add_last_cmd(t_cmd **cmd, t_cmd *new);
 void				parse_argv(t_prj *prj);
 void				parse_quotet(t_prj *prj);
-void				change_fd_write(t_cmd *cmd, int mod, char *str);
-void				change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
-void				add_last_cmd(t_cmd **cmd, t_cmd *new);
-void				close_if_op(t_cmd *cmd, int mod);
-void				check_for_ex(t_prj *prj);
-void				execute_cmd(t_prj *prj, t_cmd *cmd);
+void				make_cmd(t_prj *prj, t_argv *argv, int mod);
 
 //					String_work
+int					copy_to(t_helper *p, t_prj *prj, int *srt, char *ret);
+int					check_dollr(char *str, int i, t_prj *prj);
+int					ft_strlcpy(char *dest, const char *src, size_t size);
+int					symbl_in_str(char *str, char symb);
+int					ft_strcmp(const char *s1, const char *s2);
+int					ft_strncmp(const char *s1, const char *s2, unsigned int n);
+int					ft_strlen(const char *str);
+int					calc_size_strs(char **strs);
+int					ft_isdigit(char *str);
+int					ft_atoi(const char *str);
 char				**ft_split(char const *s, char c);
 char				*ft_strjoin(const char *s1, const char *s2);
 char				*ft_strdup(char *src, int size);
@@ -171,16 +180,6 @@ void				print_strings(char **strs, int modprnt, int mod);
 void				free_string(char *str);
 void				free_strings(char **strs);
 void				ft_sort_params(char **tab, int size);
-int					copy_to(t_helper *p, t_prj *prj, int *srt, char *ret);
-int					check_dollr(char *str, int i, t_prj *prj);
-int					ft_strlcpy(char *dest, const char *src, size_t size);
-int					symbl_in_str(char *str, char symb);
-int					ft_strcmp(const char *s1, const char *s2);
-int					ft_strncmp(const char *s1, const char *s2, unsigned int n);
-int					ft_strlen(const char *str);
-int					calc_size_strs(char **strs);
-int					ft_isdigit(char *str);
-int					ft_atoi(const char *str);
 
 //					Function
 void				pwd(char **strs, t_prj *prj, int fd);
@@ -201,6 +200,12 @@ void				env_remove_key(t_prj *prj, char *key);
 void				env_change_key(t_prj *prj, char *key, char *new_val);
 int					get_value_env_int(char *key, t_env *env);
 
+//					Fd_operation
+void				close_if_op(t_cmd *cmd, int mod);
+void				close_fd(int fd);
+void				write_in_fd(t_cmd *cmd, t_cmd *cmd2);
+void				close_all(t_prj *prj);
+
 //					Init_del_obj
 t_argv				*init_argv(char *str);
 t_cmd				*init_cmd(void);
@@ -211,10 +216,8 @@ void				free_text(t_text *text);
 void				free_argv(t_argv *text);
 void				free_env(t_env *env);
 void				free_cmd(t_cmd *cmd);
-void				close_fd(int fd);
-void				write_in_fd(t_cmd *cmd, t_cmd *cmd2);
-void				close_all(t_prj *prj);
-t_argv				*make_more_argv(t_argv *argv, char **env);
 void				free_one_argv(t_argv *argv);
+void				change_fd_write(t_cmd *cmd, int mod, char *str);
+void				change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj);
 
 #endif

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chech_cmd.c                                        :+:      :+:    :+:   */
+/*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 07:39:09 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 14:01:12 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 17:42:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 static char	*took_puth(t_prj *prj, t_cmd *cmd)
 {

@@ -10,19 +10,20 @@
 /*																			*/
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 static t_argv	*make_argv(char *text)
 {
 	t_argv	*argv;
 
 	if (!text)
-		return(NULL);
+		return (NULL);
 	argv = malloc(sizeof(t_argv));
 	argv->ex = 0;
 	argv->next = NULL;
 	text = del_symbl(text, "\n");
 	argv->text = text;
+	return (argv);
 }
 
 static void	make_ls(int *fd, char **env)
@@ -30,13 +31,22 @@ static void	make_ls(int *fd, char **env)
 	char	*str[2];
 
 	str[0] = "ls";
-	str[1]= NULL;
+	str[1] = NULL;
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	execve("/bin/ls", str, env);
 }
 
-t_argv	*make_more_argv(t_argv *argv, char **env)
+static t_argv	*get_last_list(t_argv *argv)
+{
+	if (!argv)
+		return (NULL);
+	while (argv->next)
+		argv = argv->next;
+	return (argv);
+}
+
+static t_argv	*make_more_argv(char **env)
 {
 	t_argv		*prev;
 	t_argv		*start;
@@ -62,8 +72,28 @@ t_argv	*make_more_argv(t_argv *argv, char **env)
 		prev->next = make_argv(help.str);
 		prev = prev->next;
 	}
-	if (prev)
-		prev->next = argv->next;
-	close(piper[0]);
-	return (start);
+	return (close(piper[0]), start);
+}
+
+void	make_wildcast(t_prj *prj, t_argv *argv)
+{
+	t_argv	*new;
+	t_argv	*prev;
+
+	while (argv)
+	{
+		if (ft_strcmp(argv->text, "*") == 0 && argv->ex == 1)
+		{
+			new = make_more_argv(prj->env_str);
+			if (prev)
+				prev->next = new;
+			else
+				prj->list_argv = new;
+			free_one_argv(argv);
+			get_last_list(new)->next = argv->next;
+			argv = new;
+		}
+		prev = argv;
+		argv = argv->next;
+	}
 }

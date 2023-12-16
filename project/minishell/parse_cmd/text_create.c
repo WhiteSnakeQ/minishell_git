@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   text_create.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 08:09:53 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 17:41:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 static int	check_sp(char *str)
 {
@@ -105,4 +105,6 @@ void	parse_argv(t_prj *prj)
 		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 			i++;
 	}
+	parse_quotet(prj);
+	make_cmd(prj, prj->list_argv, 1);
 }

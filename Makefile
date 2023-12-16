@@ -6,23 +6,19 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/16 17:05:40 by codespace        ###   ########.fr        #
+#    Updated: 2023/12/16 17:41:13 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-SRC				= minishell.c \
-				  del_obj.c \
-				  init_obj.c \
-				  error_handle.c \
-				  free_module.c \
-				  signals.c \
-				  text_create.c \
-				  parse_quote.c \
-				  merge_text.c \
-				  chech_cmd.c \
-				  wildcast.c \
+SRC				= ./main_project/minishell.c \
+				  ./main_project/del_obj.c \
+				  ./main_project/init_obj.c \
+				  ./main_project/error_handle.c \
+				  ./main_project/free_module.c \
+				  ./main_project/signals.c \
+				  ./main_project/wildcast.c \
 				  ./env_work/env.c \
 				  ./env_work/env_additional.c \
 				  ./function/pwd.c \
@@ -32,6 +28,10 @@ SRC				= minishell.c \
 				  ./function/export.c \
 				  ./function/unset.c \
 				  ./function/env.c \
+				  ./parse_cmd/text_create.c \
+				  ./parse_cmd/parse_quote.c \
+				  ./parse_cmd/merge_text.c \
+				  ./parse_cmd/check_cmd.c \
 				  ./parse_cmd/redirect.c \
 				  ./parse_cmd/additional_cmd.c \
 				  ./parse_cmd/create_cmd.c \
@@ -60,7 +60,7 @@ PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -g
+FLAGS			= -g -Wall -Wextra -Werror
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 

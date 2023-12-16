@@ -12,15 +12,6 @@
 
 #include "../../headers/minishell.h"
 
-static void	exit_special(t_prj *prj, t_cmd *cmd)
-{
-	if (ft_strcmp(cmd->argv[0], "exit") == 0)
-	{
-		exit_m(cmd->argv, prj, 0);
-		exit(1);
-	}
-}
-
 static void	worket(t_prj *prj, t_cmd *cmd)
 {
 	cmd->pid = fork();
@@ -70,11 +61,11 @@ static void	end_ex(t_prj *prj, int j, int i)
 	prj->l_cmd = ft_itoa(prj->exit % 255, prj->l_cmd);
 }
 
-void	execute_cmd(t_prj *prj, t_cmd *cmd)
+void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int mod)
 {
-	t_helper	help;
+	int	l_ex;
 
-	help.j = 0;
+	l_ex = 0;
 	while (cmd)
 	{
 		if (cmd->valid <= 0 || (cmd->valid == 3 && prj->exit == 0)
@@ -86,15 +77,15 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd)
 			continue ;
 		}
 		if (cmd->valid == 3 || cmd->valid == 2)
-			waitpid(help.j, &prj->exit, 0);
+			waitpid(f_ex, &prj->exit, 0);
 		if (!prj->cmd->next)
-			help.c = my_execve(prj, cmd);
-		if (help.c == 1)
+			mod = my_execve(prj, cmd);
+		if (mod == 1)
 			worket(prj, cmd);
-		if (help.j == 0)
-			help.j = cmd->pid;
-		help.i = cmd->pid;
+		if (f_ex == 0)
+			f_ex = cmd->pid;
+		l_ex = cmd->pid;
 		cmd = cmd->next;
 	}
-	end_ex(prj, help.j, help.i);
+	end_ex(prj, f_ex, l_ex);
 }
