@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 17:55:05 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 01:35:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envs)
 			exit(print_error("exit\n"));
 		parse_argv(prj);
 		set_signals(prj, GET);
-		execute_cmd(prj, prj->cmd, 0, 1);
+		execute_cmd(prj, prj->cmd, 0, 0);
 		clean_dirty(prj);
 	}
 	return (0);

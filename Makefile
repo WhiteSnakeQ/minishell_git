@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/16 18:01:42 by codespace        ###   ########.fr        #
+#    Updated: 2023/12/17 02:22:34 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC				= ./main_project/minishell.c \
 				  ./main_project/wildcast.c \
 				  ./env_work/env.c \
 				  ./env_work/env_additional.c \
+				  ./env_work/env_change.c \
 				  ./function/pwd.c \
 				  ./function/cd.c \
 				  ./function/echo.c \

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 17:41:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 00:34:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ static int	check_sp(char *str)
 
 static void	helper_crt(char *str, char *finish, int i)
 {
-	if (*finish == str[i] && i++ > -1)
+	int		act;
+
+	act = 0;
+	if (*finish == str[i] && act++ > -1)
 		*finish = '\0';
-	if (*finish == '\0' && str[i] == '\'')
+	if (*finish == '\0' && str[i] == '\'' && act == 0)
 		*finish = '\'';
-	if (*finish == '\0' && str[i] == '\"')
+	if (*finish == '\0' && str[i] == '\"' && act == 0)
 		*finish = '\"';
 }
 

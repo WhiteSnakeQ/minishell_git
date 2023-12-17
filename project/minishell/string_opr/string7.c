@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string7.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 14:02:22 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/16 23:28:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	copy_to(t_helper *p, t_prj *prj, int *srt, char *ret)
 		return (ret[*srt] = '$', *srt += 1, 1);
 	if (p->str[p->i] == '$' && p->str[p->i + 1] == '?')
 		return (p->i = ft_strlcpy(&ret[*srt], prj->l_cmd, \
-			ft_strlen(prj->l_cmd) + 1), *srt += 2, p->i);
-	if (p->str[p->i] == '$' && p->str[p->i] == ' ')
+			ft_strlen(prj->l_cmd) + 1), *srt += p->i, 2);
+	if (p->str[p->i] == '$' && p->str[p->i + 1] == ' ')
 		return (ret[*srt] = '$', *srt += 1, 1);
 	return (0);
 }

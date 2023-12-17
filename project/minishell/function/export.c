@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 11:48:53 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/17 01:53:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@ static void	add_puth(t_prj *prj)
 			break ;
 		i++;
 	}
-	prj->paths = ft_split(&prj->env_str[i][5], ':');
+	if (prj->env_str[i])
+		prj->paths = ft_split(&prj->env_str[i][5], ':');
+	else
+		prj->paths = NULL;
 }
 
 static void	add_some_th(char *strs, t_prj *prj)
 {
 	char	*key;
+	char	*new_val;
 
 	if ((strs[0] >= '0' && strs[0] <= '9') || symbl_in_str(strs, ' ') == 1)
 	{
@@ -38,9 +42,11 @@ static void	add_some_th(char *strs, t_prj *prj)
 	else
 	{
 		key = new_str_till(strs, '=');
-		env_remove_key(prj, key);
+		new_val = new_str_after(strs, '=');
+		if (env_cahnge_key2(prj, key, new_val) != 1)
+			env_add_last(prj, strs);
 		free_string(key);
-		env_add_last(prj, strs);
+		free_string(new_val);
 	}
 }
 

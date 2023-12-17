@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 11:11:11 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/17 01:15:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	cd(char **strs, t_prj *prj, int fd)
 	dir = opendir(path);
 	if (dir == 0)
 	{
-		ft_printf(2, "minishell: %s: ", strs[1]);
+		if (strs[1])
+			ft_printf(2, "minishell: cd: %s: ", strs[1]);
+		else
+			ft_printf(2, "minishell: cd: %s: ", path);
 		perror(NULL);
 		free_string(path);
 		return ;

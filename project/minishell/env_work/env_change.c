@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   additional_cmd.c                                   :+:      :+:    :+:   */
+/*   env_change.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 23:46:16 by codespace        ###   ########.fr       */
+/*   Created: 2023/12/14 07:51:35 by kreys             #+#    #+#             */
+/*   Updated: 2023/12/17 02:22:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	check_cmd(t_argv **argv)
+int	env_cahnge_key2(t_prj *prj, char *key, char *new_val)
 {
-	if (!*argv)
-		return (-1);
-	if (ft_strcmp((*argv)->text, "||") == 0 && (*argv)->ex == 1)
-		return (-1);
-	if (ft_strcmp((*argv)->text, "&&") == 0 && (*argv)->ex == 1)
-		return (-1);
-	if (ft_strcmp((*argv)->text, "|") == 0 && (*argv)->ex == 1)
+	t_env	*env;
+
+	env = prj->env;
+	while (env)
 	{
-		*argv = (*argv)->next;
-		return (-1);
+		if (ft_strcmp(env->key, key) == 0)
+		{
+			free_string(env->value);
+			env->value = ft_strdup(new_val, 0);
+			return (1);
+		}
+		env = env->next;
 	}
 	return (0);
 }

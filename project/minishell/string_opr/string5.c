@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 07:29:05 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/17 02:21:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	ft_isdigit(char *str)
 	return (0);
 }
 
-static int	check_string(long *number_print, const char *symbol, int *minus)
+static int	check_string(long long *number_print, \
+	const char *symbol, int *minus)
 {
 	int	stop_cheking;
 
@@ -77,14 +78,21 @@ static int	check_string(long *number_print, const char *symbol, int *minus)
 
 int	ft_atoi(const char *str)
 {
-	long	number_to_print;
-	int		minus;
+	long long	number_to_print;
+	int			minus;
 
 	minus = 1;
 	number_to_print = 0;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
 		str++;
 	check_string(&number_to_print, str, &minus);
+	if ((number_to_print < 0 && number_to_print >= -9223372036854775807) \
+		|| ft_strcmp(str, "9223372036854775808") == 0)
+	{
+		ft_printf(2, "minishell: exit: %s: %s\n", str, NUMREC);
+		clean_prj(GET, NULL);
+		exit(2);
+	}
 	if (minus == -1)
 		number_to_print = -number_to_print;
 	return ((int)number_to_print);

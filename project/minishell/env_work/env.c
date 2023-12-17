@@ -67,7 +67,7 @@ static t_env	*remove_env(t_env *env, char *key)
 {
 	t_hlp	hlp;
 
-	hlp.first = env;
+	hlp.addres = &env;
 	hlp.prev = NULL;
 	while (env)
 	{
@@ -78,10 +78,10 @@ static t_env	*remove_env(t_env *env, char *key)
 			free_string(env->value);
 			free(env);
 			env = NULL;
-			if (hlp.first)
+			if (*hlp.addres)
 			{
 				hlp.prev->next = hlp.next;
-				return (hlp.first);
+				return (*hlp.addres);
 			}
 			else
 				return (hlp.next);
@@ -97,6 +97,8 @@ void	env_remove_key(t_prj *prj, char *key)
 	t_env	*env;
 
 	if (!key)
+		return ;
+	if (!prj->env)
 		return ;
 	env = remove_env(prj->env, key);
 	if (env == NULL)

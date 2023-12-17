@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/15 08:51:13 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/17 00:57:37 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static t_argv	*check_sp_smb(t_argv *argv, t_cmd *cmd, t_prj *prj)
 {
+	while (argv && (!argv->text || argv->text[0] == '\0'))
+		argv = argv->next;
 	if (!argv)
 		return (argv);
 	if (ft_strcmp(argv->text, ">") == 0)
@@ -97,7 +99,8 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 		free(cmd);
 		return (argv);
 	}
-	cmd->cmd_name = ft_strdup(text->text, 0);
+	if (text->text)
+		cmd->cmd_name = ft_strdup(text->text, 0);
 	cmd->argv = merge_text(text);
 	free_text(text);
 	add_last_cmd(&prj->cmd, cmd);
@@ -115,6 +118,7 @@ void	make_cmd(t_prj *prj, t_argv *argv, int mod)
 		argv = create_cmd(argv, prj, mod);
 		if (!argv)
 			break ;
+		mod = 1;
 		if (ft_strcmp(argv->text, "||") == 0 && argv->ex == 1)
 		{
 			mod = 3;

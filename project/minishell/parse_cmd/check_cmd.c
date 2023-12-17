@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 07:39:09 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 17:42:17 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 00:48:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	check_for_ex(t_prj *prj)
 	{
 		if (check_all(cmd->cmd_name) == 1)
 			prj->exit = prj->exit;
-		else
+		else if (cmd->cmd_name)
 		{
 			cmd->cmd_name = took_puth(prj, cmd);
 			dir = opendir(cmd->cmd_name);

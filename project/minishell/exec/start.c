@@ -37,47 +37,40 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 	write_in_fd(cmd, cmd->next);
 }
 
-static void	helper_exv(t_cmd **cmd)
+static void	end_ex(t_prj *prj, int j, int i, int mod)
 {
-	int		fd0;
-	int		fd1;
-
-	fd0 = (*cmd)->pipe[0];
-	fd1 = (*cmd)->pipe[1];
-	*cmd = (*cmd)->next;
-	if (!*cmd || (*cmd)->valid == 2 || (*cmd)->valid == 3)
+	if (mod != 1)
+	{
+		prj->l_cmd = ft_itoa(prj->exit % 255, prj->l_cmd);
 		return ;
-	close(fd1);
-	(*cmd)->file_inp = fd0;
-	(*cmd)->redirect_inp = 1;
-}
-
-static void	end_ex(t_prj *prj, int j, int i)
-{
+	}
 	if (i != 0)
 		waitpid(j, &prj->exit, 0);
-	if (i != j)
+	if (i != j && i != 0)
 		waitpid(i, &prj->exit, 0);
 	prj->l_cmd = ft_itoa(prj->exit % 255, prj->l_cmd);
 }
 
-void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int mod)
+static void	check_cmd_emp(t_cmd **cmd)
 {
-	int	l_ex;
+	if ((*cmd)->cmd_name[0] == '\0')
+		(*cmd) = (*cmd)->next;
+}
 
-	l_ex = 0;
+void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int l_ex)
+{
+	int	mod;
+
 	while (cmd)
 	{
+		mod = 1;
+		check_cmd_emp(&cmd);
 		if (cmd->valid <= 0 || (cmd->valid == 3 && prj->exit == 0)
-			|| (cmd->valid == 2 && prj->exit != 0))
+			|| (cmd->valid == 2 && prj->exit == 0))
 		{
-			if (cmd->valid == 3)
+			if (cmd->valid == 3 || cmd->valid <= 0)
 				break ;
-			helper_exv(&cmd);
-			continue ;
 		}
-		if (cmd->valid == 3 || cmd->valid == 2)
-			waitpid(f_ex, &prj->exit, 0);
 		if (!prj->cmd->next)
 			mod = my_execve(prj, cmd, 1);
 		if (mod == 1)
@@ -86,6 +79,8 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int mod)
 			f_ex = cmd->pid;
 		l_ex = cmd->pid;
 		cmd = cmd->next;
+		if (cmd && (cmd->valid == 3 || cmd->valid == 2))
+			waitpid(l_ex, &prj->exit, 0);
 	}
-	end_ex(prj, f_ex, l_ex);
+	end_ex(prj, f_ex, l_ex, mod);
 }

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 18:13:51 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 02:22:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_helper_env
 {
 	struct s_env	*prev;
 	struct s_env	*next;
+	struct s_env	**addres;
 	struct s_env	*first;
 }	t_hlp;
 
@@ -148,7 +149,7 @@ void				check_for_ex(t_prj *prj);
 void				add_last_cmd(t_cmd **cmd, t_cmd *new);
 void				parse_argv(t_prj *prj);
 void				parse_quotet(t_prj *prj);
-void				make_cmd(t_prj *prj, t_argv *argv, int mod);
+void				make_cmd(t_prj *prj, t_argv *argv, int l_ex);
 
 //					String_work
 int					copy_to(t_helper *p, t_prj *prj, int *srt, char *ret);
@@ -199,6 +200,7 @@ void				env_add_last(t_prj *prj, char *str);
 void				env_remove_key(t_prj *prj, char *key);
 void				env_change_key(t_prj *prj, char *key, char *new_val);
 int					get_value_env_int(char *key, t_env *env);
+int					env_cahnge_key2(t_prj *prj, char *key, char *new_val);
 
 //					Fd_operation
 void				close_if_op(t_cmd *cmd, int mod);

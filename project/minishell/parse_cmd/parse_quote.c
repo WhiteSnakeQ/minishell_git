@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/16 17:41:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 00:21:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 	char	*key;
 
 	j = check_dollr(str, i, prj);
-	if (j != 0 && i++ > -10)
+	if (j != 0 || i++ < -10)
 	{
 		if (str[1] == '?')
 			(*stop)++;
 		return ((*stop)++, j);
 	}
 	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\'' \
-			&& str[i] != '\"'))
+			&& str[i] != '\"' && str[i] != '='))
 	{
 		if ((str[i] >= '0' && str[i] <= '9') && i == 0)
 			return (*stop += 1, 0);
