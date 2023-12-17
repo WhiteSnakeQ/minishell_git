@@ -30,7 +30,7 @@ static int	check_pid(int mod, t_prj **prj)
 	return (1);
 }
 
-static void	signal_sig(int syg)
+void	signal_sig(int syg)
 {
 	(void)syg;
 	if (check_pid(GET, NULL) == 1)
@@ -44,7 +44,7 @@ static void	signal_sig(int syg)
 	rl_redisplay();
 }
 
-static void	signal_quit(int syg)
+void	signal_quit(int syg)
 {
 	(void)syg;
 	if (check_pid(GET, NULL) == 0)
@@ -60,7 +60,7 @@ static void	set_signals_action(void)
 	if (i++ % 2 == 0)
 		signal(SIGQUIT, SIG_IGN);
 	else
-		signal(SIGQUIT, signal_quit);
+		signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_sig);
 }
 

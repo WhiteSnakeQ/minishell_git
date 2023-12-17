@@ -12,6 +12,22 @@
 
 #include "../../headers/minishell.h"
 
+void	set_signal_ignore(void)
+{
+	static int	i = 0;
+
+	if (++i % 2 == 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, signal_quit);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
+	}
+}
+
 int	print_error(char *message)
 {
 	printf("%s", message);

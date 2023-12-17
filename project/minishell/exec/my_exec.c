@@ -19,7 +19,12 @@ static void	exit_mod(t_prj *prj, t_cmd *cmd, int mod)
 	exit_m(cmd->argv, prj);
 }
 
-int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
+static int	set_signal(void)
+{
+	signal(SIGQUIT, signal_quit);
+	signal(SIGINT, signal_sig);
+	return (1);
+}int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
 {
 	int	fd;
 
@@ -41,6 +46,6 @@ int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
 	else if (ft_strcmp(cmd->argv[0], "unset") == 0)
 		unset(cmd->argv, prj);
 	else
-		return (1);
+		return (set_signal());
 	return (-1);
 }

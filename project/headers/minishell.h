@@ -137,9 +137,15 @@ typedef struct s_prj
 int					ft_printf(int descript, const char *str, ...);
 int					print_error(char *message);
 char				*get_next_line(int fd);
-void				set_signals(t_prj *prj, int mod);
+void				signal_quit(int syg);
 void				execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int mod);
 void				make_wildcast(t_prj *prj, t_argv *argv);
+
+//					Some_Signals
+void				set_signal_ignore(void);
+void				set_signals(t_prj *prj, int mod);
+void				signal_sig(int syg);
+void				write_in_zero(int mod, char *new_str);
 
 //					Parse_param
 int					check_cmd(t_argv **argv);

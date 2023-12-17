@@ -64,7 +64,7 @@ static int	scan(char *str, char *str2)
 		if (str2[i] == '\n' && str[i])
 			return (1);
 		if (str[i] != str2[i])
-			return (str[i] - str[i]);
+			return (str[i] - str2[i]);
 	}
 	if (str2[i] == '\n' && str[i] == '\0')
 		return (0);

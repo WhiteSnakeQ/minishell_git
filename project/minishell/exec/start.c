@@ -33,6 +33,8 @@ static void	worket(t_prj *prj, t_cmd *cmd)
 		execve(cmd->cmd_name, cmd->argv, prj->env_str);
 		exit(127);
 	}
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	prj->pid = cmd->pid;
 	write_in_fd(cmd, cmd->next);
 }
