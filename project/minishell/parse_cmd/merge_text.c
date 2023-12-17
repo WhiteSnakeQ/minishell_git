@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   merge_text.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:28:45 by codespace         #+#    #+#             */
 /*   Updated: 2023/12/17 00:22:07 by codespace        ###   ########.fr       */

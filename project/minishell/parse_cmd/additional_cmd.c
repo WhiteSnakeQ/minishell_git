@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   additional_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
 /*   Updated: 2023/12/16 23:46:16 by codespace        ###   ########.fr       */

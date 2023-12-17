@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   del_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
 /*   Updated: 2023/12/16 17:40:36 by codespace        ###   ########.fr       */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 02:21:20 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 09:34:47 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static int	set_signal(void)
 	signal(SIGQUIT, signal_quit);
 	signal(SIGINT, signal_sig);
 	return (1);
-}int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
+}
+
+int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
 {
 	int	fd;
 
