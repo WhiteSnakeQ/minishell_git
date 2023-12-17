@@ -113,5 +113,9 @@ void	change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj)
 		}
 	}
 	else
+	{
+		set_signal_ignore();
 		read_term(prj, cmd, str);
+		set_signal_ignore();
+	}
 }
