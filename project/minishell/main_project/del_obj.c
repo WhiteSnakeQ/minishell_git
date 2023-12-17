@@ -35,6 +35,7 @@ void	clean_prj(int mod, t_prj **prj)
 	if (!to_clean)
 		return ;
 	free_string(to_clean->name);
+	free_string(to_clean->our_path);
 	free_string(to_clean->argv);
 	free_string(to_clean->l_cmd);
 	free_strings(to_clean->paths);

@@ -12,7 +12,7 @@
 
 #include "../../headers/minishell.h"
 
-static char	*took_puth(t_prj *prj, t_cmd *cmd)
+char	*took_puth(t_prj *prj, t_cmd *cmd)
 {
 	int		i;
 	char	*cheack;
@@ -38,7 +38,7 @@ static char	*took_puth(t_prj *prj, t_cmd *cmd)
 	return (cmd->cmd_name);
 }
 
-static int	check_all(char *str)
+int	check_all_cmd(char *str)
 {
 	int	i;
 
@@ -58,32 +58,4 @@ static int	check_all(char *str)
 	else if (ft_strcmp(str, "unset") == 0)
 		i++;
 	return (i);
-}
-
-void	check_for_ex(t_prj *prj)
-{
-	t_cmd	*cmd;
-	void	*dir;
-
-	cmd = prj->cmd;
-	while (cmd)
-	{
-		if (check_all(cmd->cmd_name) == 1)
-			prj->exit = prj->exit;
-		else if (cmd->cmd_name)
-		{
-			cmd->cmd_name = took_puth(prj, cmd);
-			dir = opendir(cmd->cmd_name);
-			if (access(cmd->cmd_name, X_OK) != 0 || dir)
-			{
-				if (dir)
-					closedir(dir);
-				prj->exit = 127;
-				cmd->valid = -1;
-				ft_printf(2, "minishell: %s: command not found\n", \
-					cmd->argv[0]);
-			}
-		}
-		cmd = cmd->next;
-	}
 }

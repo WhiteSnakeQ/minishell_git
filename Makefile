@@ -60,7 +60,7 @@ PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -g -Wall -Wextra -Werror
+FLAGS			= -g #-Wall -Wextra -Werror -fsanitize=address
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 

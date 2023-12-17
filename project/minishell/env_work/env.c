@@ -78,10 +78,10 @@ static t_env	*remove_env(t_env *env, char *key)
 			free_string(env->value);
 			free(env);
 			env = NULL;
-			if (hlp.addres)
+			if (hlp.first)
 			{
 				hlp.prev->next = hlp.next;
-				return (*hlp.addres);
+				return (hlp.first);
 			}
 			else
 				return (hlp.next);

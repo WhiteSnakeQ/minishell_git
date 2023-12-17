@@ -132,5 +132,4 @@ void	make_cmd(t_prj *prj, t_argv *argv, int mod)
 			argv = argv->next;
 		}
 	}
-	check_for_ex(prj);
 }

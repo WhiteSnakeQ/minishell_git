@@ -54,6 +54,23 @@ void	change_fd_write(t_cmd *cmd, int mod, char *str)
 	}
 }
 
+static int	scan(char *str, char *str2)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str2[i] == '\n' && str[i])
+			return (1);
+		if (str[i] != str2[i])
+			return (str[i] - str[i]);
+	}
+	if (str2[i] == '\n' && str[i] == '\0')
+		return (0);
+	return (str[i] - str2[i]);
+}
+
 static void	read_term(t_prj *prj, t_cmd *cmd, char *stop)
 {
 	char	*fr_term;
@@ -63,7 +80,7 @@ static void	read_term(t_prj *prj, t_cmd *cmd, char *stop)
 	if (pipe(prj->pipeold) == -1)
 		exit (print_error(PIPERR));
 	fr_term = get_next_line(0);
-	while (fr_term && ft_strncmp(stop, fr_term, ft_strlen(fr_term) - 1) != 0)
+	while (fr_term && scan(stop, fr_term) != 0)
 	{
 		ft_printf(prj->pipeold[1], fr_term);
 		free_string(fr_term);
