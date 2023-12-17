@@ -21,8 +21,8 @@ void	pwd(char **strs, t_prj *prj, int fd)
 	path = getcwd(NULL, 1024);
 	if (!path)
 	{
-		perror("minishell: pwd:");
-		prj->exit = 1;
+		ft_printf(fd, "%s\n", prj->our_path);
+		prj->exit = 0;
 		return ;
 	}
 	ft_printf(fd, "%s\n", path);

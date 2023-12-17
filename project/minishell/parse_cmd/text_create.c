@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   text_create.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 00:34:05 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 09:13:01 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static void	helper_crt(char *str, char *finish, int i)
 		*finish = '\"';
 }
 
-static char	*create_one_arg(char *s, int *skip, t_helper h)
+static char	*create_one_arg(char *s, int *skip)
 {
+	t_helper	h;
+
 	h.i = -1;
 	h.ch = '\0';
 	while (++h.i > -2 && s[h.i])
@@ -94,7 +96,6 @@ void	parse_argv(t_prj *prj)
 {
 	int			i;
 	char		*str;
-	t_helper	h;
 
 	i = 0;
 	if (!prj->argv)
@@ -103,7 +104,7 @@ void	parse_argv(t_prj *prj)
 		i++;
 	while (prj->argv[i])
 	{
-		str = create_one_arg(&prj->argv[i], &i, h);
+		str = create_one_arg(&prj->argv[i], &i);
 		add_back_argv(prj, str);
 		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 			i++;

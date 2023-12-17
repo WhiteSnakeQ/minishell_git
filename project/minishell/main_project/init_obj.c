@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/16 17:40:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 11:19:10 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	init_prj(t_prj *prj, char **env)
 	}
 	prj->pipeold[0] = 0;
 	prj->pipeold[1] = 0;
+	prj->our_path = getcwd(NULL, 1024);
 	prj->pid = 0;
 	prj->skip = 0;
 	prj->exit = 0;

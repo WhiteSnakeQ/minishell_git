@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/17 02:22:34 by codespace        ###   ########.fr        #
+#    Updated: 2023/12/17 09:33:11 by kreys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ SRC				= ./main_project/minishell.c \
 				  ./main_project/wildcast.c \
 				  ./env_work/env.c \
 				  ./env_work/env_additional.c \
-				  ./env_work/env_change.c \
 				  ./function/pwd.c \
 				  ./function/cd.c \
 				  ./function/echo.c \
@@ -71,7 +70,7 @@ all:			 create_prj ${NAME} clean
 				@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:		${ALLOBJ}
-				@${CC} ${FLAGS} ${ALLOBJ} -lreadline -lhistory -o ${NAME} 
+				@${CC} ${FLAGS} ${ALLOBJ} -lreadline -o ${NAME} 
 				@echo DONE
 
 create_prj:		

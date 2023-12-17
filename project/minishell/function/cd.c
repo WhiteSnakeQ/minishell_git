@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 01:15:21 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 11:20:36 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ void	cd(char **strs, t_prj *prj, int fd)
 	re_lock(dir, path);
 	free_string(path);
 	set_root(prj);
+	free_string(prj->our_path);
+	prj->our_path = getcwd(NULL, 1024);
 	prj->exit = 0;
 }

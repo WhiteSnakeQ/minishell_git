@@ -71,7 +71,7 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int l_ex)
 			if (cmd->valid == 3 || cmd->valid <= 0)
 				break ;
 		}
-		if (!prj->cmd->next)
+		if (!prj->cmd->next || (cmd->next && cmd->next->valid >= 2))
 			mod = my_execve(prj, cmd, 1);
 		if (mod == 1)
 			worket(prj, cmd);

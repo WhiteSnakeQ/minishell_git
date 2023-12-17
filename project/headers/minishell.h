@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 02:22:04 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 09:32:42 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,9 +198,8 @@ char				**export_all(t_env *env, int size);
 char				*get_value_env_str(char *key, t_env *env);
 void				env_add_last(t_prj *prj, char *str);
 void				env_remove_key(t_prj *prj, char *key);
-void				env_change_key(t_prj *prj, char *key, char *new_val);
+int					env_change_key(t_prj *prj, char *key, char *new_val);
 int					get_value_env_int(char *key, t_env *env);
-int					env_cahnge_key2(t_prj *prj, char *key, char *new_val);
 
 //					Fd_operation
 void				close_if_op(t_cmd *cmd, int mod);

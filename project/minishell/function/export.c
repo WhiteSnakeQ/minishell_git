@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 01:53:54 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 09:33:40 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	add_some_th(char *strs, t_prj *prj)
 	{
 		key = new_str_till(strs, '=');
 		new_val = new_str_after(strs, '=');
-		if (env_cahnge_key2(prj, key, new_val) != 1)
+		if (env_change_key(prj, key, new_val) != 1)
 			env_add_last(prj, strs);
 		free_string(key);
 		free_string(new_val);
