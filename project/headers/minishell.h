@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 09:32:42 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/18 12:32:19 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ void				free_text(t_text *text);
 void				free_argv(t_argv *text);
 void				free_env(t_env *env);
 void				free_cmd(t_cmd *cmd);
+void				free_one_cmd(t_cmd *cmd);
 void				free_one_argv(t_argv *argv);
 
 #endif

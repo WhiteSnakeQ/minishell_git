@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 11:22:03 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/17 21:03:26 by abobylev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	make_wildcast(t_prj *prj, t_argv *argv)
 	t_argv	*new;
 	t_argv	*prev;
 
+	prev = NULL;
 	while (argv)
 	{
 		if (ft_strcmp(argv->text, "*") == 0 && argv->ex == 1)

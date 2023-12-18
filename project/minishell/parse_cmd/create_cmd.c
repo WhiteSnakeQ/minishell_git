@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 00:57:37 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/18 12:30:49 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static t_argv	*create_cmd(t_argv *argv, t_prj *prj, int mod)
 	}
 	if (!text)
 	{
-		free(cmd);
+		free_one_cmd(cmd);
 		return (argv);
 	}
 	if (text->text)

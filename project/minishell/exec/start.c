@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 09:34:47 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/17 21:06:27 by abobylev          #+#    #+#             */
+/*   Updated: 2023/12/18 12:30:07 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int l_ex)
 {
 	int	mod;
 
+	mod = 1;
 	while (cmd)
 	{
 		mod = 1;

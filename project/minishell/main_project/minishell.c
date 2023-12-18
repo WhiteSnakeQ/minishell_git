@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 01:35:32 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/17 21:50:56 by abobylev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **envs)
 		set_signals(prj, GET);
 		prj->argv = readline(NAME);
 		add_history(prj->argv);
+		prj->exit = 0;
 		if (!prj->argv)
 			exit(print_error("exit\n"));
 		parse_argv(prj);

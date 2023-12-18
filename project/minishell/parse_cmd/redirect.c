@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/11 14:19:20 by kreys            ###   ########.fr       */
+/*   Updated: 2023/12/17 21:56:09 by abobylev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ static void	read_term(t_prj *prj, t_cmd *cmd, char *stop)
 void	change_fd_read(t_cmd *cmd, int mod, char *str, t_prj *prj)
 {
 	close_if_op(cmd, 0);
-	if (cmd->valid == 0)
-		return ;
 	if (mod == SINGLE)
 	{
+		if (cmd->valid == 0)
+			return ;
 		cmd->redirect_inp = 1;
 		cmd->file_inp = open(str, O_RDONLY);
 		if (cmd->file_inp < 0)

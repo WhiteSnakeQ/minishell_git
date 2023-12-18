@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
+/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 09:34:47 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/17 21:08:01 by abobylev          #+#    #+#             */
+/*   Updated: 2023/12/17 22:05:44 by abobylev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,17 @@ int	env_change_key(t_prj *prj, char *key, char *new_val)
 	{
 		if (ft_strcmp(env->key, key) == 0)
 		{
-			free_string(env->value);
-			env->value = ft_strdup(new_val, 0);
+			if ((new_val && !env->value) || (new_val && env->value))
+			{
+				free_string(env->value);
+				env->value = ft_strdup(new_val, 0);
+			}
 			finish++;
 		}
 		env = env->next;
 	}
 	if (finish == 1)
-	{
-		free_strings(prj->env_str);
-		prj->env_str = make_env_str(prj->env);
-	}
+		return (free_strings(prj->env_str), \
+			prj->env_str = make_env_str(prj->env), finish);
 	return (finish);
 }

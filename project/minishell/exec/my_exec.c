@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 09:34:47 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/17 21:06:21 by abobylev          #+#    #+#             */
+/*   Updated: 2023/12/18 12:20:16 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,20 @@ static int	set_signal(void)
 	return (1);
 }
 
+static void	check_terminal(t_cmd *cmd)
+{
+	if (cmd && cmd->next && cmd->next->valid >= 2)
+		cmd->file_fd_out = 1;
+}
+
 int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
 {
 	int	fd;
 
 	fd = cmd->pipe[1];
-	if (!cmd->next)
-		fd = 1;
+	check_terminal(cmd);
+	if (!cmd->next || (cmd->next && cmd->next->valid >= 2))
+		fd = cmd->file_fd_out;
 	if (ft_strcmp(cmd->argv[0], "echo") == 0)
 		echo(cmd->argv, prj, fd);
 	else if (ft_strcmp(cmd->argv[0], "cd") == 0)

@@ -6,7 +6,7 @@
 #    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/17 09:33:11 by kreys            ###   ########.fr        #
+#    Updated: 2023/12/18 15:29:02 by kreys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ PRFDIR			= ./project/printf/
 PRFOBJ			= ${addprefix ${PRFDIR}, ${PRFSRC}}
 
 CC				= cc
-FLAGS			= -g #-Wall -Wextra -Werror -fsanitize=address
+FLAGS			= -Wall -Wextra -Werror
 
 ALLOBJ			=  ${SRCOBJ} ${GNLOBJ} ${PRFOBJ}
 
@@ -83,5 +83,3 @@ fclean:			clean
 				@rm -f ${NAME}
 
 re:				fclean all clean
-
-#valgrind --suppressions=readline.supp --track-origins=yes --track-fds=yes --leak-check=full --show-leak-kinds=all --trace-children=yes --gen-suppressions=no --quiet ./minishell 

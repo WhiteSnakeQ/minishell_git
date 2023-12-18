@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 09:33:40 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/17 21:07:22 by abobylev          #+#    #+#             */
+/*   Updated: 2023/12/18 12:45:22 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	add_some_th(char *strs, t_prj *prj)
 	char	*key;
 	char	*new_val;
 
-	if ((strs[0] >= '0' && strs[0] <= '9') || symbl_in_str(strs, ' ') == 1)
+	if ((strs[0] >= '0' && strs[0] <= '9'))
 	{
 		ft_printf(2, "minishell: export: `%s':%s\n", strs, NVID);
 		return ;
@@ -89,7 +89,7 @@ void	export(char **strs, t_prj *prj, int fd)
 		add_some_th(strs[i++], prj);
 	if (!strs[1])
 		print_exp(prj->env, fd);
-	else
+	else if (strs[1])
 	{
 		free_strings(prj->env_str);
 		prj->env_str = make_env_str(prj->env);
