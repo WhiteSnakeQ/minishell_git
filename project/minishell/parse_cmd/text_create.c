@@ -16,7 +16,7 @@ static int	check_sp(char *str)
 {
 	if (str[0] == '|' && str[1] && str[0] == str[1])
 		return (2);
-	else if (str[0] == '|')
+	else if (str[0] == '|'|| str[0] == '(' || str[0] == ')')
 		return (1);
 	else if (str[0] == '<' && str[1] && str[0] == str[1])
 		return (2);
@@ -52,14 +52,14 @@ static char	*create_one_arg(char *s, int *skip)
 	h.ch = '\0';
 	while (++h.i > -2 && s[h.i])
 	{
-		if ((s[h.i] == '<' || s[h.i] == '>' || s[h.i] == '|' || \
+		if ((symbl_in_str("<>|()", s[h.i]) == 1 || \
 			(s[h.i] == '&' && s[h.i + 1] == '&')) && h.i == 0)
 		{
 			h.i += check_sp(s);
 			break ;
 		}
 		helper_crt(s, &h.ch, h.i);
-		if (((s[h.i] == '<' || s[h.i] == '>' || s[h.i] == '|' || (s[h.i] == '&' \
+		if (((symbl_in_str("<>|()", s[h.i]) == 1 || (s[h.i] == '&' \
 				&& s[h.i + 1] == '&')) && h.ch == '\0') || (((s[h.i] >= 9 && \
 					s[h.i] <= 13) || s[h.i] == 32) && h.ch == '\0'))
 			break ;
@@ -92,6 +92,20 @@ static void	add_back_argv(t_prj *prj, char *text)
 	}
 }
 
+void	print_argv(t_argv *argv)
+{
+	t_argv	*curr;
+
+
+	curr = argv;
+	while (curr)
+	{
+		ft_printf(2, "%s\n", curr->text);
+		curr = curr->next;
+	}
+	return ;
+}
+
 void	parse_argv(t_prj *prj)
 {
 	int			i;
@@ -109,6 +123,7 @@ void	parse_argv(t_prj *prj)
 		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 			i++;
 	}
+	print_argv(prj->list_argv);
 	parse_quotet(prj);
 	make_cmd(prj, prj->list_argv, 1);
 }
