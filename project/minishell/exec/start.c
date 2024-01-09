@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:06:27 by abobylev          #+#    #+#             */
-/*   Updated: 2023/12/18 12:30:07 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/09 11:44:22 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int l_ex)
 {
 	int	mod;
 
-	mod = 1;
 	while (cmd)
 	{
 		mod = 1;
@@ -95,6 +94,7 @@ void	execute_cmd(t_prj *prj, t_cmd *cmd, int f_ex, int l_ex)
 		{
 			if ((cmd->valid <= 0 && !cmd->next) || (cmd->valid == 3))
 				break ;
+			close_fd(cmd->next->pipe[1]);
 		}
 		if (!prj->cmd->next || (cmd->next && cmd->next->valid >= 2))
 			mod = my_execve(prj, cmd, 1);

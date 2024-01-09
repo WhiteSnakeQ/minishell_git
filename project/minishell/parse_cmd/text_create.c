@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 09:13:01 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/09 09:59:45 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_sp(char *str)
 {
 	if (str[0] == '|' && str[1] && str[0] == str[1])
 		return (2);
-	else if (str[0] == '|'|| str[0] == '(' || str[0] == ')')
+	else if (str[0] == '|' || str[0] == '(' || str[0] == ')')
 		return (1);
 	else if (str[0] == '<' && str[1] && str[0] == str[1])
 		return (2);
@@ -92,20 +92,6 @@ static void	add_back_argv(t_prj *prj, char *text)
 	}
 }
 
-void	print_argv(t_argv *argv)
-{
-	t_argv	*curr;
-
-
-	curr = argv;
-	while (curr)
-	{
-		ft_printf(2, "%s\n", curr->text);
-		curr = curr->next;
-	}
-	return ;
-}
-
 void	parse_argv(t_prj *prj)
 {
 	int			i;
@@ -123,7 +109,6 @@ void	parse_argv(t_prj *prj)
 		while ((prj->argv[i] >= 9 && prj->argv[i] <= 13) || prj->argv[i] == ' ')
 			i++;
 	}
-	print_argv(prj->list_argv);
 	parse_quotet(prj);
 	make_cmd(prj, prj->list_argv, 1);
 }

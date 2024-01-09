@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:08:01 by abobylev          #+#    #+#             */
-/*   Updated: 2023/12/17 22:05:44 by abobylev         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:29:25 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	env_add_last(t_prj *prj, char *str)
 	change->next = new;
 }
 
-static t_env	*remove_env(t_env *env, char *key)
+static t_env	*remove_env(t_env *env, char *key, int size)
 {
 	t_hlp	hlp;
 
@@ -78,7 +78,7 @@ static t_env	*remove_env(t_env *env, char *key)
 			free_string(env->value);
 			free(env);
 			env = NULL;
-			if (hlp.first)
+			if (size >= 1 && hlp.first)
 			{
 				hlp.prev->next = hlp.next;
 				return (hlp.first);
@@ -95,14 +95,17 @@ static t_env	*remove_env(t_env *env, char *key)
 void	env_remove_key(t_prj *prj, char *key)
 {
 	t_env	*env;
+	int		size;
 
 	if (!key)
 		return ;
 	if (!prj->env)
 		return ;
-	env = remove_env(prj->env, key);
-	if (env == NULL)
-		return ;
+	if (!prj->env->next)
+		size = 0;
+	else
+		size = 1;
+	env = remove_env(prj->env, key, size);
 	prj->env = env;
 }
 

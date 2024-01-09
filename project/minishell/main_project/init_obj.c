@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/18 12:44:18 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/09 09:59:21 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	make_list_env(char **env, t_prj *prj)
 
 	i = 0;
 	while (env && env[i])
-	env_add_last(prj, env[i++]);
+		env_add_last(prj, env[i++]);
 }
 
 void	took_env(t_prj *prj, char **env)

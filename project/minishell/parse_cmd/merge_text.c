@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:28:45 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/17 00:22:07 by codespace        ###   ########.fr       */
+/*   Updated: 2024/01/09 11:06:50 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*make_full(char *str, t_prj *prj, int m_size, int i)
 	{
 		if ((str[i] == '\"' || str[i] == '\''))
 			helper_q(&i, str, prj, &help);
-		else if (str[i] == '$')
+		else if (str[i] == '$' && prj->skip_dollar == 0)
 		{
 			help.str[help.j] = '\0';
 			prj->parsing = 0;

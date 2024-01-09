@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:06:15 by abobylev          #+#    #+#             */
-/*   Updated: 2023/12/17 21:06:18 by abobylev         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:08:17 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@ void	close_fd(int fd)
 {
 	if (fd >= 3)
 		close(fd);
+}
+
+void	close_fd_two(int fd, int fd2)
+{
+	if (fd >= 3)
+		close(fd);
+	if (fd2 >= 3)
+		close(fd2);
 }
 
 void	write_in_fd(t_cmd *cmd, t_cmd *cmd2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abobylev <abobylev@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:14:32 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 21:50:56 by abobylev         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:01:00 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envs)
 		if (!prj->argv)
 			exit(print_error("exit\n"));
 		parse_argv(prj);
+		execute_cmd(prj, prj->cmd, 0, 1);
 		clean_dirty(prj);
 	}
 	return (0);

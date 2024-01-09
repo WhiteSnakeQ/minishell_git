@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/18 12:32:19 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/09 10:28:17 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_prj
 	int				skip;
 	int				parsing;
 	int				exit;
+	int				skip_dollar;
 	char			*l_cmd;
 	pid_t			curr;
 	pid_t			pid;
@@ -151,6 +152,7 @@ void				write_in_zero(int mod, char *new_str);
 int					check_cmd(t_argv **argv);
 int					check_sp_smb_arv(t_argv *argv);
 char				*make_full(char *str, t_prj *prj, int m_size, int i);
+char				*convert_to_normal(char *str, t_prj *prj, char *stop);
 void				check_for_ex(t_prj *prj);
 void				add_last_cmd(t_cmd **cmd, t_cmd *new);
 void				parse_argv(t_prj *prj);
@@ -158,6 +160,7 @@ void				parse_quotet(t_prj *prj);
 void				make_cmd(t_prj *prj, t_argv *argv, int l_ex);
 
 //					String_work
+int					scan(char *str, char *str2);
 int					copy_to(t_helper *p, t_prj *prj, int *srt, char *ret);
 int					check_dollr(char *str, int i, t_prj *prj);
 int					ft_strlcpy(char *dest, const char *src, size_t size);
@@ -212,6 +215,7 @@ int					get_value_env_int(char *key, t_env *env);
 //					Fd_operation
 void				close_if_op(t_cmd *cmd, int mod);
 void				close_fd(int fd);
+void				close_fd_two(int fd, int fd2);
 void				write_in_fd(t_cmd *cmd, t_cmd *cmd2);
 void				close_all(t_prj *prj);
 void				change_fd_write(t_cmd *cmd, int mod, char *str);

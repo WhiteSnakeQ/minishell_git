@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_quote.c                                      :+:      :+:    :+:   */
+/*   redirect_additional.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/09 09:58:04 by kreys            ###   ########.fr       */
+/*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
+/*   Updated: 2024/01/09 11:08:03 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	calc_s_q(char *str, int *stop)
 	return (*stop += i, i);
 }
 
-static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
+static int	check_doubl_q(char *str, t_prj *prj, int i)
 {
 	int	size;
 
@@ -82,14 +82,12 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 			size += calc_d_q(&str[i], prj, &i);
 			if (str[i])
 				i++;
-			argv->ex = 0;
 		}
 		else if (str[i] == '\'' && i++ > -1)
 		{
 			size += calc_s_q(&str[i], &i);
 			if (str[i])
 				i++;
-			argv->ex = 0;
 		}
 		else if (str[i] == '$' && prj->skip_dollar == 0)
 			size += calc_g_env(&str[i], prj, &i, 0);
@@ -99,31 +97,19 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 	return (size);
 }
 
-void	parse_quotet(t_prj *prj)
+char	*convert_to_normal(char *str, t_prj *prj, char *stop)
 {
-	t_argv		*argv;
-	int			i;
-	int			skip_dollar_finish;
+	int	i;
+	int	deff;
 
-	skip_dollar_finish = 0;
+	if (!str || scan(stop, str) == 0)
+		return (NULL);
+	deff = prj->skip_dollar;
 	prj->skip_dollar = 0;
-	argv = prj->list_argv;
-	while (argv)
-	{
-		if (prj->skip_dollar == 1)
-			skip_dollar_finish = 1;
-		argv->ex = 1;
-		if (ft_strcmp(argv->text, ">>") == 0 \
-			|| ft_strcmp(argv->text, "<<") == 0 \
-			|| ft_strcmp(argv->text, ">") == 0 \
-			|| ft_strcmp(argv->text, "<") == 0)
-			prj->skip_dollar = 1;
-		i = check_doubl_q(argv->text, prj, argv, 0);
-		argv->text = make_full(argv->text, prj, i, 0);
-		if (skip_dollar_finish == 1 && skip_dollar_finish-- > -9)
-			prj->skip_dollar = 0;
-		argv = argv->next;
-	}
-	argv = prj->list_argv;
-	make_wildcast(prj, argv);
+	str = del_symbl(str, "\n");
+	i = check_doubl_q(str, prj, 0);
+	str = make_full(str, prj, i, 0);
+	str = ft_strjoin(str, "\n");
+	prj->skip_dollar = deff;
+	return (str);
 }

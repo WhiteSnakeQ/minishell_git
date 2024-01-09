@@ -6,7 +6,7 @@
 #    By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 00:25:58 by kreys             #+#    #+#              #
-#    Updated: 2023/12/18 15:29:02 by kreys            ###   ########.fr        #
+#    Updated: 2024/01/09 10:18:33 by kreys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC				= ./main_project/minishell.c \
 				  ./parse_cmd/additional_cmd.c \
 				  ./parse_cmd/create_cmd.c \
 				  ./parse_cmd/additional.c \
+				  ./parse_cmd/redirect_additional.c \
 				  ./exec/start.c \
 				  ./exec/fd.c \
 				  ./exec/check.c \
