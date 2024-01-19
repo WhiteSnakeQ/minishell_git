@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:28:45 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/09 11:06:50 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:41:53 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static int	calc_g_env(char *str, t_prj *prj, int *srt, char *ret)
 		return (p.j);
 	p.j = 1;
 	p.i++;
-	while (str[p.i] && (str[p.i] != ' ' && str[p.i] != '$' && str[p.i] != '\''
-			&& str[p.i] != '\"' && str[p.i] != '='))
+	while (str[p.i] && symbl_in_str(" $\'\"=<>|", str[p.i]) == 0)
 	{
 		if ((str[p.i] >= '0' && str[p.i] <= '9') && p.i == 0)
 			return (1);
@@ -106,6 +105,8 @@ char	*make_full(char *str, t_prj *prj, int m_size, int i)
 			prj->parsing = 0;
 			i += calc_g_env(&str[i], prj, &help.j, help.str);
 		}
+		else if (str[i] && str[i] == '~')
+			i += make_tild(&str[i], prj, &help.j, help.str);
 		else if (str[i] && str[i] != '\"')
 			help.str[help.j++] = str[i++];
 	}

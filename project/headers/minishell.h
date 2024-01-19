@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 00:16:04 by kreys             #+#    #+#             */
-/*   Updated: 2024/01/09 10:28:17 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:06:36 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void				write_in_zero(int mod, char *new_str);
 //					Parse_param
 int					check_cmd(t_argv **argv);
 int					check_sp_smb_arv(t_argv *argv);
+int					make_tild(char *str, t_prj *prj, int *srt, char *ret);
 char				*make_full(char *str, t_prj *prj, int m_size, int i);
 char				*convert_to_normal(char *str, t_prj *prj, char *stop);
 void				check_for_ex(t_prj *prj);
@@ -172,6 +173,8 @@ int					calc_size_strs(char **strs);
 int					ft_isdigit(char *str);
 int					ft_atoi(const char *str);
 int					check_all_cmd(char *str);
+int					check_key(char *str);
+int					calc_tild(char *str, int *stop, t_prj *prj);
 char				**ft_split(char const *s, char c);
 char				*took_puth(t_prj *prj, t_cmd *cmd);
 char				*ft_strjoin(const char *s1, const char *s2);

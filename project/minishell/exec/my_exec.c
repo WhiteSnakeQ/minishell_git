@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:06:21 by abobylev          #+#    #+#             */
-/*   Updated: 2023/12/18 12:20:16 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/19 16:44:32 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	my_execve(t_prj *prj, t_cmd *cmd, int mod)
 
 	fd = cmd->pipe[1];
 	check_terminal(cmd);
-	if (!cmd->next || (cmd->next && cmd->next->valid >= 2))
+	if (cmd->redirect_out == 1 || !cmd->next)
 		fd = cmd->file_fd_out;
 	if (ft_strcmp(cmd->argv[0], "echo") == 0)
 		echo(cmd->argv, prj, fd);

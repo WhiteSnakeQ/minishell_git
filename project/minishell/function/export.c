@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:07:22 by abobylev          #+#    #+#             */
-/*   Updated: 2023/12/18 12:45:22 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/19 15:30:13 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,55 +29,6 @@ static void	add_puth(t_prj *prj)
 		prj->paths = NULL;
 }
 
-#include <stdbool.h>
-
-// static bool contains_invalid_char(const char *str)
-// {
-//     while (*str)
-//     {
-//         if (*str == '}' || *str == '^' || *str == '!' || *str == '~' || *str == '.' || *str == '\\' || *str == '+' || *str == '=')
-//             return true;
-//         str++;
-// 		symbl_in_str("}", *str)
-//     }
-//     return false;
-// }
-
-// static void add_some_th(char *strs, t_prj *prj)
-// {
-//     char *key;
-//     char *new_val;
-
-//     if ((strs[0] >= '0' && strs[0] <= '9') || contains_invalid_char(strs))
-//     {
-//         ft_printf(2, "minishell: export: `%s': not valid identifier: %s\n", strs, NVID);
-//         return;
-//     }
-//     else
-//     {
-//         key = new_str_till(strs, '=');
-//         new_val = new_str_after(strs, '=');
-//         if (env_change_key(prj, key, new_val) != 1)
-//             env_add_last(prj, strs);
-//         free_string(key);
-//         free_string(new_val);
-//     }
-// }
-
-static int	check_key(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (symbl_in_str("}{^-+!./\\", str[i]) == 1)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 static void	add_some_th(char *strs, t_prj *prj)
 {
 	char	*key;
@@ -91,7 +42,7 @@ static void	add_some_th(char *strs, t_prj *prj)
 	else
 	{
 		key = new_str_till(strs, '=');
-		if  (check_key(key) == 1)
+		if (check_key(key) == 1)
 		{
 			ft_printf(2, "minishell: export: `%s':%s\n", strs, NVID);
 			free_string(key);

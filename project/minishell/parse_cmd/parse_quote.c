@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:21:42 by codespace         #+#    #+#             */
-/*   Updated: 2024/01/09 09:58:04 by kreys            ###   ########.fr       */
+/*   Updated: 2024/01/19 17:05:01 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 			(*stop)++;
 		return ((*stop)++, j);
 	}
-	while (str[i] && (str[i] != ' ' && str[i] != '$' && str[i] != '\'' \
-			&& str[i] != '\"' && str[i] != '='))
+	while (str[i] && symbl_in_str(" $\'\"=<>|", str[i]) == 0)
 	{
 		if ((str[i] >= '0' && str[i] <= '9') && i == 0)
 			return (*stop += 1, 0);
@@ -40,13 +39,14 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 		free_string(key), i);
 }
 
-static int	calc_d_q(char *str, t_prj *prj, int *stop)
+static int	calc_d_q(char *str, t_prj *prj, int *stop, t_argv *argv)
 {
 	int	i;
 	int	size;
 
 	i = 0;
 	size = 0;
+	argv->ex = 0;
 	while (str[i] && str[i] != '\"')
 	{
 		if (str[i] == '$' && prj->skip_dollar == 0)
@@ -60,11 +60,12 @@ static int	calc_d_q(char *str, t_prj *prj, int *stop)
 	return (*stop += i, size);
 }
 
-static int	calc_s_q(char *str, int *stop)
+static int	calc_s_q(char *str, int *stop, t_argv *argv)
 {
 	int	i;
 
 	i = 0;
+	argv->ex = 0;
 	while (str[i] != '\'')
 		i++;
 	return (*stop += i, i);
@@ -79,20 +80,20 @@ static int	check_doubl_q(char *str, t_prj *prj, t_argv *argv, int i)
 	{
 		if (str[i] == '\"' && i++ > -1)
 		{
-			size += calc_d_q(&str[i], prj, &i);
+			size += calc_d_q(&str[i], prj, &i, argv);
 			if (str[i])
 				i++;
-			argv->ex = 0;
 		}
 		else if (str[i] == '\'' && i++ > -1)
 		{
-			size += calc_s_q(&str[i], &i);
+			size += calc_s_q(&str[i], &i, argv);
 			if (str[i])
 				i++;
-			argv->ex = 0;
 		}
 		else if (str[i] == '$' && prj->skip_dollar == 0)
 			size += calc_g_env(&str[i], prj, &i, 0);
+		else if (str[i] == '~')
+			size += calc_tild(&str[i], &i, prj);
 		else if (str[i] && i++ > -1)
 			size++;
 	}

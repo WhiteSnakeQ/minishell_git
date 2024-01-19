@@ -6,7 +6,7 @@
 /*   By: kreys <kirrill20030@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 07:39:09 by kreys             #+#    #+#             */
-/*   Updated: 2023/12/17 00:48:18 by codespace        ###   ########.fr       */
+/*   Updated: 2024/01/19 16:06:37 by kreys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,32 @@ int	check_all_cmd(char *str)
 	else if (ft_strcmp(str, "unset") == 0)
 		i++;
 	return (i);
+}
+
+int	make_tild(char *str, t_prj *prj, int *srt, char *ret)
+{
+	int		to_ret;
+	int		i;
+	char	*value;
+
+	to_ret = 1;
+	if (!str[to_ret] || str[to_ret] == '/')
+	{
+		value = get_value_env_str("HOME", prj->env);
+		i = -1;
+		while (value[++i])
+		{
+			ret[*srt] = value[i];
+			*srt += 1;
+		}
+		if (str[to_ret])
+		{
+			to_ret++;
+			ret[*srt] = '/';
+		}
+		return (to_ret);
+	}
+	ret[*srt] = '~';
+	*srt += 1;
+	return (to_ret);
 }
