@@ -49,12 +49,8 @@ int	ft_isdigit(char *str)
 static int	check_string(long long *number_print, \
 	const char *symbol, int *minus)
 {
-	int	stop_cheking;
-
-	stop_cheking = 0;
 	if ((symbol[0] == '+' || symbol[0] == '-') && *number_print == 0)
 	{
-		stop_cheking++;
 		if (symbol[0] == '-')
 			*minus = -*minus;
 		symbol++;
@@ -65,7 +61,6 @@ static int	check_string(long long *number_print, \
 		{
 			*number_print *= 10;
 			*number_print += symbol[0] - 48;
-			stop_cheking++;
 		}
 		else if (*number_print > 0)
 			return (1);
