@@ -26,7 +26,7 @@ static int	calc_g_env(char *str, t_prj *prj, int *stop, int i)
 	}
 	while (str[i] && symbl_in_str(" $\'\"=<>|", str[i]) == 0)
 	{
-		if ((str[i] >= '0' && str[i] <= '9') && i == 0)
+		if ((str[i + 1] >= '0' && str[i + 1] <= '9') && i == 0)
 			return (*stop += 1, 0);
 		i++;
 	}

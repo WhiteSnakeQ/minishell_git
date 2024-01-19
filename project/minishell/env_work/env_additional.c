@@ -86,7 +86,7 @@ void	ft_sort_params(char **tab, int size)
 	while (main_iteration >= 1)
 	{
 		i_o_a = main_iteration - 1;
-		while (i_o_a > 0)
+		while (i_o_a >= 0)
 		{
 			if (ft_strcmp(*(tab + main_iteration), *(tab + i_o_a)) < 0)
 				swap((tab + main_iteration), (tab + i_o_a));

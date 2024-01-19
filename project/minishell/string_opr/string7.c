@@ -31,7 +31,7 @@ char	*add_to_start(char *str, char symb)
 int	check_dollr(char *str, int i, t_prj *prj)
 {
 	if (str[i] == '$' && (!str[i + 1] || \
-		symbl_in_str(" $\'\"=<>|0123456789", str[i + 1]) == 1))
+		symbl_in_str(" $\'\"=<>|", str[i + 1]) == 1))
 	{
 		return (1);
 	}
@@ -45,7 +45,7 @@ int	check_dollr(char *str, int i, t_prj *prj)
 int	copy_to(t_helper *p, t_prj *prj, int *srt, char *ret)
 {
 	if (p->str[p->i] == '$' && (!p->str[p->i + 1] || \
-		symbl_in_str(" $\'\"=<>|0123456789", p->str[p->i + 1]) == 1))
+		symbl_in_str(" $\'\"=<>|", p->str[p->i + 1]) == 1))
 		return (ret[*srt] = '$', *srt += 1, 1);
 	if (p->str[p->i] == '$' && p->str[p->i + 1] == '?')
 		return (p->i = ft_strlcpy(&ret[*srt], prj->l_cmd, \

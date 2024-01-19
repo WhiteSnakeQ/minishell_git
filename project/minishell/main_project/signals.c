@@ -57,6 +57,7 @@ static void	set_signals_action(void)
 {
 	static int			i = 0;
 
+	signal(SIGINT, SIG_IGN);
 	if (i++ % 2 == 0)
 		signal(SIGQUIT, SIG_IGN);
 	else

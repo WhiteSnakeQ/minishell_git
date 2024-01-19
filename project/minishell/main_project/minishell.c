@@ -23,15 +23,17 @@ int	main(int argc, char **argv, char **envs)
 		return (print_error(MALCERR));
 	clean_prj(SET, &prj);
 	init_prj(prj, envs);
+	set_signals(prj, 0);
 	while (42)
 	{
+		set_signals(prj, 1);
 		prj->argv = readline(NAME);
 		add_history(prj->argv);
-		prj->exit = 0;
 		if (!prj->argv)
 			exit(print_error("exit\n"));
 		parse_argv(prj);
 		execute_cmd(prj, prj->cmd, 0, 1);
+		set_signals(prj, 1);
 		clean_dirty(prj);
 	}
 	return (0);

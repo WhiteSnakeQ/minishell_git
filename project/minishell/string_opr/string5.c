@@ -57,6 +57,8 @@ static int	check_string(long long *number_print, \
 	}
 	while (*symbol)
 	{
+		if (*number_print < 0)
+			return (-1);
 		if (symbol[0] >= '0' && symbol[0] <= '9')
 		{
 			*number_print *= 10;
